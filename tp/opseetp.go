@@ -3,13 +3,14 @@ package tp
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/julienschmidt/httprouter"
-	log "github.com/sirupsen/logrus"
-	"golang.org/x/net/context"
 	"net/http"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/julienschmidt/httprouter"
+	log "github.com/sirupsen/logrus"
+	"golang.org/x/net/context"
 )
 
 type DecodeFunc func(context.Context, http.ResponseWriter, *http.Request, httprouter.Params) (context.Context, int, error)
@@ -185,7 +186,9 @@ func serverError(rw http.ResponseWriter, req *http.Request, status int, err erro
 		message = err.Error()
 	}
 
-	msg, _ := json.Marshal(MessageResponse{message})
+	msg, _ = json.Marshal(MessageResponse{message})
+	rw.Header().Set("Content-Type", defaultContentType)
+
 	rw.WriteHeader(status)
 	rw.Write(msg)
 }
