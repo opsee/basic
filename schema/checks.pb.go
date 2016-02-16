@@ -40,11 +40,37 @@ type Check struct {
 	Name       string                     `protobuf:"bytes,6,opt,name=name,proto3" json:"name,omitempty"`
 	Assertions []*Assertion               `protobuf:"bytes,7,rep,name=assertions" json:"assertions,omitempty"`
 	Results    []*CheckResult             `protobuf:"bytes,8,rep,name=results" json:"results,omitempty"`
+	// Types that are valid to be assigned to Spec:
+	//	*Check_HttpCheck
+	//	*Check_CloudwatchCheck
+	Spec isCheck_Spec `protobuf_oneof:"spec"`
 }
 
 func (m *Check) Reset()         { *m = Check{} }
 func (m *Check) String() string { return proto.CompactTextString(m) }
 func (*Check) ProtoMessage()    {}
+
+type isCheck_Spec interface {
+	isCheck_Spec()
+	Equal(interface{}) bool
+}
+
+type Check_HttpCheck struct {
+	HttpCheck *HttpCheck `protobuf:"bytes,101,opt,name=http_check,oneof"`
+}
+type Check_CloudwatchCheck struct {
+	CloudwatchCheck *CloudWatchCheck `protobuf:"bytes,102,opt,name=cloudwatch_check,oneof"`
+}
+
+func (*Check_HttpCheck) isCheck_Spec()       {}
+func (*Check_CloudwatchCheck) isCheck_Spec() {}
+
+func (m *Check) GetSpec() isCheck_Spec {
+	if m != nil {
+		return m.Spec
+	}
+	return nil
+}
 
 func (m *Check) GetTarget() *Target {
 	if m != nil {
@@ -79,6 +105,73 @@ func (m *Check) GetResults() []*CheckResult {
 		return m.Results
 	}
 	return nil
+}
+
+func (m *Check) GetHttpCheck() *HttpCheck {
+	if x, ok := m.GetSpec().(*Check_HttpCheck); ok {
+		return x.HttpCheck
+	}
+	return nil
+}
+
+func (m *Check) GetCloudwatchCheck() *CloudWatchCheck {
+	if x, ok := m.GetSpec().(*Check_CloudwatchCheck); ok {
+		return x.CloudwatchCheck
+	}
+	return nil
+}
+
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*Check) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), []interface{}) {
+	return _Check_OneofMarshaler, _Check_OneofUnmarshaler, []interface{}{
+		(*Check_HttpCheck)(nil),
+		(*Check_CloudwatchCheck)(nil),
+	}
+}
+
+func _Check_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*Check)
+	// spec
+	switch x := m.Spec.(type) {
+	case *Check_HttpCheck:
+		_ = b.EncodeVarint(101<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.HttpCheck); err != nil {
+			return err
+		}
+	case *Check_CloudwatchCheck:
+		_ = b.EncodeVarint(102<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.CloudwatchCheck); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("Check.Spec has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _Check_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*Check)
+	switch tag {
+	case 101: // spec.http_check
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(HttpCheck)
+		err := b.DecodeMessage(msg)
+		m.Spec = &Check_HttpCheck{msg}
+		return true, err
+	case 102: // spec.cloudwatch_check
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(CloudWatchCheck)
+		err := b.DecodeMessage(msg)
+		m.Spec = &Check_CloudwatchCheck{msg}
+		return true, err
+	default:
+		return false, nil
+	}
 }
 
 type Assertion struct {
@@ -279,11 +372,32 @@ type CheckResponse struct {
 	Response *google_protobuf2.Any `protobuf:"bytes,2,opt,name=response" json:"response,omitempty"`
 	Error    string                `protobuf:"bytes,3,opt,name=error,proto3" json:"error,omitempty"`
 	Passing  bool                  `protobuf:"varint,4,opt,name=passing,proto3" json:"passing,omitempty"`
+	// Types that are valid to be assigned to Reply:
+	//	*CheckResponse_HttpResponse
+	Reply isCheckResponse_Reply `protobuf_oneof:"reply"`
 }
 
 func (m *CheckResponse) Reset()         { *m = CheckResponse{} }
 func (m *CheckResponse) String() string { return proto.CompactTextString(m) }
 func (*CheckResponse) ProtoMessage()    {}
+
+type isCheckResponse_Reply interface {
+	isCheckResponse_Reply()
+	Equal(interface{}) bool
+}
+
+type CheckResponse_HttpResponse struct {
+	HttpResponse *HttpResponse `protobuf:"bytes,101,opt,name=http_response,oneof"`
+}
+
+func (*CheckResponse_HttpResponse) isCheckResponse_Reply() {}
+
+func (m *CheckResponse) GetReply() isCheckResponse_Reply {
+	if m != nil {
+		return m.Reply
+	}
+	return nil
+}
 
 func (m *CheckResponse) GetTarget() *Target {
 	if m != nil {
@@ -297,6 +411,52 @@ func (m *CheckResponse) GetResponse() *google_protobuf2.Any {
 		return m.Response
 	}
 	return nil
+}
+
+func (m *CheckResponse) GetHttpResponse() *HttpResponse {
+	if x, ok := m.GetReply().(*CheckResponse_HttpResponse); ok {
+		return x.HttpResponse
+	}
+	return nil
+}
+
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*CheckResponse) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), []interface{}) {
+	return _CheckResponse_OneofMarshaler, _CheckResponse_OneofUnmarshaler, []interface{}{
+		(*CheckResponse_HttpResponse)(nil),
+	}
+}
+
+func _CheckResponse_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*CheckResponse)
+	// reply
+	switch x := m.Reply.(type) {
+	case *CheckResponse_HttpResponse:
+		_ = b.EncodeVarint(101<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.HttpResponse); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("CheckResponse.Reply has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _CheckResponse_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*CheckResponse)
+	switch tag {
+	case 101: // reply.http_response
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(HttpResponse)
+		err := b.DecodeMessage(msg)
+		m.Reply = &CheckResponse_HttpResponse{msg}
+		return true, err
+	default:
+		return false, nil
+	}
 }
 
 type CheckResult struct {
@@ -449,6 +609,75 @@ func (this *Check) Equal(that interface{}) bool {
 		if !this.Results[i].Equal(that1.Results[i]) {
 			return false
 		}
+	}
+	if that1.Spec == nil {
+		if this.Spec != nil {
+			return false
+		}
+	} else if this.Spec == nil {
+		return false
+	} else if !this.Spec.Equal(that1.Spec) {
+		return false
+	}
+	return true
+}
+func (this *Check_HttpCheck) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Check_HttpCheck)
+	if !ok {
+		that2, ok := that.(Check_HttpCheck)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.HttpCheck.Equal(that1.HttpCheck) {
+		return false
+	}
+	return true
+}
+func (this *Check_CloudwatchCheck) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Check_CloudwatchCheck)
+	if !ok {
+		that2, ok := that.(Check_CloudwatchCheck)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.CloudwatchCheck.Equal(that1.CloudwatchCheck) {
+		return false
 	}
 	return true
 }
@@ -939,6 +1168,45 @@ func (this *CheckResponse) Equal(that interface{}) bool {
 	if this.Passing != that1.Passing {
 		return false
 	}
+	if that1.Reply == nil {
+		if this.Reply != nil {
+			return false
+		}
+	} else if this.Reply == nil {
+		return false
+	} else if !this.Reply.Equal(that1.Reply) {
+		return false
+	}
+	return true
+}
+func (this *CheckResponse_HttpResponse) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*CheckResponse_HttpResponse)
+	if !ok {
+		that2, ok := that.(CheckResponse_HttpResponse)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.HttpResponse.Equal(that1.HttpResponse) {
+		return false
+	}
 	return true
 }
 func (this *CheckResult) Equal(that interface{}) bool {
@@ -1009,6 +1277,7 @@ type CheckGetter interface {
 }
 
 var GraphQLCheckType *github_com_graphql_go_graphql.Object
+var GraphQLCheckSpecUnion *github_com_graphql_go_graphql.Union
 
 type AssertionGetter interface {
 	GetAssertion() *Assertion
@@ -1081,12 +1350,23 @@ type CheckResponseGetter interface {
 }
 
 var GraphQLCheckResponseType *github_com_graphql_go_graphql.Object
+var GraphQLCheckResponseReplyUnion *github_com_graphql_go_graphql.Union
 
 type CheckResultGetter interface {
 	GetCheckResult() *CheckResult
 }
 
 var GraphQLCheckResultType *github_com_graphql_go_graphql.Object
+
+func (g *Check_HttpCheck) GetHttpCheck() *HttpCheck {
+	return g.HttpCheck
+}
+func (g *Check_CloudwatchCheck) GetCloudWatchCheck() *CloudWatchCheck {
+	return g.CloudwatchCheck
+}
+func (g *CheckResponse_HttpResponse) GetHttpResponse() *HttpResponse {
+	return g.HttpResponse
+}
 
 func init() {
 	GraphQLTargetType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
@@ -1346,6 +1626,17 @@ func init() {
 							return face.Results, nil
 						}
 						return nil, fmt.Errorf("field results not resolved")
+					},
+				},
+				"spec": &github_com_graphql_go_graphql.Field{
+					Type:        GraphQLCheckSpecUnion,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Check)
+						if !ok {
+							return nil, fmt.Errorf("field spec not resolved")
+						}
+						return obj.GetSpec(), nil
 					},
 				},
 			}
@@ -2246,6 +2537,17 @@ func init() {
 						return nil, fmt.Errorf("field passing not resolved")
 					},
 				},
+				"reply": &github_com_graphql_go_graphql.Field{
+					Type:        GraphQLCheckResponseReplyUnion,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*CheckResponse)
+						if !ok {
+							return nil, fmt.Errorf("field reply not resolved")
+						}
+						return obj.GetReply(), nil
+					},
+				},
 			}
 		}),
 	})
@@ -2421,6 +2723,37 @@ func init() {
 			}
 		}),
 	})
+	GraphQLCheckResponseReplyUnion = github_com_graphql_go_graphql.NewUnion(github_com_graphql_go_graphql.UnionConfig{
+		Name:        "CheckResponseReply",
+		Description: "",
+		Types: []*github_com_graphql_go_graphql.Object{
+			GraphQLHttpResponseType,
+		},
+		ResolveType: func(value interface{}, info github_com_graphql_go_graphql.ResolveInfo) *github_com_graphql_go_graphql.Object {
+			switch value.(type) {
+			case *CheckResponse_HttpResponse:
+				return GraphQLHttpResponseType
+			}
+			return nil
+		},
+	})
+	GraphQLCheckSpecUnion = github_com_graphql_go_graphql.NewUnion(github_com_graphql_go_graphql.UnionConfig{
+		Name:        "CheckSpec",
+		Description: "",
+		Types: []*github_com_graphql_go_graphql.Object{
+			GraphQLHttpCheckType,
+			GraphQLCloudWatchCheckType,
+		},
+		ResolveType: func(value interface{}, info github_com_graphql_go_graphql.ResolveInfo) *github_com_graphql_go_graphql.Object {
+			switch value.(type) {
+			case *Check_HttpCheck:
+				return GraphQLHttpCheckType
+			case *Check_CloudwatchCheck:
+				return GraphQLCloudWatchCheckType
+			}
+			return nil
+		},
+	})
 }
 func NewPopulatedTarget(r randyChecks, easy bool) *Target {
 	this := &Target{}
@@ -2464,11 +2797,28 @@ func NewPopulatedCheck(r randyChecks, easy bool) *Check {
 			this.Results[i] = NewPopulatedCheckResult(r, easy)
 		}
 	}
+	oneofNumber_Spec := []int32{101, 102}[r.Intn(2)]
+	switch oneofNumber_Spec {
+	case 101:
+		this.Spec = NewPopulatedCheck_HttpCheck(r, easy)
+	case 102:
+		this.Spec = NewPopulatedCheck_CloudwatchCheck(r, easy)
+	}
 	if !easy && r.Intn(10) != 0 {
 	}
 	return this
 }
 
+func NewPopulatedCheck_HttpCheck(r randyChecks, easy bool) *Check_HttpCheck {
+	this := &Check_HttpCheck{}
+	this.HttpCheck = NewPopulatedHttpCheck(r, easy)
+	return this
+}
+func NewPopulatedCheck_CloudwatchCheck(r randyChecks, easy bool) *Check_CloudwatchCheck {
+	this := &Check_CloudwatchCheck{}
+	this.CloudwatchCheck = NewPopulatedCloudWatchCheck(r, easy)
+	return this
+}
 func NewPopulatedAssertion(r randyChecks, easy bool) *Assertion {
 	this := &Assertion{}
 	this.Key = randStringChecks(r)
@@ -2662,11 +3012,21 @@ func NewPopulatedCheckResponse(r randyChecks, easy bool) *CheckResponse {
 	}
 	this.Error = randStringChecks(r)
 	this.Passing = bool(bool(r.Intn(2) == 0))
+	oneofNumber_Reply := []int32{101}[r.Intn(1)]
+	switch oneofNumber_Reply {
+	case 101:
+		this.Reply = NewPopulatedCheckResponse_HttpResponse(r, easy)
+	}
 	if !easy && r.Intn(10) != 0 {
 	}
 	return this
 }
 
+func NewPopulatedCheckResponse_HttpResponse(r randyChecks, easy bool) *CheckResponse_HttpResponse {
+	this := &CheckResponse_HttpResponse{}
+	this.HttpResponse = NewPopulatedHttpResponse(r, easy)
+	return this
+}
 func NewPopulatedCheckResult(r randyChecks, easy bool) *CheckResult {
 	this := &CheckResult{}
 	this.CheckId = randStringChecks(r)
