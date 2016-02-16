@@ -40,7 +40,31 @@ func TestCheckschema(t *testing.T) {
 				address
 			}
 			last_run
-			check_spec
+			spec {
+				... on schemaHttpCheck {
+					name
+					path
+					protocol
+					port
+					verb
+					headers {
+						name
+						values
+					}
+					body
+				}
+				... on schemaCloudWatchCheck {
+					target {
+						name
+						type
+						id
+						address
+					}
+					metric_name
+					function
+					function_params
+				}
+			}
 			name
 			assertions {
 				key
@@ -63,6 +87,23 @@ func TestCheckschema(t *testing.T) {
 					response
 					error
 					passing
+					reply {
+						... on schemaHttpResponse {
+							code
+							body
+							headers {
+								name
+								values
+							}
+							metrics {
+								name
+								value
+								tags
+								timestamp
+							}
+							host
+						}
+					}
 				}
 				target {
 					name
