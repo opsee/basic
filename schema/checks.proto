@@ -27,20 +27,24 @@ message Check {
 	int32 interval = 2 [(opseeproto.required) = true];
 	Target target = 3 [(opseeproto.required) = true];
 	google.protobuf.Timestamp last_run = 4;
-  google.protobuf.Any check_spec = 5 [(opseeproto.required) = true];
+	google.protobuf.Any check_spec = 5 [(opseeproto.required) = true];
 	string name = 6 [(opseeproto.required) = true];
-  repeated Assertion assertions = 7;
-  repeated CheckResult results = 8;
+	repeated Assertion assertions = 7;
+	repeated CheckResult results = 8;
+	oneof spec {
+		HttpCheck http_check = 101;
+		CloudWatchCheck cloudwatch_check = 102;
+	}
 }
 
 message Assertion {
 	// key is one of "code", "header", "body".
 	string key = 1 [(opseeproto.required) = true];
-  // In the case of key=header, value would be the header field.
-  string value = 2;
-  // relationship is one of: "equal" "notEqual" "empty" "notEmpty" "contain" "notContain" "regExp"
-  string relationship = 3 [(opseeproto.required) = true];
-  string operand = 4;
+	// In the case of key=header, value would be the header field.
+	string value = 2;
+	// relationship is one of: "equal" "notEqual" "empty" "notEmpty" "contain" "notContain" "regExp"
+	string relationship = 3 [(opseeproto.required) = true];
+	string operand = 4;
 }
 
 message Header {
@@ -110,6 +114,9 @@ message CheckResponse {
 	google.protobuf.Any response = 2;
 	string error = 3;
 	bool passing = 4;
+	oneof reply {
+		HttpResponse http_response = 101;
+	}
 }
 
 message CheckResult {
@@ -120,5 +127,5 @@ message CheckResult {
 	repeated CheckResponse responses = 5;
 	Target target = 6;
 	string check_name = 7;
-  int32 version = 8;
+	int32 version = 8;
 }
