@@ -186,7 +186,7 @@ func serverError(rw http.ResponseWriter, req *http.Request, status int, err erro
 		message = err.Error()
 	}
 
-	msg, _ = json.Marshal(MessageResponse{message})
+	msg, _ := json.Marshal(MessageResponse{message})
 	rw.Header().Set("Content-Type", defaultContentType)
 
 	rw.WriteHeader(status)
