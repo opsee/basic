@@ -24,6 +24,7 @@ It has these top-level messages:
 	CheckResourceResponse
 	ResourceResponse
 	CheckResourceRequest
+	ResultsResource
 	TestCheckRequest
 	TestCheckResponse
 	CheckResponse
