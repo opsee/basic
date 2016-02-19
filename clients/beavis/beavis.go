@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gogo/protobuf/proto"
-	"github.com/opsee/basic/com"
 	"github.com/opsee/basic/schema"
 	"io"
 	"io/ioutil"
@@ -15,7 +14,7 @@ import (
 )
 
 type Client interface {
-	ListResults(user *com.User) ([]*schema.CheckResult, error)
+	ListResults(user *schema.User) ([]*schema.CheckResult, error)
 }
 
 type client struct {
@@ -32,8 +31,8 @@ func New(endpoint string) Client {
 }
 
 // ListChecks lists the checks + assertions for a user's customer account, without the results
-func (c *client) ListResults(user *com.User) ([]*schema.CheckResult, error) {
-	body, err := c.do(user, "GET", "/gql/results?q="+url.QueryEscape(fmt.Sprintf("customer_id = \"%s\" and type = \"result\"", user.CustomerID)), nil)
+func (c *client) ListResults(user *schema.User) ([]*schema.CheckResult, error) {
+	body, err := c.do(user, "GET", "/gql/results?q="+url.QueryEscape(fmt.Sprintf("customer_id = \"%s\" and type = \"result\"", user.CustomerId)), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +46,7 @@ func (c *client) ListResults(user *com.User) ([]*schema.CheckResult, error) {
 	return results.Results, nil
 }
 
-func (c *client) do(user *com.User, method, path string, body io.Reader) ([]byte, error) {
+func (c *client) do(user *schema.User, method, path string, body io.Reader) ([]byte, error) {
 	req, err := http.NewRequest(method, c.endpoint+path, body)
 	if err != nil {
 		return nil, err
