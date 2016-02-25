@@ -22,7 +22,7 @@ var _ = math.Inf
 
 type GetUserRequest struct {
 	CustomerId string `protobuf:"bytes,1,opt,name=customer_id,proto3" json:"customer_id,omitempty"`
-	Id         string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	Id         int32  `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`
 	Email      string `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
 }
 
@@ -317,7 +317,10 @@ var _Vape_serviceDesc = grpc.ServiceDesc{
 func NewPopulatedGetUserRequest(r randyVape, easy bool) *GetUserRequest {
 	this := &GetUserRequest{}
 	this.CustomerId = randStringVape(r)
-	this.Id = randStringVape(r)
+	this.Id = int32(r.Int31())
+	if r.Intn(2) == 0 {
+		this.Id *= -1
+	}
 	this.Email = randStringVape(r)
 	if !easy && r.Intn(10) != 0 {
 	}

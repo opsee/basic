@@ -9,7 +9,7 @@ option go_package = "service";
 
 message GetUserRequest {
 	string customer_id = 1;
-	string id = 2;
+	int32 id = 2;
 	string email = 3;
 }
 
