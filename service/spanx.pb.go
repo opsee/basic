@@ -10,7 +10,7 @@ import math "math"
 import _ "github.com/opsee/protobuf/opseeproto"
 import _ "github.com/opsee/protobuf/opseeproto/types"
 import opsee_aws_credentials "github.com/opsee/basic/schema/aws/credentials"
-import opsee1 "github.com/opsee/basic/schema"
+import opsee2 "github.com/opsee/basic/schema"
 
 import github_com_graphql_go_graphql "github.com/graphql-go/graphql"
 
@@ -25,7 +25,7 @@ var _ = fmt.Errorf
 var _ = math.Inf
 
 type PutRoleRequest struct {
-	User        *opsee1.User                 `protobuf:"bytes,1,opt,name=user" json:"user,omitempty"`
+	User        *opsee2.User                 `protobuf:"bytes,1,opt,name=user" json:"user,omitempty"`
 	Credentials *opsee_aws_credentials.Value `protobuf:"bytes,2,opt,name=credentials" json:"credentials,omitempty"`
 }
 
@@ -33,7 +33,7 @@ func (m *PutRoleRequest) Reset()         { *m = PutRoleRequest{} }
 func (m *PutRoleRequest) String() string { return proto.CompactTextString(m) }
 func (*PutRoleRequest) ProtoMessage()    {}
 
-func (m *PutRoleRequest) GetUser() *opsee1.User {
+func (m *PutRoleRequest) GetUser() *opsee2.User {
 	if m != nil {
 		return m.User
 	}
@@ -63,14 +63,14 @@ func (m *PutRoleResponse) GetCredentials() *opsee_aws_credentials.Value {
 }
 
 type GetCredentialsRequest struct {
-	User *opsee1.User `protobuf:"bytes,1,opt,name=user" json:"user,omitempty"`
+	User *opsee2.User `protobuf:"bytes,1,opt,name=user" json:"user,omitempty"`
 }
 
 func (m *GetCredentialsRequest) Reset()         { *m = GetCredentialsRequest{} }
 func (m *GetCredentialsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetCredentialsRequest) ProtoMessage()    {}
 
-func (m *GetCredentialsRequest) GetUser() *opsee1.User {
+func (m *GetCredentialsRequest) GetUser() *opsee2.User {
 	if m != nil {
 		return m.User
 	}
@@ -253,7 +253,7 @@ func init() {
 		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
 			return github_com_graphql_go_graphql.Fields{
 				"user": &github_com_graphql_go_graphql.Field{
-					Type:        opsee1.GraphQLUserType,
+					Type:        opsee2.GraphQLUserType,
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*PutRoleRequest)
@@ -344,7 +344,7 @@ func init() {
 		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
 			return github_com_graphql_go_graphql.Fields{
 				"user": &github_com_graphql_go_graphql.Field{
-					Type:        opsee1.GraphQLUserType,
+					Type:        opsee2.GraphQLUserType,
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*GetCredentialsRequest)
@@ -497,7 +497,7 @@ var _Spanx_serviceDesc = grpc.ServiceDesc{
 func NewPopulatedPutRoleRequest(r randySpanx, easy bool) *PutRoleRequest {
 	this := &PutRoleRequest{}
 	if r.Intn(10) != 0 {
-		this.User = opsee1.NewPopulatedUser(r, easy)
+		this.User = opsee2.NewPopulatedUser(r, easy)
 	}
 	if r.Intn(10) != 0 {
 		this.Credentials = opsee_aws_credentials.NewPopulatedValue(r, easy)
@@ -520,7 +520,7 @@ func NewPopulatedPutRoleResponse(r randySpanx, easy bool) *PutRoleResponse {
 func NewPopulatedGetCredentialsRequest(r randySpanx, easy bool) *GetCredentialsRequest {
 	this := &GetCredentialsRequest{}
 	if r.Intn(10) != 0 {
-		this.User = opsee1.NewPopulatedUser(r, easy)
+		this.User = opsee2.NewPopulatedUser(r, easy)
 	}
 	if !easy && r.Intn(10) != 0 {
 	}

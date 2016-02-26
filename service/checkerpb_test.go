@@ -7,6 +7,7 @@ Package service is a generated protocol buffer package.
 
 It is generated from these files:
 	checker.proto
+	keelhaul.proto
 	spanx.proto
 	vape.proto
 
@@ -17,6 +18,8 @@ It has these top-level messages:
 	ResultsResource
 	TestCheckRequest
 	TestCheckResponse
+	ListBastionsRequest
+	ListBastionsResponse
 	PutRoleRequest
 	PutRoleResponse
 	GetCredentialsRequest
