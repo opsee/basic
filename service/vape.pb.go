@@ -7,8 +7,12 @@ package service
 import proto "github.com/gogo/protobuf/proto"
 import fmt "fmt"
 import math "math"
+import _ "github.com/opsee/protobuf/opseeproto"
 import _ "github.com/opsee/protobuf/opseeproto/types"
 import opsee1 "github.com/opsee/basic/schema"
+
+import github_com_graphql_go_graphql "github.com/graphql-go/graphql"
+import github_com_opsee_protobuf_plugin_graphql_scalars "github.com/opsee/protobuf/plugin/graphql/scalars"
 
 import (
 	context "golang.org/x/net/context"
@@ -224,6 +228,280 @@ func (this *ListUsersResponse) Equal(that interface{}) bool {
 		return false
 	}
 	return true
+}
+
+type GetUserRequestGetter interface {
+	GetGetUserRequest() *GetUserRequest
+}
+
+var GraphQLGetUserRequestType *github_com_graphql_go_graphql.Object
+
+type GetUserResponseGetter interface {
+	GetGetUserResponse() *GetUserResponse
+}
+
+var GraphQLGetUserResponseType *github_com_graphql_go_graphql.Object
+
+type ListUsersRequestGetter interface {
+	GetListUsersRequest() *ListUsersRequest
+}
+
+var GraphQLListUsersRequestType *github_com_graphql_go_graphql.Object
+
+type ListUsersResponseGetter interface {
+	GetListUsersResponse() *ListUsersResponse
+}
+
+var GraphQLListUsersResponseType *github_com_graphql_go_graphql.Object
+
+func init() {
+	GraphQLGetUserRequestType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "serviceGetUserRequest",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"customer_id": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*GetUserRequest)
+						if ok {
+							return obj.CustomerId, nil
+						}
+						inter, ok := p.Source.(GetUserRequestGetter)
+						if ok {
+							face := inter.GetGetUserRequest()
+							if face == nil {
+								return nil, nil
+							}
+							return face.CustomerId, nil
+						}
+						return nil, fmt.Errorf("field customer_id not resolved")
+					},
+				},
+				"id": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.Int,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*GetUserRequest)
+						if ok {
+							return obj.Id, nil
+						}
+						inter, ok := p.Source.(GetUserRequestGetter)
+						if ok {
+							face := inter.GetGetUserRequest()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Id, nil
+						}
+						return nil, fmt.Errorf("field id not resolved")
+					},
+				},
+				"email": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*GetUserRequest)
+						if ok {
+							return obj.Email, nil
+						}
+						inter, ok := p.Source.(GetUserRequestGetter)
+						if ok {
+							face := inter.GetGetUserRequest()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Email, nil
+						}
+						return nil, fmt.Errorf("field email not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLGetUserResponseType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "serviceGetUserResponse",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"user": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_opsee_protobuf_plugin_graphql_scalars.ByteString,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*GetUserResponse)
+						if ok {
+							if obj.User == nil {
+								return nil, nil
+							}
+							return obj.GetUser(), nil
+						}
+						inter, ok := p.Source.(GetUserResponseGetter)
+						if ok {
+							face := inter.GetGetUserResponse()
+							if face == nil {
+								return nil, nil
+							}
+							if face.User == nil {
+								return nil, nil
+							}
+							return face.GetUser(), nil
+						}
+						return nil, fmt.Errorf("field user not resolved")
+					},
+				},
+				"basic_token": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*GetUserResponse)
+						if ok {
+							return obj.BasicToken, nil
+						}
+						inter, ok := p.Source.(GetUserResponseGetter)
+						if ok {
+							face := inter.GetGetUserResponse()
+							if face == nil {
+								return nil, nil
+							}
+							return face.BasicToken, nil
+						}
+						return nil, fmt.Errorf("field basic_token not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLListUsersRequestType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "serviceListUsersRequest",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"page": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.Int,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*ListUsersRequest)
+						if ok {
+							return obj.Page, nil
+						}
+						inter, ok := p.Source.(ListUsersRequestGetter)
+						if ok {
+							face := inter.GetListUsersRequest()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Page, nil
+						}
+						return nil, fmt.Errorf("field page not resolved")
+					},
+				},
+				"per_page": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.Int,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*ListUsersRequest)
+						if ok {
+							return obj.PerPage, nil
+						}
+						inter, ok := p.Source.(ListUsersRequestGetter)
+						if ok {
+							face := inter.GetListUsersRequest()
+							if face == nil {
+								return nil, nil
+							}
+							return face.PerPage, nil
+						}
+						return nil, fmt.Errorf("field per_page not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLListUsersResponseType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "serviceListUsersResponse",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"users": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(github_com_opsee_protobuf_plugin_graphql_scalars.ByteString),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*ListUsersResponse)
+						if ok {
+							return obj.Users, nil
+						}
+						inter, ok := p.Source.(ListUsersResponseGetter)
+						if ok {
+							face := inter.GetListUsersResponse()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Users, nil
+						}
+						return nil, fmt.Errorf("field users not resolved")
+					},
+				},
+				"page": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.Int,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*ListUsersResponse)
+						if ok {
+							return obj.Page, nil
+						}
+						inter, ok := p.Source.(ListUsersResponseGetter)
+						if ok {
+							face := inter.GetListUsersResponse()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Page, nil
+						}
+						return nil, fmt.Errorf("field page not resolved")
+					},
+				},
+				"per_page": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.Int,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*ListUsersResponse)
+						if ok {
+							return obj.PerPage, nil
+						}
+						inter, ok := p.Source.(ListUsersResponseGetter)
+						if ok {
+							face := inter.GetListUsersResponse()
+							if face == nil {
+								return nil, nil
+							}
+							return face.PerPage, nil
+						}
+						return nil, fmt.Errorf("field per_page not resolved")
+					},
+				},
+				"total": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.Int,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*ListUsersResponse)
+						if ok {
+							return obj.Total, nil
+						}
+						inter, ok := p.Source.(ListUsersResponseGetter)
+						if ok {
+							face := inter.GetListUsersResponse()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Total, nil
+						}
+						return nil, fmt.Errorf("field total not resolved")
+					},
+				},
+			}
+		}),
+	})
 }
 
 // Reference imports to suppress errors if they are not otherwise used.

@@ -7,9 +7,13 @@ package service
 import proto "github.com/gogo/protobuf/proto"
 import fmt "fmt"
 import math "math"
+import _ "github.com/opsee/protobuf/opseeproto"
 import _ "github.com/opsee/protobuf/opseeproto/types"
 import opsee_aws_credentials "github.com/opsee/basic/schema/aws/credentials"
 import opsee1 "github.com/opsee/basic/schema"
+
+import github_com_graphql_go_graphql "github.com/graphql-go/graphql"
+import github_com_opsee_protobuf_plugin_graphql_scalars "github.com/opsee/protobuf/plugin/graphql/scalars"
 
 import (
 	context "golang.org/x/net/context"
@@ -217,6 +221,190 @@ func (this *GetCredentialsResponse) Equal(that interface{}) bool {
 		return false
 	}
 	return true
+}
+
+type PutRoleRequestGetter interface {
+	GetPutRoleRequest() *PutRoleRequest
+}
+
+var GraphQLPutRoleRequestType *github_com_graphql_go_graphql.Object
+
+type PutRoleResponseGetter interface {
+	GetPutRoleResponse() *PutRoleResponse
+}
+
+var GraphQLPutRoleResponseType *github_com_graphql_go_graphql.Object
+
+type GetCredentialsRequestGetter interface {
+	GetGetCredentialsRequest() *GetCredentialsRequest
+}
+
+var GraphQLGetCredentialsRequestType *github_com_graphql_go_graphql.Object
+
+type GetCredentialsResponseGetter interface {
+	GetGetCredentialsResponse() *GetCredentialsResponse
+}
+
+var GraphQLGetCredentialsResponseType *github_com_graphql_go_graphql.Object
+
+func init() {
+	GraphQLPutRoleRequestType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "servicePutRoleRequest",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"user": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_opsee_protobuf_plugin_graphql_scalars.ByteString,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*PutRoleRequest)
+						if ok {
+							if obj.User == nil {
+								return nil, nil
+							}
+							return obj.GetUser(), nil
+						}
+						inter, ok := p.Source.(PutRoleRequestGetter)
+						if ok {
+							face := inter.GetPutRoleRequest()
+							if face == nil {
+								return nil, nil
+							}
+							if face.User == nil {
+								return nil, nil
+							}
+							return face.GetUser(), nil
+						}
+						return nil, fmt.Errorf("field user not resolved")
+					},
+				},
+				"credentials": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_opsee_protobuf_plugin_graphql_scalars.ByteString,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*PutRoleRequest)
+						if ok {
+							if obj.Credentials == nil {
+								return nil, nil
+							}
+							return obj.GetCredentials(), nil
+						}
+						inter, ok := p.Source.(PutRoleRequestGetter)
+						if ok {
+							face := inter.GetPutRoleRequest()
+							if face == nil {
+								return nil, nil
+							}
+							if face.Credentials == nil {
+								return nil, nil
+							}
+							return face.GetCredentials(), nil
+						}
+						return nil, fmt.Errorf("field credentials not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLPutRoleResponseType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "servicePutRoleResponse",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"credentials": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_opsee_protobuf_plugin_graphql_scalars.ByteString,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*PutRoleResponse)
+						if ok {
+							if obj.Credentials == nil {
+								return nil, nil
+							}
+							return obj.GetCredentials(), nil
+						}
+						inter, ok := p.Source.(PutRoleResponseGetter)
+						if ok {
+							face := inter.GetPutRoleResponse()
+							if face == nil {
+								return nil, nil
+							}
+							if face.Credentials == nil {
+								return nil, nil
+							}
+							return face.GetCredentials(), nil
+						}
+						return nil, fmt.Errorf("field credentials not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLGetCredentialsRequestType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "serviceGetCredentialsRequest",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"user": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_opsee_protobuf_plugin_graphql_scalars.ByteString,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*GetCredentialsRequest)
+						if ok {
+							if obj.User == nil {
+								return nil, nil
+							}
+							return obj.GetUser(), nil
+						}
+						inter, ok := p.Source.(GetCredentialsRequestGetter)
+						if ok {
+							face := inter.GetGetCredentialsRequest()
+							if face == nil {
+								return nil, nil
+							}
+							if face.User == nil {
+								return nil, nil
+							}
+							return face.GetUser(), nil
+						}
+						return nil, fmt.Errorf("field user not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLGetCredentialsResponseType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "serviceGetCredentialsResponse",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"credentials": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_opsee_protobuf_plugin_graphql_scalars.ByteString,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*GetCredentialsResponse)
+						if ok {
+							if obj.Credentials == nil {
+								return nil, nil
+							}
+							return obj.GetCredentials(), nil
+						}
+						inter, ok := p.Source.(GetCredentialsResponseGetter)
+						if ok {
+							face := inter.GetGetCredentialsResponse()
+							if face == nil {
+								return nil, nil
+							}
+							if face.Credentials == nil {
+								return nil, nil
+							}
+							return face.GetCredentials(), nil
+						}
+						return nil, fmt.Errorf("field credentials not resolved")
+					},
+				},
+			}
+		}),
+	})
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
