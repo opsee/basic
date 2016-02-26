@@ -748,7 +748,7 @@ func init() {
 					},
 				},
 				"created_at": &github_com_graphql_go_graphql.Field{
-					Type:        github_com_opsee_protobuf_plugin_graphql_scalars.ByteString,
+					Type:        github_com_opsee_protobuf_plugin_graphql_scalars.Timestamp,
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*Group)
@@ -773,7 +773,7 @@ func init() {
 					},
 				},
 				"updated_at": &github_com_graphql_go_graphql.Field{
-					Type:        github_com_opsee_protobuf_plugin_graphql_scalars.ByteString,
+					Type:        github_com_opsee_protobuf_plugin_graphql_scalars.Timestamp,
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*Group)
@@ -893,7 +893,7 @@ func init() {
 					},
 				},
 				"created_at": &github_com_graphql_go_graphql.Field{
-					Type:        github_com_opsee_protobuf_plugin_graphql_scalars.ByteString,
+					Type:        github_com_opsee_protobuf_plugin_graphql_scalars.Timestamp,
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*Instance)
@@ -918,7 +918,7 @@ func init() {
 					},
 				},
 				"updated_at": &github_com_graphql_go_graphql.Field{
-					Type:        github_com_opsee_protobuf_plugin_graphql_scalars.ByteString,
+					Type:        github_com_opsee_protobuf_plugin_graphql_scalars.Timestamp,
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*Instance)

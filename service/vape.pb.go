@@ -12,7 +12,6 @@ import _ "github.com/opsee/protobuf/opseeproto/types"
 import opsee1 "github.com/opsee/basic/schema"
 
 import github_com_graphql_go_graphql "github.com/graphql-go/graphql"
-import github_com_opsee_protobuf_plugin_graphql_scalars "github.com/opsee/protobuf/plugin/graphql/scalars"
 
 import (
 	context "golang.org/x/net/context"
@@ -326,7 +325,7 @@ func init() {
 		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
 			return github_com_graphql_go_graphql.Fields{
 				"user": &github_com_graphql_go_graphql.Field{
-					Type:        github_com_opsee_protobuf_plugin_graphql_scalars.ByteString,
+					Type:        opsee1.GraphQLUserType,
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*GetUserResponse)
@@ -424,7 +423,7 @@ func init() {
 		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
 			return github_com_graphql_go_graphql.Fields{
 				"users": &github_com_graphql_go_graphql.Field{
-					Type:        github_com_graphql_go_graphql.NewList(github_com_opsee_protobuf_plugin_graphql_scalars.ByteString),
+					Type:        github_com_graphql_go_graphql.NewList(opsee1.GraphQLUserType),
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*ListUsersResponse)
