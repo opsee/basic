@@ -9,7 +9,7 @@ import fmt "fmt"
 import math "math"
 import _ "github.com/opsee/protobuf/opseeproto"
 import _ "github.com/opsee/protobuf/opseeproto/types"
-import opsee1 "github.com/opsee/basic/schema"
+import opsee2 "github.com/opsee/basic/schema"
 
 import github_com_graphql_go_graphql "github.com/graphql-go/graphql"
 
@@ -34,7 +34,7 @@ func (m *GetUserRequest) String() string { return proto.CompactTextString(m) }
 func (*GetUserRequest) ProtoMessage()    {}
 
 type GetUserResponse struct {
-	User       *opsee1.User `protobuf:"bytes,1,opt,name=user" json:"user,omitempty"`
+	User       *opsee2.User `protobuf:"bytes,1,opt,name=user" json:"user,omitempty"`
 	BasicToken string       `protobuf:"bytes,2,opt,name=basic_token,proto3" json:"basic_token,omitempty"`
 }
 
@@ -42,7 +42,7 @@ func (m *GetUserResponse) Reset()         { *m = GetUserResponse{} }
 func (m *GetUserResponse) String() string { return proto.CompactTextString(m) }
 func (*GetUserResponse) ProtoMessage()    {}
 
-func (m *GetUserResponse) GetUser() *opsee1.User {
+func (m *GetUserResponse) GetUser() *opsee2.User {
 	if m != nil {
 		return m.User
 	}
@@ -59,7 +59,7 @@ func (m *ListUsersRequest) String() string { return proto.CompactTextString(m) }
 func (*ListUsersRequest) ProtoMessage()    {}
 
 type ListUsersResponse struct {
-	Users   []*opsee1.User `protobuf:"bytes,1,rep,name=users" json:"users,omitempty"`
+	Users   []*opsee2.User `protobuf:"bytes,1,rep,name=users" json:"users,omitempty"`
 	Page    int32          `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
 	PerPage int32          `protobuf:"varint,3,opt,name=per_page,proto3" json:"per_page,omitempty"`
 	Total   int32          `protobuf:"varint,4,opt,name=total,proto3" json:"total,omitempty"`
@@ -69,7 +69,7 @@ func (m *ListUsersResponse) Reset()         { *m = ListUsersResponse{} }
 func (m *ListUsersResponse) String() string { return proto.CompactTextString(m) }
 func (*ListUsersResponse) ProtoMessage()    {}
 
-func (m *ListUsersResponse) GetUsers() []*opsee1.User {
+func (m *ListUsersResponse) GetUsers() []*opsee2.User {
 	if m != nil {
 		return m.Users
 	}
@@ -325,7 +325,7 @@ func init() {
 		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
 			return github_com_graphql_go_graphql.Fields{
 				"user": &github_com_graphql_go_graphql.Field{
-					Type:        opsee1.GraphQLUserType,
+					Type:        opsee2.GraphQLUserType,
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*GetUserResponse)
@@ -423,7 +423,7 @@ func init() {
 		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
 			return github_com_graphql_go_graphql.Fields{
 				"users": &github_com_graphql_go_graphql.Field{
-					Type:        github_com_graphql_go_graphql.NewList(opsee1.GraphQLUserType),
+					Type:        github_com_graphql_go_graphql.NewList(opsee2.GraphQLUserType),
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*ListUsersResponse)
@@ -607,7 +607,7 @@ func NewPopulatedGetUserRequest(r randyVape, easy bool) *GetUserRequest {
 func NewPopulatedGetUserResponse(r randyVape, easy bool) *GetUserResponse {
 	this := &GetUserResponse{}
 	if r.Intn(10) != 0 {
-		this.User = opsee1.NewPopulatedUser(r, easy)
+		this.User = opsee2.NewPopulatedUser(r, easy)
 	}
 	this.BasicToken = randStringVape(r)
 	if !easy && r.Intn(10) != 0 {
@@ -634,9 +634,9 @@ func NewPopulatedListUsersResponse(r randyVape, easy bool) *ListUsersResponse {
 	this := &ListUsersResponse{}
 	if r.Intn(10) != 0 {
 		v1 := r.Intn(5)
-		this.Users = make([]*opsee1.User, v1)
+		this.Users = make([]*opsee2.User, v1)
 		for i := 0; i < v1; i++ {
-			this.Users[i] = opsee1.NewPopulatedUser(r, easy)
+			this.Users[i] = opsee2.NewPopulatedUser(r, easy)
 		}
 	}
 	this.Page = int32(r.Int31())

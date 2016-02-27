@@ -7,12 +7,14 @@ Package schema is a generated protocol buffer package.
 
 It is generated from these files:
 	aws_data.proto
+	bastion.proto
 	checks.proto
 	user.proto
 
 It has these top-level messages:
 	Group
 	Instance
+	Bastion
 	Target
 	Check
 	Assertion
