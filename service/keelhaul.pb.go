@@ -10,7 +10,7 @@ import math "math"
 import _ "github.com/opsee/protobuf/opseeproto"
 import _ "github.com/opsee/protobuf/opseeproto/types"
 import opsee1 "github.com/opsee/basic/schema"
-import _ "github.com/opsee/basic/schema"
+import opsee2 "github.com/opsee/basic/schema"
 import opsee3 "github.com/opsee/basic/schema"
 import _ "github.com/opsee/basic/schema/aws/ec2"
 
@@ -50,14 +50,22 @@ func (m *ListBastionStatesResponse) GetBastionStates() []*opsee1.BastionState {
 }
 
 type ScanVpcsRequest struct {
-	AccessKey string `protobuf:"bytes,1,opt,name=access_key,proto3" json:"access_key,omitempty"`
-	SecretKey string `protobuf:"bytes,2,opt,name=secret_key,proto3" json:"secret_key,omitempty"`
-	Region    string `protobuf:"bytes,3,opt,name=region,proto3" json:"region,omitempty"`
+	User      *opsee2.User `protobuf:"bytes,1,opt,name=user" json:"user,omitempty"`
+	AccessKey string       `protobuf:"bytes,2,opt,name=access_key,proto3" json:"access_key,omitempty"`
+	SecretKey string       `protobuf:"bytes,3,opt,name=secret_key,proto3" json:"secret_key,omitempty"`
+	Region    string       `protobuf:"bytes,4,opt,name=region,proto3" json:"region,omitempty"`
 }
 
 func (m *ScanVpcsRequest) Reset()         { *m = ScanVpcsRequest{} }
 func (m *ScanVpcsRequest) String() string { return proto.CompactTextString(m) }
 func (*ScanVpcsRequest) ProtoMessage()    {}
+
+func (m *ScanVpcsRequest) GetUser() *opsee2.User {
+	if m != nil {
+		return m.User
+	}
+	return nil
+}
 
 type ScanVpcsResponse struct {
 	Region *opsee3.Region `protobuf:"bytes,1,opt,name=region" json:"region,omitempty"`
@@ -75,17 +83,25 @@ func (m *ScanVpcsResponse) GetRegion() *opsee3.Region {
 }
 
 type LaunchStackRequest struct {
-	AccessKey    string `protobuf:"bytes,1,opt,name=access_key,proto3" json:"access_key,omitempty"`
-	SecretKey    string `protobuf:"bytes,2,opt,name=secret_key,proto3" json:"secret_key,omitempty"`
-	Region       string `protobuf:"bytes,3,opt,name=region,proto3" json:"region,omitempty"`
-	VpcId        string `protobuf:"bytes,4,opt,name=vpc_id,proto3" json:"vpc_id,omitempty"`
-	SubnetId     string `protobuf:"bytes,5,opt,name=subnet_id,proto3" json:"subnet_id,omitempty"`
-	InstanceSize string `protobuf:"bytes,6,opt,name=instance_size,proto3" json:"instance_size,omitempty"`
+	User         *opsee2.User `protobuf:"bytes,1,opt,name=user" json:"user,omitempty"`
+	AccessKey    string       `protobuf:"bytes,2,opt,name=access_key,proto3" json:"access_key,omitempty"`
+	SecretKey    string       `protobuf:"bytes,3,opt,name=secret_key,proto3" json:"secret_key,omitempty"`
+	Region       string       `protobuf:"bytes,4,opt,name=region,proto3" json:"region,omitempty"`
+	VpcId        string       `protobuf:"bytes,5,opt,name=vpc_id,proto3" json:"vpc_id,omitempty"`
+	SubnetId     string       `protobuf:"bytes,6,opt,name=subnet_id,proto3" json:"subnet_id,omitempty"`
+	InstanceSize string       `protobuf:"bytes,7,opt,name=instance_size,proto3" json:"instance_size,omitempty"`
 }
 
 func (m *LaunchStackRequest) Reset()         { *m = LaunchStackRequest{} }
 func (m *LaunchStackRequest) String() string { return proto.CompactTextString(m) }
 func (*LaunchStackRequest) ProtoMessage()    {}
+
+func (m *LaunchStackRequest) GetUser() *opsee2.User {
+	if m != nil {
+		return m.User
+	}
+	return nil
+}
 
 type LaunchStackResponse struct {
 	StackId string `protobuf:"bytes,1,opt,name=stack_id,proto3" json:"stack_id,omitempty"`
@@ -217,6 +233,9 @@ func (this *ScanVpcsRequest) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
+	if !this.User.Equal(that1.User) {
+		return false
+	}
 	if this.AccessKey != that1.AccessKey {
 		return false
 	}
@@ -281,6 +300,9 @@ func (this *LaunchStackRequest) Equal(that interface{}) bool {
 		}
 		return false
 	} else if this == nil {
+		return false
+	}
+	if !this.User.Equal(that1.User) {
 		return false
 	}
 	if this.AccessKey != that1.AccessKey {
@@ -505,6 +527,31 @@ func init() {
 		Description: "",
 		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
 			return github_com_graphql_go_graphql.Fields{
+				"user": &github_com_graphql_go_graphql.Field{
+					Type:        opsee2.GraphQLUserType,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*ScanVpcsRequest)
+						if ok {
+							if obj.User == nil {
+								return nil, nil
+							}
+							return obj.GetUser(), nil
+						}
+						inter, ok := p.Source.(ScanVpcsRequestGetter)
+						if ok {
+							face := inter.GetScanVpcsRequest()
+							if face == nil {
+								return nil, nil
+							}
+							if face.User == nil {
+								return nil, nil
+							}
+							return face.GetUser(), nil
+						}
+						return nil, fmt.Errorf("field user not resolved")
+					},
+				},
 				"access_key": &github_com_graphql_go_graphql.Field{
 					Type:        github_com_graphql_go_graphql.String,
 					Description: "",
@@ -603,6 +650,31 @@ func init() {
 		Description: "",
 		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
 			return github_com_graphql_go_graphql.Fields{
+				"user": &github_com_graphql_go_graphql.Field{
+					Type:        opsee2.GraphQLUserType,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*LaunchStackRequest)
+						if ok {
+							if obj.User == nil {
+								return nil, nil
+							}
+							return obj.GetUser(), nil
+						}
+						inter, ok := p.Source.(LaunchStackRequestGetter)
+						if ok {
+							face := inter.GetLaunchStackRequest()
+							if face == nil {
+								return nil, nil
+							}
+							if face.User == nil {
+								return nil, nil
+							}
+							return face.GetUser(), nil
+						}
+						return nil, fmt.Errorf("field user not resolved")
+					},
+				},
 				"access_key": &github_com_graphql_go_graphql.Field{
 					Type:        github_com_graphql_go_graphql.String,
 					Description: "",
@@ -992,6 +1064,9 @@ func NewPopulatedListBastionStatesResponse(r randyKeelhaul, easy bool) *ListBast
 
 func NewPopulatedScanVpcsRequest(r randyKeelhaul, easy bool) *ScanVpcsRequest {
 	this := &ScanVpcsRequest{}
+	if r.Intn(10) != 0 {
+		this.User = opsee2.NewPopulatedUser(r, easy)
+	}
 	this.AccessKey = randStringKeelhaul(r)
 	this.SecretKey = randStringKeelhaul(r)
 	this.Region = randStringKeelhaul(r)
@@ -1012,6 +1087,9 @@ func NewPopulatedScanVpcsResponse(r randyKeelhaul, easy bool) *ScanVpcsResponse 
 
 func NewPopulatedLaunchStackRequest(r randyKeelhaul, easy bool) *LaunchStackRequest {
 	this := &LaunchStackRequest{}
+	if r.Intn(10) != 0 {
+		this.User = opsee2.NewPopulatedUser(r, easy)
+	}
 	this.AccessKey = randStringKeelhaul(r)
 	this.SecretKey = randStringKeelhaul(r)
 	this.Region = randStringKeelhaul(r)

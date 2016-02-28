@@ -21,9 +21,10 @@ message ListBastionStatesResponse {
 }
 
 message ScanVpcsRequest {
-	string access_key = 1;
-	string secret_key = 2;
-	string region = 3;
+  User user = 1;
+	string access_key = 2;
+	string secret_key = 3;
+	string region = 4;
 }
 
 message ScanVpcsResponse {
@@ -31,12 +32,13 @@ message ScanVpcsResponse {
 }
 
 message LaunchStackRequest {
-	string access_key = 1;
-	string secret_key = 2;
-	string region = 3;
-	string vpc_id = 4;
-	string subnet_id = 5;
-	string instance_size = 6;
+  User user = 1;
+	string access_key = 2;
+	string secret_key = 3;
+	string region = 4;
+	string vpc_id = 5;
+	string subnet_id = 6;
+	string instance_size = 7;
 }
 
 message LaunchStackResponse {
