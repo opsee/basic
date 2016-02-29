@@ -30,6 +30,7 @@ It has these top-level messages:
 	BastionState
 	Stack
 	User
+	Customer
 */
 package schema
 

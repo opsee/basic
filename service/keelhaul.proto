@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "github.com/opsee/protobuf/opseeproto/opsee.proto";
 import "github.com/opsee/protobuf/opseeproto/types/timestamp.proto";
-import "github.com/opsee/basic/schema/stack.proto";
+import "stack.proto";
 import "github.com/opsee/basic/schema/user.proto";
 import "github.com/opsee/basic/schema/aws_data.proto";
 import "github.com/opsee/basic/schema/aws/ec2/types.proto";
