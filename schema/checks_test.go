@@ -1,11 +1,21 @@
 package schema
 
 import (
+	"github.com/gogo/protobuf/jsonpb"
 	"github.com/graphql-go/graphql"
 	"math/rand"
 	"testing"
 	"time"
 )
+
+func TestUnmarshalCheck(t *testing.T) {
+	checkString := `{"id":"www.reddit.com","interval":0,"target":{"name":"www.reddit.com","type":"url","id":"www.reddit.com","address":"www.reddit.com"},"name":"www.reddit.com","http_check":{"name":"","path":"/r/pepe","protocol":"https","port":443,"verb":"GET","body":""}}`
+	check := &Check{}
+	err := jsonpb.UnmarshalString(checkString, check)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
 
 func TestCheckschema(t *testing.T) {
 	popr := rand.New(rand.NewSource(time.Now().UnixNano()))
