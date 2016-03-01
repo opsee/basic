@@ -32,7 +32,7 @@ func RequestDecodeFunc(requestKey int, requestType interface{}) DecodeFunc {
 		}
 
 		if err != nil {
-			return ctx, http.StatusInternalServerError, err
+			return ctx, http.StatusBadRequest, err
 		}
 
 		request, ok := requestInterface.(RequestValidator)
