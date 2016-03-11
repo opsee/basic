@@ -219,10 +219,12 @@ func (m *HttpCheck) GetHeaders() []*Header {
 }
 
 type CloudWatchCheck struct {
-	Target         *Target  `protobuf:"bytes,1,opt,name=target" json:"target,omitempty"`
-	MetricName     string   `protobuf:"bytes,2,opt,name=metric_name,proto3" json:"metric_name,omitempty"`
-	Function       string   `protobuf:"bytes,3,opt,name=function,proto3" json:"function,omitempty"`
-	FunctionParams []string `protobuf:"bytes,4,rep,name=function_params" json:"function_params,omitempty"`
+	// In the case of RDS, id is db instance identifier, name is maybe something
+	// we can let them give in UI?
+	Target *Target `protobuf:"bytes,1,opt,name=target" json:"target,omitempty"`
+	// The AWS CloudWatch metric namespace, e.g. AWS/RDS
+	Namespace  string `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	MetricName string `protobuf:"bytes,3,opt,name=metric_name,proto3" json:"metric_name,omitempty"`
 }
 
 func (m *CloudWatchCheck) Reset()         { *m = CloudWatchCheck{} }
@@ -232,6 +234,23 @@ func (*CloudWatchCheck) ProtoMessage()    {}
 func (m *CloudWatchCheck) GetTarget() *Target {
 	if m != nil {
 		return m.Target
+	}
+	return nil
+}
+
+type CloudWatchResponse struct {
+	// The AWS CloudWatch metric namespace, e.g. AWS/RDS
+	Namespace string    `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Metrics   []*Metric `protobuf:"bytes,2,rep,name=metrics" json:"metrics,omitempty"`
+}
+
+func (m *CloudWatchResponse) Reset()         { *m = CloudWatchResponse{} }
+func (m *CloudWatchResponse) String() string { return proto.CompactTextString(m) }
+func (*CloudWatchResponse) ProtoMessage()    {}
+
+func (m *CloudWatchResponse) GetMetrics() []*Metric {
+	if m != nil {
+		return m.Metrics
 	}
 	return nil
 }
@@ -287,6 +306,7 @@ type CheckResponse struct {
 	Passing  bool              `protobuf:"varint,4,opt,name=passing,proto3" json:"passing,omitempty"`
 	// Types that are valid to be assigned to Reply:
 	//	*CheckResponse_HttpResponse
+	//	*CheckResponse_CloudwatchResponse
 	Reply isCheckResponse_Reply `protobuf_oneof:"reply"`
 }
 
@@ -302,8 +322,12 @@ type isCheckResponse_Reply interface {
 type CheckResponse_HttpResponse struct {
 	HttpResponse *HttpResponse `protobuf:"bytes,101,opt,name=http_response,oneof"`
 }
+type CheckResponse_CloudwatchResponse struct {
+	CloudwatchResponse *CloudWatchResponse `protobuf:"bytes,102,opt,name=cloudwatch_response,oneof"`
+}
 
-func (*CheckResponse_HttpResponse) isCheckResponse_Reply() {}
+func (*CheckResponse_HttpResponse) isCheckResponse_Reply()       {}
+func (*CheckResponse_CloudwatchResponse) isCheckResponse_Reply() {}
 
 func (m *CheckResponse) GetReply() isCheckResponse_Reply {
 	if m != nil {
@@ -333,10 +357,18 @@ func (m *CheckResponse) GetHttpResponse() *HttpResponse {
 	return nil
 }
 
+func (m *CheckResponse) GetCloudwatchResponse() *CloudWatchResponse {
+	if x, ok := m.GetReply().(*CheckResponse_CloudwatchResponse); ok {
+		return x.CloudwatchResponse
+	}
+	return nil
+}
+
 // XXX_OneofFuncs is for the internal use of the proto package.
 func (*CheckResponse) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), []interface{}) {
 	return _CheckResponse_OneofMarshaler, _CheckResponse_OneofUnmarshaler, []interface{}{
 		(*CheckResponse_HttpResponse)(nil),
+		(*CheckResponse_CloudwatchResponse)(nil),
 	}
 }
 
@@ -347,6 +379,11 @@ func _CheckResponse_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
 	case *CheckResponse_HttpResponse:
 		_ = b.EncodeVarint(101<<3 | proto.WireBytes)
 		if err := b.EncodeMessage(x.HttpResponse); err != nil {
+			return err
+		}
+	case *CheckResponse_CloudwatchResponse:
+		_ = b.EncodeVarint(102<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.CloudwatchResponse); err != nil {
 			return err
 		}
 	case nil:
@@ -366,6 +403,14 @@ func _CheckResponse_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.
 		msg := new(HttpResponse)
 		err := b.DecodeMessage(msg)
 		m.Reply = &CheckResponse_HttpResponse{msg}
+		return true, err
+	case 102: // reply.cloudwatch_response
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(CloudWatchResponse)
+		err := b.DecodeMessage(msg)
+		m.Reply = &CheckResponse_CloudwatchResponse{msg}
 		return true, err
 	default:
 		return false, nil
@@ -415,6 +460,7 @@ func init() {
 	proto.RegisterType((*Header)(nil), "opsee.Header")
 	proto.RegisterType((*HttpCheck)(nil), "opsee.HttpCheck")
 	proto.RegisterType((*CloudWatchCheck)(nil), "opsee.CloudWatchCheck")
+	proto.RegisterType((*CloudWatchResponse)(nil), "opsee.CloudWatchResponse")
 	proto.RegisterType((*Metric)(nil), "opsee.Metric")
 	proto.RegisterType((*HttpResponse)(nil), "opsee.HttpResponse")
 	proto.RegisterType((*CheckResponse)(nil), "opsee.CheckResponse")
@@ -747,17 +793,47 @@ func (this *CloudWatchCheck) Equal(that interface{}) bool {
 	if !this.Target.Equal(that1.Target) {
 		return false
 	}
+	if this.Namespace != that1.Namespace {
+		return false
+	}
 	if this.MetricName != that1.MetricName {
 		return false
 	}
-	if this.Function != that1.Function {
+	return true
+}
+func (this *CloudWatchResponse) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
 		return false
 	}
-	if len(this.FunctionParams) != len(that1.FunctionParams) {
+
+	that1, ok := that.(*CloudWatchResponse)
+	if !ok {
+		that2, ok := that.(CloudWatchResponse)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
 		return false
 	}
-	for i := range this.FunctionParams {
-		if this.FunctionParams[i] != that1.FunctionParams[i] {
+	if this.Namespace != that1.Namespace {
+		return false
+	}
+	if len(this.Metrics) != len(that1.Metrics) {
+		return false
+	}
+	for i := range this.Metrics {
+		if !this.Metrics[i].Equal(that1.Metrics[i]) {
 			return false
 		}
 	}
@@ -937,6 +1013,36 @@ func (this *CheckResponse_HttpResponse) Equal(that interface{}) bool {
 	}
 	return true
 }
+func (this *CheckResponse_CloudwatchResponse) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*CheckResponse_CloudwatchResponse)
+	if !ok {
+		that2, ok := that.(CheckResponse_CloudwatchResponse)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if !this.CloudwatchResponse.Equal(that1.CloudwatchResponse) {
+		return false
+	}
+	return true
+}
 func (this *CheckResult) Equal(that interface{}) bool {
 	if that == nil {
 		if this == nil {
@@ -1031,6 +1137,12 @@ type CloudWatchCheckGetter interface {
 
 var GraphQLCloudWatchCheckType *github_com_graphql_go_graphql.Object
 
+type CloudWatchResponseGetter interface {
+	GetCloudWatchResponse() *CloudWatchResponse
+}
+
+var GraphQLCloudWatchResponseType *github_com_graphql_go_graphql.Object
+
 type MetricGetter interface {
 	GetMetric() *Metric
 }
@@ -1064,6 +1176,9 @@ func (g *Check_CloudwatchCheck) GetCloudWatchCheck() *CloudWatchCheck {
 }
 func (g *CheckResponse_HttpResponse) GetHttpResponse() *HttpResponse {
 	return g.HttpResponse
+}
+func (g *CheckResponse_CloudwatchResponse) GetCloudWatchResponse() *CloudWatchResponse {
+	return g.CloudwatchResponse
 }
 
 func init() {
@@ -1618,7 +1733,7 @@ func init() {
 			return github_com_graphql_go_graphql.Fields{
 				"target": &github_com_graphql_go_graphql.Field{
 					Type:        GraphQLTargetType,
-					Description: "",
+					Description: "In the case of RDS, id is db instance identifier, name is maybe something\n we can let them give in UI?",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*CloudWatchCheck)
 						if ok {
@@ -1641,6 +1756,25 @@ func init() {
 						return nil, fmt.Errorf("field target not resolved")
 					},
 				},
+				"namespace": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "The AWS CloudWatch metric namespace, e.g. AWS/RDS",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*CloudWatchCheck)
+						if ok {
+							return obj.Namespace, nil
+						}
+						inter, ok := p.Source.(CloudWatchCheckGetter)
+						if ok {
+							face := inter.GetCloudWatchCheck()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Namespace, nil
+						}
+						return nil, fmt.Errorf("field namespace not resolved")
+					},
+				},
 				"metric_name": &github_com_graphql_go_graphql.Field{
 					Type:        github_com_graphql_go_graphql.String,
 					Description: "",
@@ -1660,42 +1794,50 @@ func init() {
 						return nil, fmt.Errorf("field metric_name not resolved")
 					},
 				},
-				"function": &github_com_graphql_go_graphql.Field{
+			}
+		}),
+	})
+	GraphQLCloudWatchResponseType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "schemaCloudWatchResponse",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"namespace": &github_com_graphql_go_graphql.Field{
 					Type:        github_com_graphql_go_graphql.String,
-					Description: "",
+					Description: "The AWS CloudWatch metric namespace, e.g. AWS/RDS",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
-						obj, ok := p.Source.(*CloudWatchCheck)
+						obj, ok := p.Source.(*CloudWatchResponse)
 						if ok {
-							return obj.Function, nil
+							return obj.Namespace, nil
 						}
-						inter, ok := p.Source.(CloudWatchCheckGetter)
+						inter, ok := p.Source.(CloudWatchResponseGetter)
 						if ok {
-							face := inter.GetCloudWatchCheck()
+							face := inter.GetCloudWatchResponse()
 							if face == nil {
 								return nil, nil
 							}
-							return face.Function, nil
+							return face.Namespace, nil
 						}
-						return nil, fmt.Errorf("field function not resolved")
+						return nil, fmt.Errorf("field namespace not resolved")
 					},
 				},
-				"function_params": &github_com_graphql_go_graphql.Field{
-					Type:        github_com_graphql_go_graphql.NewList(github_com_graphql_go_graphql.String),
+				"metrics": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLMetricType),
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
-						obj, ok := p.Source.(*CloudWatchCheck)
+						obj, ok := p.Source.(*CloudWatchResponse)
 						if ok {
-							return obj.FunctionParams, nil
+							return obj.Metrics, nil
 						}
-						inter, ok := p.Source.(CloudWatchCheckGetter)
+						inter, ok := p.Source.(CloudWatchResponseGetter)
 						if ok {
-							face := inter.GetCloudWatchCheck()
+							face := inter.GetCloudWatchResponse()
 							if face == nil {
 								return nil, nil
 							}
-							return face.FunctionParams, nil
+							return face.Metrics, nil
 						}
-						return nil, fmt.Errorf("field function_params not resolved")
+						return nil, fmt.Errorf("field metrics not resolved")
 					},
 				},
 			}
@@ -2195,11 +2337,14 @@ func init() {
 		Description: "",
 		Types: []*github_com_graphql_go_graphql.Object{
 			GraphQLHttpResponseType,
+			GraphQLCloudWatchResponseType,
 		},
 		ResolveType: func(value interface{}, info github_com_graphql_go_graphql.ResolveInfo) *github_com_graphql_go_graphql.Object {
 			switch value.(type) {
 			case *CheckResponse_HttpResponse:
 				return GraphQLHttpResponseType
+			case *CheckResponse_CloudwatchResponse:
+				return GraphQLCloudWatchResponseType
 			}
 			return nil
 		},
@@ -2321,12 +2466,22 @@ func NewPopulatedCloudWatchCheck(r randyChecks, easy bool) *CloudWatchCheck {
 	if r.Intn(10) != 0 {
 		this.Target = NewPopulatedTarget(r, easy)
 	}
+	this.Namespace = randStringChecks(r)
 	this.MetricName = randStringChecks(r)
-	this.Function = randStringChecks(r)
-	v5 := r.Intn(10)
-	this.FunctionParams = make([]string, v5)
-	for i := 0; i < v5; i++ {
-		this.FunctionParams[i] = randStringChecks(r)
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
+func NewPopulatedCloudWatchResponse(r randyChecks, easy bool) *CloudWatchResponse {
+	this := &CloudWatchResponse{}
+	this.Namespace = randStringChecks(r)
+	if r.Intn(10) != 0 {
+		v5 := r.Intn(5)
+		this.Metrics = make([]*Metric, v5)
+		for i := 0; i < v5; i++ {
+			this.Metrics[i] = NewPopulatedMetric(r, easy)
+		}
 	}
 	if !easy && r.Intn(10) != 0 {
 	}
@@ -2390,10 +2545,12 @@ func NewPopulatedCheckResponse(r randyChecks, easy bool) *CheckResponse {
 	}
 	this.Error = randStringChecks(r)
 	this.Passing = bool(bool(r.Intn(2) == 0))
-	oneofNumber_Reply := []int32{101}[r.Intn(1)]
+	oneofNumber_Reply := []int32{101, 102}[r.Intn(2)]
 	switch oneofNumber_Reply {
 	case 101:
 		this.Reply = NewPopulatedCheckResponse_HttpResponse(r, easy)
+	case 102:
+		this.Reply = NewPopulatedCheckResponse_CloudwatchResponse(r, easy)
 	}
 	if !easy && r.Intn(10) != 0 {
 	}
@@ -2403,6 +2560,11 @@ func NewPopulatedCheckResponse(r randyChecks, easy bool) *CheckResponse {
 func NewPopulatedCheckResponse_HttpResponse(r randyChecks, easy bool) *CheckResponse_HttpResponse {
 	this := &CheckResponse_HttpResponse{}
 	this.HttpResponse = NewPopulatedHttpResponse(r, easy)
+	return this
+}
+func NewPopulatedCheckResponse_CloudwatchResponse(r randyChecks, easy bool) *CheckResponse_CloudwatchResponse {
+	this := &CheckResponse_CloudwatchResponse{}
+	this.CloudwatchResponse = NewPopulatedCloudWatchResponse(r, easy)
 	return this
 }
 func NewPopulatedCheckResult(r randyChecks, easy bool) *CheckResult {

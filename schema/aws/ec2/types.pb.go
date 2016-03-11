@@ -1106,10 +1106,13 @@ func (m *Tag) GetValue() string {
 }
 
 type UserIdGroupPair struct {
-	GroupId          *string `protobuf:"bytes,2,opt,name=GroupId" json:"GroupId,omitempty"`
-	GroupName        *string `protobuf:"bytes,3,opt,name=GroupName" json:"GroupName,omitempty"`
-	UserId           *string `protobuf:"bytes,4,opt,name=UserId" json:"UserId,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	GroupId                *string `protobuf:"bytes,2,opt,name=GroupId" json:"GroupId,omitempty"`
+	GroupName              *string `protobuf:"bytes,3,opt,name=GroupName" json:"GroupName,omitempty"`
+	PeeringStatus          *string `protobuf:"bytes,4,opt,name=PeeringStatus" json:"PeeringStatus,omitempty"`
+	UserId                 *string `protobuf:"bytes,5,opt,name=UserId" json:"UserId,omitempty"`
+	VpcId                  *string `protobuf:"bytes,6,opt,name=VpcId" json:"VpcId,omitempty"`
+	VpcPeeringConnectionId *string `protobuf:"bytes,7,opt,name=VpcPeeringConnectionId" json:"VpcPeeringConnectionId,omitempty"`
+	XXX_unrecognized       []byte  `json:"-"`
 }
 
 func (m *UserIdGroupPair) Reset()         { *m = UserIdGroupPair{} }
@@ -1130,9 +1133,30 @@ func (m *UserIdGroupPair) GetGroupName() string {
 	return ""
 }
 
+func (m *UserIdGroupPair) GetPeeringStatus() string {
+	if m != nil && m.PeeringStatus != nil {
+		return *m.PeeringStatus
+	}
+	return ""
+}
+
 func (m *UserIdGroupPair) GetUserId() string {
 	if m != nil && m.UserId != nil {
 		return *m.UserId
+	}
+	return ""
+}
+
+func (m *UserIdGroupPair) GetVpcId() string {
+	if m != nil && m.VpcId != nil {
+		return *m.VpcId
+	}
+	return ""
+}
+
+func (m *UserIdGroupPair) GetVpcPeeringConnectionId() string {
+	if m != nil && m.VpcPeeringConnectionId != nil {
+		return *m.VpcPeeringConnectionId
 	}
 	return ""
 }
@@ -2808,6 +2832,15 @@ func (this *UserIdGroupPair) Equal(that interface{}) bool {
 	} else if that1.GroupName != nil {
 		return false
 	}
+	if this.PeeringStatus != nil && that1.PeeringStatus != nil {
+		if *this.PeeringStatus != *that1.PeeringStatus {
+			return false
+		}
+	} else if this.PeeringStatus != nil {
+		return false
+	} else if that1.PeeringStatus != nil {
+		return false
+	}
 	if this.UserId != nil && that1.UserId != nil {
 		if *this.UserId != *that1.UserId {
 			return false
@@ -2815,6 +2848,24 @@ func (this *UserIdGroupPair) Equal(that interface{}) bool {
 	} else if this.UserId != nil {
 		return false
 	} else if that1.UserId != nil {
+		return false
+	}
+	if this.VpcId != nil && that1.VpcId != nil {
+		if *this.VpcId != *that1.VpcId {
+			return false
+		}
+	} else if this.VpcId != nil {
+		return false
+	} else if that1.VpcId != nil {
+		return false
+	}
+	if this.VpcPeeringConnectionId != nil && that1.VpcPeeringConnectionId != nil {
+		if *this.VpcPeeringConnectionId != *that1.VpcPeeringConnectionId {
+			return false
+		}
+	} else if this.VpcPeeringConnectionId != nil {
+		return false
+	} else if that1.VpcPeeringConnectionId != nil {
 		return false
 	}
 	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
@@ -5979,6 +6030,31 @@ func init() {
 						return nil, fmt.Errorf("field GroupName not resolved")
 					},
 				},
+				"PeeringStatus": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*UserIdGroupPair)
+						if ok {
+							if obj.PeeringStatus == nil {
+								return nil, nil
+							}
+							return obj.GetPeeringStatus(), nil
+						}
+						inter, ok := p.Source.(UserIdGroupPairGetter)
+						if ok {
+							face := inter.GetUserIdGroupPair()
+							if face == nil {
+								return nil, nil
+							}
+							if face.PeeringStatus == nil {
+								return nil, nil
+							}
+							return face.GetPeeringStatus(), nil
+						}
+						return nil, fmt.Errorf("field PeeringStatus not resolved")
+					},
+				},
 				"UserId": &github_com_graphql_go_graphql.Field{
 					Type:        github_com_graphql_go_graphql.String,
 					Description: "",
@@ -6002,6 +6078,56 @@ func init() {
 							return face.GetUserId(), nil
 						}
 						return nil, fmt.Errorf("field UserId not resolved")
+					},
+				},
+				"VpcId": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*UserIdGroupPair)
+						if ok {
+							if obj.VpcId == nil {
+								return nil, nil
+							}
+							return obj.GetVpcId(), nil
+						}
+						inter, ok := p.Source.(UserIdGroupPairGetter)
+						if ok {
+							face := inter.GetUserIdGroupPair()
+							if face == nil {
+								return nil, nil
+							}
+							if face.VpcId == nil {
+								return nil, nil
+							}
+							return face.GetVpcId(), nil
+						}
+						return nil, fmt.Errorf("field VpcId not resolved")
+					},
+				},
+				"VpcPeeringConnectionId": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*UserIdGroupPair)
+						if ok {
+							if obj.VpcPeeringConnectionId == nil {
+								return nil, nil
+							}
+							return obj.GetVpcPeeringConnectionId(), nil
+						}
+						inter, ok := p.Source.(UserIdGroupPairGetter)
+						if ok {
+							face := inter.GetUserIdGroupPair()
+							if face == nil {
+								return nil, nil
+							}
+							if face.VpcPeeringConnectionId == nil {
+								return nil, nil
+							}
+							return face.GetVpcPeeringConnectionId(), nil
+						}
+						return nil, fmt.Errorf("field VpcPeeringConnectionId not resolved")
 					},
 				},
 			}
@@ -6865,10 +6991,22 @@ func NewPopulatedUserIdGroupPair(r randyTypes, easy bool) *UserIdGroupPair {
 	}
 	if r.Intn(10) != 0 {
 		v106 := randStringTypes(r)
-		this.UserId = &v106
+		this.PeeringStatus = &v106
+	}
+	if r.Intn(10) != 0 {
+		v107 := randStringTypes(r)
+		this.UserId = &v107
+	}
+	if r.Intn(10) != 0 {
+		v108 := randStringTypes(r)
+		this.VpcId = &v108
+	}
+	if r.Intn(10) != 0 {
+		v109 := randStringTypes(r)
+		this.VpcPeeringConnectionId = &v109
 	}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedTypes(r, 5)
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 8)
 	}
 	return this
 }
@@ -6876,35 +7014,35 @@ func NewPopulatedUserIdGroupPair(r randyTypes, easy bool) *UserIdGroupPair {
 func NewPopulatedVpc(r randyTypes, easy bool) *Vpc {
 	this := &Vpc{}
 	if r.Intn(10) != 0 {
-		v107 := randStringTypes(r)
-		this.CidrBlock = &v107
-	}
-	if r.Intn(10) != 0 {
-		v108 := randStringTypes(r)
-		this.DhcpOptionsId = &v108
-	}
-	if r.Intn(10) != 0 {
-		v109 := randStringTypes(r)
-		this.InstanceTenancy = &v109
-	}
-	if r.Intn(10) != 0 {
-		v110 := bool(bool(r.Intn(2) == 0))
-		this.IsDefault = &v110
+		v110 := randStringTypes(r)
+		this.CidrBlock = &v110
 	}
 	if r.Intn(10) != 0 {
 		v111 := randStringTypes(r)
-		this.State = &v111
+		this.DhcpOptionsId = &v111
 	}
 	if r.Intn(10) != 0 {
-		v112 := r.Intn(5)
-		this.Tags = make([]*Tag, v112)
-		for i := 0; i < v112; i++ {
+		v112 := randStringTypes(r)
+		this.InstanceTenancy = &v112
+	}
+	if r.Intn(10) != 0 {
+		v113 := bool(bool(r.Intn(2) == 0))
+		this.IsDefault = &v113
+	}
+	if r.Intn(10) != 0 {
+		v114 := randStringTypes(r)
+		this.State = &v114
+	}
+	if r.Intn(10) != 0 {
+		v115 := r.Intn(5)
+		this.Tags = make([]*Tag, v115)
+		for i := 0; i < v115; i++ {
 			this.Tags[i] = NewPopulatedTag(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v113 := randStringTypes(r)
-		this.VpcId = &v113
+		v116 := randStringTypes(r)
+		this.VpcId = &v116
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 9)
@@ -6931,9 +7069,9 @@ func randUTF8RuneTypes(r randyTypes) rune {
 	return rune(ru + 61)
 }
 func randStringTypes(r randyTypes) string {
-	v114 := r.Intn(100)
-	tmps := make([]rune, v114)
-	for i := 0; i < v114; i++ {
+	v117 := r.Intn(100)
+	tmps := make([]rune, v117)
+	for i := 0; i < v117; i++ {
 		tmps[i] = randUTF8RuneTypes(r)
 	}
 	return string(tmps)
@@ -6955,11 +7093,11 @@ func randFieldTypes(data []byte, r randyTypes, fieldNumber int, wire int) []byte
 	switch wire {
 	case 0:
 		data = encodeVarintPopulateTypes(data, uint64(key))
-		v115 := r.Int63()
+		v118 := r.Int63()
 		if r.Intn(2) == 0 {
-			v115 *= -1
+			v118 *= -1
 		}
-		data = encodeVarintPopulateTypes(data, uint64(v115))
+		data = encodeVarintPopulateTypes(data, uint64(v118))
 	case 1:
 		data = encodeVarintPopulateTypes(data, uint64(key))
 		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))

@@ -23,6 +23,7 @@ It has these top-level messages:
 	Header
 	HttpCheck
 	CloudWatchCheck
+	CloudWatchResponse
 	Metric
 	HttpResponse
 	CheckResponse
