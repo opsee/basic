@@ -63,10 +63,18 @@ message HttpCheck {
 }
 
 message CloudWatchCheck {
+	// In the case of RDS, id is db instance identifier, name is maybe something
+	// we can let them give in UI?
 	Target target = 1;
-	string metric_name = 2;
-	string function = 3;
-	repeated string function_params = 4;
+	// The AWS CloudWatch metric namespace, e.g. AWS/RDS
+	string namespace = 2;
+	string metric_name = 3;
+}
+
+message CloudWatchResponse {
+	// The AWS CloudWatch metric namespace, e.g. AWS/RDS
+	string namespace = 1;
+	repeated Metric metrics = 2;
 }
 
 message Metric {
@@ -92,6 +100,7 @@ message CheckResponse {
 	bool passing = 4;
 	oneof reply {
 		HttpResponse http_response = 101;
+		CloudWatchResponse cloudwatch_response = 102;
 	}
 }
 

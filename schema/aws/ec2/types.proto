@@ -183,7 +183,10 @@ message Tag {
 message UserIdGroupPair {
   optional string GroupId = 2;
   optional string GroupName = 3;
-  optional string UserId = 4;
+  optional string PeeringStatus = 4;
+  optional string UserId = 5;
+  optional string VpcId = 6;
+  optional string VpcPeeringConnectionId = 7;
 }
 
 message Vpc {

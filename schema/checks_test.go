@@ -71,8 +71,6 @@ func TestCheckschema(t *testing.T) {
 						address
 					}
 					metric_name
-					function
-					function_params
 				}
 			}
 			name
