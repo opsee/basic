@@ -93,7 +93,7 @@ message CheckResponse {
 	bool passing = 4;
 	oneof reply {
 		HttpResponse http_response = 101;
-                CloudWatchResponse cloudwatch_response = 102;
+                CloudWatchCheck cloudwatch_response = 102;
 	}
 }
 
