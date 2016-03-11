@@ -67,7 +67,7 @@ message CloudWatchCheck {
 	string metric_name = 2;
 	string function = 3;
 	repeated string function_params = 4;
-        repeated Metric measurements = 5;
+	repeated Metric measurements = 5;
 }
 
 message Metric {
@@ -93,7 +93,7 @@ message CheckResponse {
 	bool passing = 4;
 	oneof reply {
 		HttpResponse http_response = 101;
-                CloudWatchCheck cloudwatch_response = 102;
+		CloudWatchCheck cloudwatch_response = 102;
 	}
 }
 
