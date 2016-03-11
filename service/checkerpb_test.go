@@ -34,6 +34,7 @@ It has these top-level messages:
 	GetUserResponse
 	ListUsersRequest
 	ListUsersResponse
+	ListCustomersResponse
 */
 package service
 
