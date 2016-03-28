@@ -55,6 +55,7 @@ func (c *client) CreateCheck(user *schema.User, check *schema.Check) (map[string
 	}
 
 	resp, err := c.do(user, "POST", "application/json", "/checks", bytes.NewBuffer(jsondata))
+
 	if err != nil {
 		return nil, err
 	}
@@ -80,6 +81,7 @@ func (c *client) do(user *schema.User, method, accept, path string, body io.Read
 	}
 
 	req.Header.Set("Authorization", fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString(toke)))
+	req.Header.Set("Content-Type", accept)
 	req.Header.Set("Accept", accept)
 
 	resp, err := c.client.Do(req)
