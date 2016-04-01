@@ -2,49 +2,15 @@
 // source: checker.proto
 // DO NOT EDIT!
 
-/*
-Package service is a generated protocol buffer package.
-
-It is generated from these files:
-	checker.proto
-	keelhaul.proto
-	spanx.proto
-	vape.proto
-
-It has these top-level messages:
-	CheckResourceResponse
-	ResourceResponse
-	CheckResourceRequest
-	ResultsResource
-	TestCheckRequest
-	TestCheckResponse
-	ListBastionStatesRequest
-	ListBastionStatesResponse
-	ScanVpcsRequest
-	ScanVpcsResponse
-	LaunchStackRequest
-	LaunchStackResponse
-	AuthenticateBastionRequest
-	AuthenticateBastionResponse
-	PutRoleRequest
-	PutRoleResponse
-	GetCredentialsRequest
-	GetCredentialsResponse
-	GetUserRequest
-	GetUserResponse
-	ListUsersRequest
-	ListUsersResponse
-	ListCustomersResponse
-*/
 package service
 
 import proto "github.com/gogo/protobuf/proto"
 import fmt "fmt"
 import math "math"
 import _ "github.com/opsee/protobuf/opseeproto/types"
-import opsee_types1 "github.com/opsee/protobuf/opseeproto/types"
+import opsee_types "github.com/opsee/protobuf/opseeproto/types"
 import _ "github.com/opsee/protobuf/opseeproto"
-import opsee "github.com/opsee/basic/schema"
+import opsee2 "github.com/opsee/basic/schema"
 
 import github_com_graphql_go_graphql "github.com/graphql-go/graphql"
 import github_com_opsee_protobuf_plugin_graphql_scalars "github.com/opsee/protobuf/plugin/graphql/scalars"
@@ -60,16 +26,16 @@ var _ = fmt.Errorf
 var _ = math.Inf
 
 type CheckResourceResponse struct {
-	Id    string       `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Check *opsee.Check `protobuf:"bytes,2,opt,name=check" json:"check,omitempty"`
-	Error string       `protobuf:"bytes,3,opt,name=error,proto3" json:"error,omitempty"`
+	Id    string        `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Check *opsee2.Check `protobuf:"bytes,2,opt,name=check" json:"check,omitempty"`
+	Error string        `protobuf:"bytes,3,opt,name=error,proto3" json:"error,omitempty"`
 }
 
 func (m *CheckResourceResponse) Reset()         { *m = CheckResourceResponse{} }
 func (m *CheckResourceResponse) String() string { return proto.CompactTextString(m) }
 func (*CheckResourceResponse) ProtoMessage()    {}
 
-func (m *CheckResourceResponse) GetCheck() *opsee.Check {
+func (m *CheckResourceResponse) GetCheck() *opsee2.Check {
 	if m != nil {
 		return m.Check
 	}
@@ -92,14 +58,14 @@ func (m *ResourceResponse) GetResponses() []*CheckResourceResponse {
 }
 
 type CheckResourceRequest struct {
-	Checks []*opsee.Check `protobuf:"bytes,1,rep,name=checks" json:"checks,omitempty"`
+	Checks []*opsee2.Check `protobuf:"bytes,1,rep,name=checks" json:"checks,omitempty"`
 }
 
 func (m *CheckResourceRequest) Reset()         { *m = CheckResourceRequest{} }
 func (m *CheckResourceRequest) String() string { return proto.CompactTextString(m) }
 func (*CheckResourceRequest) ProtoMessage()    {}
 
-func (m *CheckResourceRequest) GetChecks() []*opsee.Check {
+func (m *CheckResourceRequest) GetChecks() []*opsee2.Check {
 	if m != nil {
 		return m.Checks
 	}
@@ -107,14 +73,14 @@ func (m *CheckResourceRequest) GetChecks() []*opsee.Check {
 }
 
 type ResultsResource struct {
-	Results []*opsee.CheckResult `protobuf:"bytes,1,rep,name=results" json:"results,omitempty"`
+	Results []*opsee2.CheckResult `protobuf:"bytes,1,rep,name=results" json:"results,omitempty"`
 }
 
 func (m *ResultsResource) Reset()         { *m = ResultsResource{} }
 func (m *ResultsResource) String() string { return proto.CompactTextString(m) }
 func (*ResultsResource) ProtoMessage()    {}
 
-func (m *ResultsResource) GetResults() []*opsee.CheckResult {
+func (m *ResultsResource) GetResults() []*opsee2.CheckResult {
 	if m != nil {
 		return m.Results
 	}
@@ -122,23 +88,23 @@ func (m *ResultsResource) GetResults() []*opsee.CheckResult {
 }
 
 type TestCheckRequest struct {
-	MaxHosts int32                   `protobuf:"varint,1,opt,name=max_hosts,proto3" json:"max_hosts,omitempty"`
-	Deadline *opsee_types1.Timestamp `protobuf:"bytes,2,opt,name=deadline" json:"deadline,omitempty"`
-	Check    *opsee.Check            `protobuf:"bytes,3,opt,name=check" json:"check,omitempty"`
+	MaxHosts int32                  `protobuf:"varint,1,opt,name=max_hosts,proto3" json:"max_hosts,omitempty"`
+	Deadline *opsee_types.Timestamp `protobuf:"bytes,2,opt,name=deadline" json:"deadline,omitempty"`
+	Check    *opsee2.Check          `protobuf:"bytes,3,opt,name=check" json:"check,omitempty"`
 }
 
 func (m *TestCheckRequest) Reset()         { *m = TestCheckRequest{} }
 func (m *TestCheckRequest) String() string { return proto.CompactTextString(m) }
 func (*TestCheckRequest) ProtoMessage()    {}
 
-func (m *TestCheckRequest) GetDeadline() *opsee_types1.Timestamp {
+func (m *TestCheckRequest) GetDeadline() *opsee_types.Timestamp {
 	if m != nil {
 		return m.Deadline
 	}
 	return nil
 }
 
-func (m *TestCheckRequest) GetCheck() *opsee.Check {
+func (m *TestCheckRequest) GetCheck() *opsee2.Check {
 	if m != nil {
 		return m.Check
 	}
@@ -146,15 +112,15 @@ func (m *TestCheckRequest) GetCheck() *opsee.Check {
 }
 
 type TestCheckResponse struct {
-	Responses []*opsee.CheckResponse `protobuf:"bytes,1,rep,name=responses" json:"responses,omitempty"`
-	Error     string                 `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
+	Responses []*opsee2.CheckResponse `protobuf:"bytes,1,rep,name=responses" json:"responses,omitempty"`
+	Error     string                  `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
 }
 
 func (m *TestCheckResponse) Reset()         { *m = TestCheckResponse{} }
 func (m *TestCheckResponse) String() string { return proto.CompactTextString(m) }
 func (*TestCheckResponse) ProtoMessage()    {}
 
-func (m *TestCheckResponse) GetResponses() []*opsee.CheckResponse {
+func (m *TestCheckResponse) GetResponses() []*opsee2.CheckResponse {
 	if m != nil {
 		return m.Responses
 	}
@@ -447,7 +413,7 @@ func init() {
 					},
 				},
 				"check": &github_com_graphql_go_graphql.Field{
-					Type:        opsee.GraphQLCheckType,
+					Type:        opsee2.GraphQLCheckType,
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*CheckResourceResponse)
@@ -526,7 +492,7 @@ func init() {
 		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
 			return github_com_graphql_go_graphql.Fields{
 				"checks": &github_com_graphql_go_graphql.Field{
-					Type:        github_com_graphql_go_graphql.NewList(opsee.GraphQLCheckType),
+					Type:        github_com_graphql_go_graphql.NewList(opsee2.GraphQLCheckType),
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*CheckResourceRequest)
@@ -553,7 +519,7 @@ func init() {
 		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
 			return github_com_graphql_go_graphql.Fields{
 				"results": &github_com_graphql_go_graphql.Field{
-					Type:        github_com_graphql_go_graphql.NewList(opsee.GraphQLCheckResultType),
+					Type:        github_com_graphql_go_graphql.NewList(opsee2.GraphQLCheckResultType),
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*ResultsResource)
@@ -624,7 +590,7 @@ func init() {
 					},
 				},
 				"check": &github_com_graphql_go_graphql.Field{
-					Type:        opsee.GraphQLCheckType,
+					Type:        opsee2.GraphQLCheckType,
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*TestCheckRequest)
@@ -657,7 +623,7 @@ func init() {
 		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
 			return github_com_graphql_go_graphql.Fields{
 				"responses": &github_com_graphql_go_graphql.Field{
-					Type:        github_com_graphql_go_graphql.NewList(opsee.GraphQLCheckResponseType),
+					Type:        github_com_graphql_go_graphql.NewList(opsee2.GraphQLCheckResponseType),
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*TestCheckResponse)
@@ -872,7 +838,7 @@ func NewPopulatedCheckResourceResponse(r randyChecker, easy bool) *CheckResource
 	this := &CheckResourceResponse{}
 	this.Id = randStringChecker(r)
 	if r.Intn(10) != 0 {
-		this.Check = opsee.NewPopulatedCheck(r, easy)
+		this.Check = opsee2.NewPopulatedCheck(r, easy)
 	}
 	this.Error = randStringChecker(r)
 	if !easy && r.Intn(10) != 0 {
@@ -898,9 +864,9 @@ func NewPopulatedCheckResourceRequest(r randyChecker, easy bool) *CheckResourceR
 	this := &CheckResourceRequest{}
 	if r.Intn(10) != 0 {
 		v2 := r.Intn(5)
-		this.Checks = make([]*opsee.Check, v2)
+		this.Checks = make([]*opsee2.Check, v2)
 		for i := 0; i < v2; i++ {
-			this.Checks[i] = opsee.NewPopulatedCheck(r, easy)
+			this.Checks[i] = opsee2.NewPopulatedCheck(r, easy)
 		}
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -912,9 +878,9 @@ func NewPopulatedResultsResource(r randyChecker, easy bool) *ResultsResource {
 	this := &ResultsResource{}
 	if r.Intn(10) != 0 {
 		v3 := r.Intn(5)
-		this.Results = make([]*opsee.CheckResult, v3)
+		this.Results = make([]*opsee2.CheckResult, v3)
 		for i := 0; i < v3; i++ {
-			this.Results[i] = opsee.NewPopulatedCheckResult(r, easy)
+			this.Results[i] = opsee2.NewPopulatedCheckResult(r, easy)
 		}
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -929,10 +895,10 @@ func NewPopulatedTestCheckRequest(r randyChecker, easy bool) *TestCheckRequest {
 		this.MaxHosts *= -1
 	}
 	if r.Intn(10) != 0 {
-		this.Deadline = opsee_types1.NewPopulatedTimestamp(r, easy)
+		this.Deadline = opsee_types.NewPopulatedTimestamp(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		this.Check = opsee.NewPopulatedCheck(r, easy)
+		this.Check = opsee2.NewPopulatedCheck(r, easy)
 	}
 	if !easy && r.Intn(10) != 0 {
 	}
@@ -943,9 +909,9 @@ func NewPopulatedTestCheckResponse(r randyChecker, easy bool) *TestCheckResponse
 	this := &TestCheckResponse{}
 	if r.Intn(10) != 0 {
 		v4 := r.Intn(5)
-		this.Responses = make([]*opsee.CheckResponse, v4)
+		this.Responses = make([]*opsee2.CheckResponse, v4)
 		for i := 0; i < v4; i++ {
-			this.Responses[i] = opsee.NewPopulatedCheckResponse(r, easy)
+			this.Responses[i] = opsee2.NewPopulatedCheckResponse(r, easy)
 		}
 	}
 	this.Error = randStringChecker(r)

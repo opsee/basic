@@ -9,6 +9,8 @@ It is generated from these files:
 	types.proto
 
 It has these top-level messages:
+	DescribeAutoScalingGroupsInput
+	DescribeAutoScalingGroupsOutput
 	EnabledMetric
 	Group
 	Instance
@@ -31,6 +33,62 @@ import github_com_graphql_go_graphql "github.com/graphql-go/graphql"
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
+
+type DescribeAutoScalingGroupsInput struct {
+	AutoScalingGroupNames []string `protobuf:"bytes,2,rep,name=AutoScalingGroupNames" json:"AutoScalingGroupNames,omitempty"`
+	MaxRecords            *int64   `protobuf:"zigzag64,3,opt,name=MaxRecords" json:"MaxRecords,omitempty"`
+	NextToken             *string  `protobuf:"bytes,4,opt,name=NextToken" json:"NextToken,omitempty"`
+	XXX_unrecognized      []byte   `json:"-"`
+}
+
+func (m *DescribeAutoScalingGroupsInput) Reset()         { *m = DescribeAutoScalingGroupsInput{} }
+func (m *DescribeAutoScalingGroupsInput) String() string { return proto.CompactTextString(m) }
+func (*DescribeAutoScalingGroupsInput) ProtoMessage()    {}
+
+func (m *DescribeAutoScalingGroupsInput) GetAutoScalingGroupNames() []string {
+	if m != nil {
+		return m.AutoScalingGroupNames
+	}
+	return nil
+}
+
+func (m *DescribeAutoScalingGroupsInput) GetMaxRecords() int64 {
+	if m != nil && m.MaxRecords != nil {
+		return *m.MaxRecords
+	}
+	return 0
+}
+
+func (m *DescribeAutoScalingGroupsInput) GetNextToken() string {
+	if m != nil && m.NextToken != nil {
+		return *m.NextToken
+	}
+	return ""
+}
+
+type DescribeAutoScalingGroupsOutput struct {
+	AutoScalingGroups []*Group `protobuf:"bytes,2,rep,name=AutoScalingGroups" json:"AutoScalingGroups,omitempty"`
+	NextToken         *string  `protobuf:"bytes,3,opt,name=NextToken" json:"NextToken,omitempty"`
+	XXX_unrecognized  []byte   `json:"-"`
+}
+
+func (m *DescribeAutoScalingGroupsOutput) Reset()         { *m = DescribeAutoScalingGroupsOutput{} }
+func (m *DescribeAutoScalingGroupsOutput) String() string { return proto.CompactTextString(m) }
+func (*DescribeAutoScalingGroupsOutput) ProtoMessage()    {}
+
+func (m *DescribeAutoScalingGroupsOutput) GetAutoScalingGroups() []*Group {
+	if m != nil {
+		return m.AutoScalingGroups
+	}
+	return nil
+}
+
+func (m *DescribeAutoScalingGroupsOutput) GetNextToken() string {
+	if m != nil && m.NextToken != nil {
+		return *m.NextToken
+	}
+	return ""
+}
 
 type EnabledMetric struct {
 	Granularity      *string `protobuf:"bytes,2,opt,name=Granularity" json:"Granularity,omitempty"`
@@ -361,11 +419,116 @@ func (m *TagDescription) GetValue() string {
 }
 
 func init() {
+	proto.RegisterType((*DescribeAutoScalingGroupsInput)(nil), "opsee.aws.autoscaling.DescribeAutoScalingGroupsInput")
+	proto.RegisterType((*DescribeAutoScalingGroupsOutput)(nil), "opsee.aws.autoscaling.DescribeAutoScalingGroupsOutput")
 	proto.RegisterType((*EnabledMetric)(nil), "opsee.aws.autoscaling.EnabledMetric")
 	proto.RegisterType((*Group)(nil), "opsee.aws.autoscaling.Group")
 	proto.RegisterType((*Instance)(nil), "opsee.aws.autoscaling.Instance")
 	proto.RegisterType((*SuspendedProcess)(nil), "opsee.aws.autoscaling.SuspendedProcess")
 	proto.RegisterType((*TagDescription)(nil), "opsee.aws.autoscaling.TagDescription")
+}
+func (this *DescribeAutoScalingGroupsInput) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*DescribeAutoScalingGroupsInput)
+	if !ok {
+		that2, ok := that.(DescribeAutoScalingGroupsInput)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if len(this.AutoScalingGroupNames) != len(that1.AutoScalingGroupNames) {
+		return false
+	}
+	for i := range this.AutoScalingGroupNames {
+		if this.AutoScalingGroupNames[i] != that1.AutoScalingGroupNames[i] {
+			return false
+		}
+	}
+	if this.MaxRecords != nil && that1.MaxRecords != nil {
+		if *this.MaxRecords != *that1.MaxRecords {
+			return false
+		}
+	} else if this.MaxRecords != nil {
+		return false
+	} else if that1.MaxRecords != nil {
+		return false
+	}
+	if this.NextToken != nil && that1.NextToken != nil {
+		if *this.NextToken != *that1.NextToken {
+			return false
+		}
+	} else if this.NextToken != nil {
+		return false
+	} else if that1.NextToken != nil {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *DescribeAutoScalingGroupsOutput) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*DescribeAutoScalingGroupsOutput)
+	if !ok {
+		that2, ok := that.(DescribeAutoScalingGroupsOutput)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if len(this.AutoScalingGroups) != len(that1.AutoScalingGroups) {
+		return false
+	}
+	for i := range this.AutoScalingGroups {
+		if !this.AutoScalingGroups[i].Equal(that1.AutoScalingGroups[i]) {
+			return false
+		}
+	}
+	if this.NextToken != nil && that1.NextToken != nil {
+		if *this.NextToken != *that1.NextToken {
+			return false
+		}
+	} else if this.NextToken != nil {
+		return false
+	} else if that1.NextToken != nil {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
 }
 func (this *EnabledMetric) Equal(that interface{}) bool {
 	if that == nil {
@@ -835,6 +998,18 @@ func (this *TagDescription) Equal(that interface{}) bool {
 	return true
 }
 
+type DescribeAutoScalingGroupsInputGetter interface {
+	GetDescribeAutoScalingGroupsInput() *DescribeAutoScalingGroupsInput
+}
+
+var GraphQLDescribeAutoScalingGroupsInputType *github_com_graphql_go_graphql.Object
+
+type DescribeAutoScalingGroupsOutputGetter interface {
+	GetDescribeAutoScalingGroupsOutput() *DescribeAutoScalingGroupsOutput
+}
+
+var GraphQLDescribeAutoScalingGroupsOutputType *github_com_graphql_go_graphql.Object
+
 type EnabledMetricGetter interface {
 	GetEnabledMetric() *EnabledMetric
 }
@@ -866,6 +1041,135 @@ type TagDescriptionGetter interface {
 var GraphQLTagDescriptionType *github_com_graphql_go_graphql.Object
 
 func init() {
+	GraphQLDescribeAutoScalingGroupsInputType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "autoscalingDescribeAutoScalingGroupsInput",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"AutoScalingGroupNames": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(github_com_graphql_go_graphql.String),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeAutoScalingGroupsInput)
+						if ok {
+							return obj.AutoScalingGroupNames, nil
+						}
+						inter, ok := p.Source.(DescribeAutoScalingGroupsInputGetter)
+						if ok {
+							face := inter.GetDescribeAutoScalingGroupsInput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.AutoScalingGroupNames, nil
+						}
+						return nil, fmt.Errorf("field AutoScalingGroupNames not resolved")
+					},
+				},
+				"MaxRecords": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.Int,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeAutoScalingGroupsInput)
+						if ok {
+							if obj.MaxRecords == nil {
+								return nil, nil
+							}
+							return obj.GetMaxRecords(), nil
+						}
+						inter, ok := p.Source.(DescribeAutoScalingGroupsInputGetter)
+						if ok {
+							face := inter.GetDescribeAutoScalingGroupsInput()
+							if face == nil {
+								return nil, nil
+							}
+							if face.MaxRecords == nil {
+								return nil, nil
+							}
+							return face.GetMaxRecords(), nil
+						}
+						return nil, fmt.Errorf("field MaxRecords not resolved")
+					},
+				},
+				"NextToken": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeAutoScalingGroupsInput)
+						if ok {
+							if obj.NextToken == nil {
+								return nil, nil
+							}
+							return obj.GetNextToken(), nil
+						}
+						inter, ok := p.Source.(DescribeAutoScalingGroupsInputGetter)
+						if ok {
+							face := inter.GetDescribeAutoScalingGroupsInput()
+							if face == nil {
+								return nil, nil
+							}
+							if face.NextToken == nil {
+								return nil, nil
+							}
+							return face.GetNextToken(), nil
+						}
+						return nil, fmt.Errorf("field NextToken not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLDescribeAutoScalingGroupsOutputType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "autoscalingDescribeAutoScalingGroupsOutput",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"AutoScalingGroups": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLGroupType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeAutoScalingGroupsOutput)
+						if ok {
+							return obj.AutoScalingGroups, nil
+						}
+						inter, ok := p.Source.(DescribeAutoScalingGroupsOutputGetter)
+						if ok {
+							face := inter.GetDescribeAutoScalingGroupsOutput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.AutoScalingGroups, nil
+						}
+						return nil, fmt.Errorf("field AutoScalingGroups not resolved")
+					},
+				},
+				"NextToken": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeAutoScalingGroupsOutput)
+						if ok {
+							if obj.NextToken == nil {
+								return nil, nil
+							}
+							return obj.GetNextToken(), nil
+						}
+						inter, ok := p.Source.(DescribeAutoScalingGroupsOutputGetter)
+						if ok {
+							face := inter.GetDescribeAutoScalingGroupsOutput()
+							if face == nil {
+								return nil, nil
+							}
+							if face.NextToken == nil {
+								return nil, nil
+							}
+							return face.GetNextToken(), nil
+						}
+						return nil, fmt.Errorf("field NextToken not resolved")
+					},
+				},
+			}
+		}),
+	})
 	GraphQLEnabledMetricType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
 		Name:        "autoscalingEnabledMetric",
 		Description: "",
@@ -1765,15 +2069,60 @@ func init() {
 		}),
 	})
 }
+func NewPopulatedDescribeAutoScalingGroupsInput(r randyTypes, easy bool) *DescribeAutoScalingGroupsInput {
+	this := &DescribeAutoScalingGroupsInput{}
+	if r.Intn(10) != 0 {
+		v1 := r.Intn(10)
+		this.AutoScalingGroupNames = make([]string, v1)
+		for i := 0; i < v1; i++ {
+			this.AutoScalingGroupNames[i] = randStringTypes(r)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v2 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v2 *= -1
+		}
+		this.MaxRecords = &v2
+	}
+	if r.Intn(10) != 0 {
+		v3 := randStringTypes(r)
+		this.NextToken = &v3
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 5)
+	}
+	return this
+}
+
+func NewPopulatedDescribeAutoScalingGroupsOutput(r randyTypes, easy bool) *DescribeAutoScalingGroupsOutput {
+	this := &DescribeAutoScalingGroupsOutput{}
+	if r.Intn(10) != 0 {
+		v4 := r.Intn(5)
+		this.AutoScalingGroups = make([]*Group, v4)
+		for i := 0; i < v4; i++ {
+			this.AutoScalingGroups[i] = NewPopulatedGroup(r, easy)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v5 := randStringTypes(r)
+		this.NextToken = &v5
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
+	}
+	return this
+}
+
 func NewPopulatedEnabledMetric(r randyTypes, easy bool) *EnabledMetric {
 	this := &EnabledMetric{}
 	if r.Intn(10) != 0 {
-		v1 := randStringTypes(r)
-		this.Granularity = &v1
+		v6 := randStringTypes(r)
+		this.Granularity = &v6
 	}
 	if r.Intn(10) != 0 {
-		v2 := randStringTypes(r)
-		this.Metric = &v2
+		v7 := randStringTypes(r)
+		this.Metric = &v7
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
@@ -1784,75 +2133,46 @@ func NewPopulatedEnabledMetric(r randyTypes, easy bool) *EnabledMetric {
 func NewPopulatedGroup(r randyTypes, easy bool) *Group {
 	this := &Group{}
 	if r.Intn(10) != 0 {
-		v3 := randStringTypes(r)
-		this.AutoScalingGroupARN = &v3
+		v8 := randStringTypes(r)
+		this.AutoScalingGroupARN = &v8
 	}
 	if r.Intn(10) != 0 {
-		v4 := randStringTypes(r)
-		this.AutoScalingGroupName = &v4
+		v9 := randStringTypes(r)
+		this.AutoScalingGroupName = &v9
 	}
 	if r.Intn(10) != 0 {
-		v5 := r.Intn(10)
-		this.AvailabilityZones = make([]string, v5)
-		for i := 0; i < v5; i++ {
+		v10 := r.Intn(10)
+		this.AvailabilityZones = make([]string, v10)
+		for i := 0; i < v10; i++ {
 			this.AvailabilityZones[i] = randStringTypes(r)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v6 := int64(r.Int63())
+		v11 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v6 *= -1
+			v11 *= -1
 		}
-		this.CreatedTime = &v6
+		this.CreatedTime = &v11
 	}
 	if r.Intn(10) != 0 {
-		v7 := int64(r.Int63())
+		v12 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v7 *= -1
+			v12 *= -1
 		}
-		this.DefaultCooldown = &v7
+		this.DefaultCooldown = &v12
 	}
 	if r.Intn(10) != 0 {
-		v8 := int64(r.Int63())
+		v13 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v8 *= -1
+			v13 *= -1
 		}
-		this.DesiredCapacity = &v8
+		this.DesiredCapacity = &v13
 	}
 	if r.Intn(10) != 0 {
-		v9 := r.Intn(5)
-		this.EnabledMetrics = make([]*EnabledMetric, v9)
-		for i := 0; i < v9; i++ {
-			this.EnabledMetrics[i] = NewPopulatedEnabledMetric(r, easy)
-		}
-	}
-	if r.Intn(10) != 0 {
-		v10 := int64(r.Int63())
-		if r.Intn(2) == 0 {
-			v10 *= -1
-		}
-		this.HealthCheckGracePeriod = &v10
-	}
-	if r.Intn(10) != 0 {
-		v11 := randStringTypes(r)
-		this.HealthCheckType = &v11
-	}
-	if r.Intn(10) != 0 {
-		v12 := r.Intn(5)
-		this.Instances = make([]*Instance, v12)
-		for i := 0; i < v12; i++ {
-			this.Instances[i] = NewPopulatedInstance(r, easy)
-		}
-	}
-	if r.Intn(10) != 0 {
-		v13 := randStringTypes(r)
-		this.LaunchConfigurationName = &v13
-	}
-	if r.Intn(10) != 0 {
-		v14 := r.Intn(10)
-		this.LoadBalancerNames = make([]string, v14)
+		v14 := r.Intn(5)
+		this.EnabledMetrics = make([]*EnabledMetric, v14)
 		for i := 0; i < v14; i++ {
-			this.LoadBalancerNames[i] = randStringTypes(r)
+			this.EnabledMetrics[i] = NewPopulatedEnabledMetric(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
@@ -1860,51 +2180,80 @@ func NewPopulatedGroup(r randyTypes, easy bool) *Group {
 		if r.Intn(2) == 0 {
 			v15 *= -1
 		}
-		this.MaxSize = &v15
+		this.HealthCheckGracePeriod = &v15
 	}
 	if r.Intn(10) != 0 {
-		v16 := int64(r.Int63())
-		if r.Intn(2) == 0 {
-			v16 *= -1
+		v16 := randStringTypes(r)
+		this.HealthCheckType = &v16
+	}
+	if r.Intn(10) != 0 {
+		v17 := r.Intn(5)
+		this.Instances = make([]*Instance, v17)
+		for i := 0; i < v17; i++ {
+			this.Instances[i] = NewPopulatedInstance(r, easy)
 		}
-		this.MinSize = &v16
-	}
-	if r.Intn(10) != 0 {
-		v17 := bool(bool(r.Intn(2) == 0))
-		this.NewInstancesProtectedFromScaleIn = &v17
 	}
 	if r.Intn(10) != 0 {
 		v18 := randStringTypes(r)
-		this.PlacementGroup = &v18
+		this.LaunchConfigurationName = &v18
 	}
 	if r.Intn(10) != 0 {
-		v19 := randStringTypes(r)
-		this.Status = &v19
+		v19 := r.Intn(10)
+		this.LoadBalancerNames = make([]string, v19)
+		for i := 0; i < v19; i++ {
+			this.LoadBalancerNames[i] = randStringTypes(r)
+		}
 	}
 	if r.Intn(10) != 0 {
-		v20 := r.Intn(5)
-		this.SuspendedProcesses = make([]*SuspendedProcess, v20)
-		for i := 0; i < v20; i++ {
+		v20 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v20 *= -1
+		}
+		this.MaxSize = &v20
+	}
+	if r.Intn(10) != 0 {
+		v21 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v21 *= -1
+		}
+		this.MinSize = &v21
+	}
+	if r.Intn(10) != 0 {
+		v22 := bool(bool(r.Intn(2) == 0))
+		this.NewInstancesProtectedFromScaleIn = &v22
+	}
+	if r.Intn(10) != 0 {
+		v23 := randStringTypes(r)
+		this.PlacementGroup = &v23
+	}
+	if r.Intn(10) != 0 {
+		v24 := randStringTypes(r)
+		this.Status = &v24
+	}
+	if r.Intn(10) != 0 {
+		v25 := r.Intn(5)
+		this.SuspendedProcesses = make([]*SuspendedProcess, v25)
+		for i := 0; i < v25; i++ {
 			this.SuspendedProcesses[i] = NewPopulatedSuspendedProcess(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v21 := r.Intn(5)
-		this.Tags = make([]*TagDescription, v21)
-		for i := 0; i < v21; i++ {
+		v26 := r.Intn(5)
+		this.Tags = make([]*TagDescription, v26)
+		for i := 0; i < v26; i++ {
 			this.Tags[i] = NewPopulatedTagDescription(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v22 := r.Intn(10)
-		this.TerminationPolicies = make([]string, v22)
-		for i := 0; i < v22; i++ {
+		v27 := r.Intn(10)
+		this.TerminationPolicies = make([]string, v27)
+		for i := 0; i < v27; i++ {
 			this.TerminationPolicies[i] = randStringTypes(r)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v23 := randStringTypes(r)
-		this.VPCZoneIdentifier = &v23
+		v28 := randStringTypes(r)
+		this.VPCZoneIdentifier = &v28
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 23)
@@ -1915,28 +2264,28 @@ func NewPopulatedGroup(r randyTypes, easy bool) *Group {
 func NewPopulatedInstance(r randyTypes, easy bool) *Instance {
 	this := &Instance{}
 	if r.Intn(10) != 0 {
-		v24 := randStringTypes(r)
-		this.AvailabilityZone = &v24
+		v29 := randStringTypes(r)
+		this.AvailabilityZone = &v29
 	}
 	if r.Intn(10) != 0 {
-		v25 := randStringTypes(r)
-		this.HealthStatus = &v25
+		v30 := randStringTypes(r)
+		this.HealthStatus = &v30
 	}
 	if r.Intn(10) != 0 {
-		v26 := randStringTypes(r)
-		this.InstanceId = &v26
+		v31 := randStringTypes(r)
+		this.InstanceId = &v31
 	}
 	if r.Intn(10) != 0 {
-		v27 := randStringTypes(r)
-		this.LaunchConfigurationName = &v27
+		v32 := randStringTypes(r)
+		this.LaunchConfigurationName = &v32
 	}
 	if r.Intn(10) != 0 {
-		v28 := randStringTypes(r)
-		this.LifecycleState = &v28
+		v33 := randStringTypes(r)
+		this.LifecycleState = &v33
 	}
 	if r.Intn(10) != 0 {
-		v29 := bool(bool(r.Intn(2) == 0))
-		this.ProtectedFromScaleIn = &v29
+		v34 := bool(bool(r.Intn(2) == 0))
+		this.ProtectedFromScaleIn = &v34
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 8)
@@ -1947,12 +2296,12 @@ func NewPopulatedInstance(r randyTypes, easy bool) *Instance {
 func NewPopulatedSuspendedProcess(r randyTypes, easy bool) *SuspendedProcess {
 	this := &SuspendedProcess{}
 	if r.Intn(10) != 0 {
-		v30 := randStringTypes(r)
-		this.ProcessName = &v30
+		v35 := randStringTypes(r)
+		this.ProcessName = &v35
 	}
 	if r.Intn(10) != 0 {
-		v31 := randStringTypes(r)
-		this.SuspensionReason = &v31
+		v36 := randStringTypes(r)
+		this.SuspensionReason = &v36
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
@@ -1963,24 +2312,24 @@ func NewPopulatedSuspendedProcess(r randyTypes, easy bool) *SuspendedProcess {
 func NewPopulatedTagDescription(r randyTypes, easy bool) *TagDescription {
 	this := &TagDescription{}
 	if r.Intn(10) != 0 {
-		v32 := randStringTypes(r)
-		this.Key = &v32
+		v37 := randStringTypes(r)
+		this.Key = &v37
 	}
 	if r.Intn(10) != 0 {
-		v33 := bool(bool(r.Intn(2) == 0))
-		this.PropagateAtLaunch = &v33
+		v38 := bool(bool(r.Intn(2) == 0))
+		this.PropagateAtLaunch = &v38
 	}
 	if r.Intn(10) != 0 {
-		v34 := randStringTypes(r)
-		this.ResourceId = &v34
+		v39 := randStringTypes(r)
+		this.ResourceId = &v39
 	}
 	if r.Intn(10) != 0 {
-		v35 := randStringTypes(r)
-		this.ResourceType = &v35
+		v40 := randStringTypes(r)
+		this.ResourceType = &v40
 	}
 	if r.Intn(10) != 0 {
-		v36 := randStringTypes(r)
-		this.Value = &v36
+		v41 := randStringTypes(r)
+		this.Value = &v41
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 7)
@@ -2007,9 +2356,9 @@ func randUTF8RuneTypes(r randyTypes) rune {
 	return rune(ru + 61)
 }
 func randStringTypes(r randyTypes) string {
-	v37 := r.Intn(100)
-	tmps := make([]rune, v37)
-	for i := 0; i < v37; i++ {
+	v42 := r.Intn(100)
+	tmps := make([]rune, v42)
+	for i := 0; i < v42; i++ {
 		tmps[i] = randUTF8RuneTypes(r)
 	}
 	return string(tmps)
@@ -2031,11 +2380,11 @@ func randFieldTypes(data []byte, r randyTypes, fieldNumber int, wire int) []byte
 	switch wire {
 	case 0:
 		data = encodeVarintPopulateTypes(data, uint64(key))
-		v38 := r.Int63()
+		v43 := r.Int63()
 		if r.Intn(2) == 0 {
-			v38 *= -1
+			v43 *= -1
 		}
-		data = encodeVarintPopulateTypes(data, uint64(v38))
+		data = encodeVarintPopulateTypes(data, uint64(v43))
 	case 1:
 		data = encodeVarintPopulateTypes(data, uint64(key))
 		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
