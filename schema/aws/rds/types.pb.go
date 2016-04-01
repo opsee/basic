@@ -15,7 +15,11 @@ It has these top-level messages:
 	DBParameterGroupStatus
 	DBSecurityGroupMembership
 	DBSubnetGroup
+	DescribeDBInstancesInput
+	DescribeDBInstancesOutput
+	DomainMembership
 	Endpoint
+	Filter
 	OptionGroupMembership
 	PendingModifiedValues
 	Subnet
@@ -72,32 +76,34 @@ type DBInstance struct {
 	DBSubnetGroup                         *DBSubnetGroup                `protobuf:"bytes,16,opt,name=DBSubnetGroup" json:"DBSubnetGroup,omitempty"`
 	DbInstancePort                        *int64                        `protobuf:"zigzag64,17,opt,name=DbInstancePort" json:"DbInstancePort,omitempty"`
 	DbiResourceId                         *string                       `protobuf:"bytes,18,opt,name=DbiResourceId" json:"DbiResourceId,omitempty"`
-	Endpoint                              *Endpoint                     `protobuf:"bytes,19,opt,name=Endpoint" json:"Endpoint,omitempty"`
-	Engine                                *string                       `protobuf:"bytes,20,opt,name=Engine" json:"Engine,omitempty"`
-	EngineVersion                         *string                       `protobuf:"bytes,21,opt,name=EngineVersion" json:"EngineVersion,omitempty"`
-	EnhancedMonitoringResourceArn         *string                       `protobuf:"bytes,22,opt,name=EnhancedMonitoringResourceArn" json:"EnhancedMonitoringResourceArn,omitempty"`
-	InstanceCreateTime                    *int64                        `protobuf:"fixed64,23,opt,name=InstanceCreateTime" json:"InstanceCreateTime,omitempty"`
-	Iops                                  *int64                        `protobuf:"zigzag64,24,opt,name=Iops" json:"Iops,omitempty"`
-	KmsKeyId                              *string                       `protobuf:"bytes,25,opt,name=KmsKeyId" json:"KmsKeyId,omitempty"`
-	LatestRestorableTime                  *int64                        `protobuf:"fixed64,26,opt,name=LatestRestorableTime" json:"LatestRestorableTime,omitempty"`
-	LicenseModel                          *string                       `protobuf:"bytes,27,opt,name=LicenseModel" json:"LicenseModel,omitempty"`
-	MasterUsername                        *string                       `protobuf:"bytes,28,opt,name=MasterUsername" json:"MasterUsername,omitempty"`
-	MonitoringInterval                    *int64                        `protobuf:"zigzag64,29,opt,name=MonitoringInterval" json:"MonitoringInterval,omitempty"`
-	MonitoringRoleArn                     *string                       `protobuf:"bytes,30,opt,name=MonitoringRoleArn" json:"MonitoringRoleArn,omitempty"`
-	MultiAZ                               *bool                         `protobuf:"varint,31,opt,name=MultiAZ" json:"MultiAZ,omitempty"`
-	OptionGroupMemberships                []*OptionGroupMembership      `protobuf:"bytes,32,rep,name=OptionGroupMemberships" json:"OptionGroupMemberships,omitempty"`
-	PendingModifiedValues                 *PendingModifiedValues        `protobuf:"bytes,33,opt,name=PendingModifiedValues" json:"PendingModifiedValues,omitempty"`
-	PreferredBackupWindow                 *string                       `protobuf:"bytes,34,opt,name=PreferredBackupWindow" json:"PreferredBackupWindow,omitempty"`
-	PreferredMaintenanceWindow            *string                       `protobuf:"bytes,35,opt,name=PreferredMaintenanceWindow" json:"PreferredMaintenanceWindow,omitempty"`
-	PubliclyAccessible                    *bool                         `protobuf:"varint,36,opt,name=PubliclyAccessible" json:"PubliclyAccessible,omitempty"`
-	ReadReplicaDBInstanceIdentifiers      []string                      `protobuf:"bytes,37,rep,name=ReadReplicaDBInstanceIdentifiers" json:"ReadReplicaDBInstanceIdentifiers,omitempty"`
-	ReadReplicaSourceDBInstanceIdentifier *string                       `protobuf:"bytes,38,opt,name=ReadReplicaSourceDBInstanceIdentifier" json:"ReadReplicaSourceDBInstanceIdentifier,omitempty"`
-	SecondaryAvailabilityZone             *string                       `protobuf:"bytes,39,opt,name=SecondaryAvailabilityZone" json:"SecondaryAvailabilityZone,omitempty"`
-	StatusInfos                           []*DBInstanceStatusInfo       `protobuf:"bytes,40,rep,name=StatusInfos" json:"StatusInfos,omitempty"`
-	StorageEncrypted                      *bool                         `protobuf:"varint,41,opt,name=StorageEncrypted" json:"StorageEncrypted,omitempty"`
-	StorageType                           *string                       `protobuf:"bytes,42,opt,name=StorageType" json:"StorageType,omitempty"`
-	TdeCredentialArn                      *string                       `protobuf:"bytes,43,opt,name=TdeCredentialArn" json:"TdeCredentialArn,omitempty"`
-	VpcSecurityGroups                     []*VpcSecurityGroupMembership `protobuf:"bytes,44,rep,name=VpcSecurityGroups" json:"VpcSecurityGroups,omitempty"`
+	DomainMemberships                     []*DomainMembership           `protobuf:"bytes,19,rep,name=DomainMemberships" json:"DomainMemberships,omitempty"`
+	Endpoint                              *Endpoint                     `protobuf:"bytes,20,opt,name=Endpoint" json:"Endpoint,omitempty"`
+	Engine                                *string                       `protobuf:"bytes,21,opt,name=Engine" json:"Engine,omitempty"`
+	EngineVersion                         *string                       `protobuf:"bytes,22,opt,name=EngineVersion" json:"EngineVersion,omitempty"`
+	EnhancedMonitoringResourceArn         *string                       `protobuf:"bytes,23,opt,name=EnhancedMonitoringResourceArn" json:"EnhancedMonitoringResourceArn,omitempty"`
+	InstanceCreateTime                    *int64                        `protobuf:"fixed64,24,opt,name=InstanceCreateTime" json:"InstanceCreateTime,omitempty"`
+	Iops                                  *int64                        `protobuf:"zigzag64,25,opt,name=Iops" json:"Iops,omitempty"`
+	KmsKeyId                              *string                       `protobuf:"bytes,26,opt,name=KmsKeyId" json:"KmsKeyId,omitempty"`
+	LatestRestorableTime                  *int64                        `protobuf:"fixed64,27,opt,name=LatestRestorableTime" json:"LatestRestorableTime,omitempty"`
+	LicenseModel                          *string                       `protobuf:"bytes,28,opt,name=LicenseModel" json:"LicenseModel,omitempty"`
+	MasterUsername                        *string                       `protobuf:"bytes,29,opt,name=MasterUsername" json:"MasterUsername,omitempty"`
+	MonitoringInterval                    *int64                        `protobuf:"zigzag64,30,opt,name=MonitoringInterval" json:"MonitoringInterval,omitempty"`
+	MonitoringRoleArn                     *string                       `protobuf:"bytes,31,opt,name=MonitoringRoleArn" json:"MonitoringRoleArn,omitempty"`
+	MultiAZ                               *bool                         `protobuf:"varint,32,opt,name=MultiAZ" json:"MultiAZ,omitempty"`
+	OptionGroupMemberships                []*OptionGroupMembership      `protobuf:"bytes,33,rep,name=OptionGroupMemberships" json:"OptionGroupMemberships,omitempty"`
+	PendingModifiedValues                 *PendingModifiedValues        `protobuf:"bytes,34,opt,name=PendingModifiedValues" json:"PendingModifiedValues,omitempty"`
+	PreferredBackupWindow                 *string                       `protobuf:"bytes,35,opt,name=PreferredBackupWindow" json:"PreferredBackupWindow,omitempty"`
+	PreferredMaintenanceWindow            *string                       `protobuf:"bytes,36,opt,name=PreferredMaintenanceWindow" json:"PreferredMaintenanceWindow,omitempty"`
+	PromotionTier                         *int64                        `protobuf:"zigzag64,37,opt,name=PromotionTier" json:"PromotionTier,omitempty"`
+	PubliclyAccessible                    *bool                         `protobuf:"varint,38,opt,name=PubliclyAccessible" json:"PubliclyAccessible,omitempty"`
+	ReadReplicaDBInstanceIdentifiers      []string                      `protobuf:"bytes,39,rep,name=ReadReplicaDBInstanceIdentifiers" json:"ReadReplicaDBInstanceIdentifiers,omitempty"`
+	ReadReplicaSourceDBInstanceIdentifier *string                       `protobuf:"bytes,40,opt,name=ReadReplicaSourceDBInstanceIdentifier" json:"ReadReplicaSourceDBInstanceIdentifier,omitempty"`
+	SecondaryAvailabilityZone             *string                       `protobuf:"bytes,41,opt,name=SecondaryAvailabilityZone" json:"SecondaryAvailabilityZone,omitempty"`
+	StatusInfos                           []*DBInstanceStatusInfo       `protobuf:"bytes,42,rep,name=StatusInfos" json:"StatusInfos,omitempty"`
+	StorageEncrypted                      *bool                         `protobuf:"varint,43,opt,name=StorageEncrypted" json:"StorageEncrypted,omitempty"`
+	StorageType                           *string                       `protobuf:"bytes,44,opt,name=StorageType" json:"StorageType,omitempty"`
+	TdeCredentialArn                      *string                       `protobuf:"bytes,45,opt,name=TdeCredentialArn" json:"TdeCredentialArn,omitempty"`
+	VpcSecurityGroups                     []*VpcSecurityGroupMembership `protobuf:"bytes,46,rep,name=VpcSecurityGroups" json:"VpcSecurityGroups,omitempty"`
 	XXX_unrecognized                      []byte                        `json:"-"`
 }
 
@@ -224,6 +230,13 @@ func (m *DBInstance) GetDbiResourceId() string {
 	return ""
 }
 
+func (m *DBInstance) GetDomainMemberships() []*DomainMembership {
+	if m != nil {
+		return m.DomainMemberships
+	}
+	return nil
+}
+
 func (m *DBInstance) GetEndpoint() *Endpoint {
 	if m != nil {
 		return m.Endpoint
@@ -341,6 +354,13 @@ func (m *DBInstance) GetPreferredMaintenanceWindow() string {
 		return *m.PreferredMaintenanceWindow
 	}
 	return ""
+}
+
+func (m *DBInstance) GetPromotionTier() int64 {
+	if m != nil && m.PromotionTier != nil {
+		return *m.PromotionTier
+	}
+	return 0
 }
 
 func (m *DBInstance) GetPubliclyAccessible() bool {
@@ -542,6 +562,110 @@ func (m *DBSubnetGroup) GetVpcId() string {
 	return ""
 }
 
+type DescribeDBInstancesInput struct {
+	DBInstanceIdentifier *string   `protobuf:"bytes,2,opt,name=DBInstanceIdentifier" json:"DBInstanceIdentifier,omitempty"`
+	Filters              []*Filter `protobuf:"bytes,3,rep,name=Filters" json:"Filters,omitempty"`
+	Marker               *string   `protobuf:"bytes,4,opt,name=Marker" json:"Marker,omitempty"`
+	MaxRecords           *int64    `protobuf:"zigzag64,5,opt,name=MaxRecords" json:"MaxRecords,omitempty"`
+	XXX_unrecognized     []byte    `json:"-"`
+}
+
+func (m *DescribeDBInstancesInput) Reset()         { *m = DescribeDBInstancesInput{} }
+func (m *DescribeDBInstancesInput) String() string { return proto.CompactTextString(m) }
+func (*DescribeDBInstancesInput) ProtoMessage()    {}
+
+func (m *DescribeDBInstancesInput) GetDBInstanceIdentifier() string {
+	if m != nil && m.DBInstanceIdentifier != nil {
+		return *m.DBInstanceIdentifier
+	}
+	return ""
+}
+
+func (m *DescribeDBInstancesInput) GetFilters() []*Filter {
+	if m != nil {
+		return m.Filters
+	}
+	return nil
+}
+
+func (m *DescribeDBInstancesInput) GetMarker() string {
+	if m != nil && m.Marker != nil {
+		return *m.Marker
+	}
+	return ""
+}
+
+func (m *DescribeDBInstancesInput) GetMaxRecords() int64 {
+	if m != nil && m.MaxRecords != nil {
+		return *m.MaxRecords
+	}
+	return 0
+}
+
+type DescribeDBInstancesOutput struct {
+	DBInstances      []*DBInstance `protobuf:"bytes,2,rep,name=DBInstances" json:"DBInstances,omitempty"`
+	Marker           *string       `protobuf:"bytes,3,opt,name=Marker" json:"Marker,omitempty"`
+	XXX_unrecognized []byte        `json:"-"`
+}
+
+func (m *DescribeDBInstancesOutput) Reset()         { *m = DescribeDBInstancesOutput{} }
+func (m *DescribeDBInstancesOutput) String() string { return proto.CompactTextString(m) }
+func (*DescribeDBInstancesOutput) ProtoMessage()    {}
+
+func (m *DescribeDBInstancesOutput) GetDBInstances() []*DBInstance {
+	if m != nil {
+		return m.DBInstances
+	}
+	return nil
+}
+
+func (m *DescribeDBInstancesOutput) GetMarker() string {
+	if m != nil && m.Marker != nil {
+		return *m.Marker
+	}
+	return ""
+}
+
+type DomainMembership struct {
+	Domain           *string `protobuf:"bytes,2,opt,name=Domain" json:"Domain,omitempty"`
+	FQDN             *string `protobuf:"bytes,3,opt,name=FQDN" json:"FQDN,omitempty"`
+	IAMRoleName      *string `protobuf:"bytes,4,opt,name=IAMRoleName" json:"IAMRoleName,omitempty"`
+	Status           *string `protobuf:"bytes,5,opt,name=Status" json:"Status,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
+}
+
+func (m *DomainMembership) Reset()         { *m = DomainMembership{} }
+func (m *DomainMembership) String() string { return proto.CompactTextString(m) }
+func (*DomainMembership) ProtoMessage()    {}
+
+func (m *DomainMembership) GetDomain() string {
+	if m != nil && m.Domain != nil {
+		return *m.Domain
+	}
+	return ""
+}
+
+func (m *DomainMembership) GetFQDN() string {
+	if m != nil && m.FQDN != nil {
+		return *m.FQDN
+	}
+	return ""
+}
+
+func (m *DomainMembership) GetIAMRoleName() string {
+	if m != nil && m.IAMRoleName != nil {
+		return *m.IAMRoleName
+	}
+	return ""
+}
+
+func (m *DomainMembership) GetStatus() string {
+	if m != nil && m.Status != nil {
+		return *m.Status
+	}
+	return ""
+}
+
 type Endpoint struct {
 	Address          *string `protobuf:"bytes,2,opt,name=Address" json:"Address,omitempty"`
 	HostedZoneId     *string `protobuf:"bytes,3,opt,name=HostedZoneId" json:"HostedZoneId,omitempty"`
@@ -572,6 +696,30 @@ func (m *Endpoint) GetPort() int64 {
 		return *m.Port
 	}
 	return 0
+}
+
+type Filter struct {
+	Name             *string  `protobuf:"bytes,2,opt,name=Name" json:"Name,omitempty"`
+	Values           []string `protobuf:"bytes,3,rep,name=Values" json:"Values,omitempty"`
+	XXX_unrecognized []byte   `json:"-"`
+}
+
+func (m *Filter) Reset()         { *m = Filter{} }
+func (m *Filter) String() string { return proto.CompactTextString(m) }
+func (*Filter) ProtoMessage()    {}
+
+func (m *Filter) GetName() string {
+	if m != nil && m.Name != nil {
+		return *m.Name
+	}
+	return ""
+}
+
+func (m *Filter) GetValues() []string {
+	if m != nil {
+		return m.Values
+	}
+	return nil
 }
 
 type OptionGroupMembership struct {
@@ -757,7 +905,11 @@ func init() {
 	proto.RegisterType((*DBParameterGroupStatus)(nil), "opsee.aws.rds.DBParameterGroupStatus")
 	proto.RegisterType((*DBSecurityGroupMembership)(nil), "opsee.aws.rds.DBSecurityGroupMembership")
 	proto.RegisterType((*DBSubnetGroup)(nil), "opsee.aws.rds.DBSubnetGroup")
+	proto.RegisterType((*DescribeDBInstancesInput)(nil), "opsee.aws.rds.DescribeDBInstancesInput")
+	proto.RegisterType((*DescribeDBInstancesOutput)(nil), "opsee.aws.rds.DescribeDBInstancesOutput")
+	proto.RegisterType((*DomainMembership)(nil), "opsee.aws.rds.DomainMembership")
 	proto.RegisterType((*Endpoint)(nil), "opsee.aws.rds.Endpoint")
+	proto.RegisterType((*Filter)(nil), "opsee.aws.rds.Filter")
 	proto.RegisterType((*OptionGroupMembership)(nil), "opsee.aws.rds.OptionGroupMembership")
 	proto.RegisterType((*PendingModifiedValues)(nil), "opsee.aws.rds.PendingModifiedValues")
 	proto.RegisterType((*Subnet)(nil), "opsee.aws.rds.Subnet")
@@ -972,6 +1124,14 @@ func (this *DBInstance) Equal(that interface{}) bool {
 	} else if that1.DbiResourceId != nil {
 		return false
 	}
+	if len(this.DomainMemberships) != len(that1.DomainMemberships) {
+		return false
+	}
+	for i := range this.DomainMemberships {
+		if !this.DomainMemberships[i].Equal(that1.DomainMemberships[i]) {
+			return false
+		}
+	}
 	if !this.Endpoint.Equal(that1.Endpoint) {
 		return false
 	}
@@ -1110,6 +1270,15 @@ func (this *DBInstance) Equal(that interface{}) bool {
 	} else if this.PreferredMaintenanceWindow != nil {
 		return false
 	} else if that1.PreferredMaintenanceWindow != nil {
+		return false
+	}
+	if this.PromotionTier != nil && that1.PromotionTier != nil {
+		if *this.PromotionTier != *that1.PromotionTier {
+			return false
+		}
+	} else if this.PromotionTier != nil {
+		return false
+	} else if that1.PromotionTier != nil {
 		return false
 	}
 	if this.PubliclyAccessible != nil && that1.PubliclyAccessible != nil {
@@ -1431,6 +1600,184 @@ func (this *DBSubnetGroup) Equal(that interface{}) bool {
 	}
 	return true
 }
+func (this *DescribeDBInstancesInput) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*DescribeDBInstancesInput)
+	if !ok {
+		that2, ok := that.(DescribeDBInstancesInput)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if this.DBInstanceIdentifier != nil && that1.DBInstanceIdentifier != nil {
+		if *this.DBInstanceIdentifier != *that1.DBInstanceIdentifier {
+			return false
+		}
+	} else if this.DBInstanceIdentifier != nil {
+		return false
+	} else if that1.DBInstanceIdentifier != nil {
+		return false
+	}
+	if len(this.Filters) != len(that1.Filters) {
+		return false
+	}
+	for i := range this.Filters {
+		if !this.Filters[i].Equal(that1.Filters[i]) {
+			return false
+		}
+	}
+	if this.Marker != nil && that1.Marker != nil {
+		if *this.Marker != *that1.Marker {
+			return false
+		}
+	} else if this.Marker != nil {
+		return false
+	} else if that1.Marker != nil {
+		return false
+	}
+	if this.MaxRecords != nil && that1.MaxRecords != nil {
+		if *this.MaxRecords != *that1.MaxRecords {
+			return false
+		}
+	} else if this.MaxRecords != nil {
+		return false
+	} else if that1.MaxRecords != nil {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *DescribeDBInstancesOutput) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*DescribeDBInstancesOutput)
+	if !ok {
+		that2, ok := that.(DescribeDBInstancesOutput)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if len(this.DBInstances) != len(that1.DBInstances) {
+		return false
+	}
+	for i := range this.DBInstances {
+		if !this.DBInstances[i].Equal(that1.DBInstances[i]) {
+			return false
+		}
+	}
+	if this.Marker != nil && that1.Marker != nil {
+		if *this.Marker != *that1.Marker {
+			return false
+		}
+	} else if this.Marker != nil {
+		return false
+	} else if that1.Marker != nil {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *DomainMembership) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*DomainMembership)
+	if !ok {
+		that2, ok := that.(DomainMembership)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if this.Domain != nil && that1.Domain != nil {
+		if *this.Domain != *that1.Domain {
+			return false
+		}
+	} else if this.Domain != nil {
+		return false
+	} else if that1.Domain != nil {
+		return false
+	}
+	if this.FQDN != nil && that1.FQDN != nil {
+		if *this.FQDN != *that1.FQDN {
+			return false
+		}
+	} else if this.FQDN != nil {
+		return false
+	} else if that1.FQDN != nil {
+		return false
+	}
+	if this.IAMRoleName != nil && that1.IAMRoleName != nil {
+		if *this.IAMRoleName != *that1.IAMRoleName {
+			return false
+		}
+	} else if this.IAMRoleName != nil {
+		return false
+	} else if that1.IAMRoleName != nil {
+		return false
+	}
+	if this.Status != nil && that1.Status != nil {
+		if *this.Status != *that1.Status {
+			return false
+		}
+	} else if this.Status != nil {
+		return false
+	} else if that1.Status != nil {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
 func (this *Endpoint) Equal(that interface{}) bool {
 	if that == nil {
 		if this == nil {
@@ -1482,6 +1829,53 @@ func (this *Endpoint) Equal(that interface{}) bool {
 		return false
 	} else if that1.Port != nil {
 		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *Filter) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Filter)
+	if !ok {
+		that2, ok := that.(Filter)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if this.Name != nil && that1.Name != nil {
+		if *this.Name != *that1.Name {
+			return false
+		}
+	} else if this.Name != nil {
+		return false
+	} else if that1.Name != nil {
+		return false
+	}
+	if len(this.Values) != len(that1.Values) {
+		return false
+	}
+	for i := range this.Values {
+		if this.Values[i] != that1.Values[i] {
+			return false
+		}
 	}
 	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
@@ -1801,11 +2195,35 @@ type DBSubnetGroupGetter interface {
 
 var GraphQLDBSubnetGroupType *github_com_graphql_go_graphql.Object
 
+type DescribeDBInstancesInputGetter interface {
+	GetDescribeDBInstancesInput() *DescribeDBInstancesInput
+}
+
+var GraphQLDescribeDBInstancesInputType *github_com_graphql_go_graphql.Object
+
+type DescribeDBInstancesOutputGetter interface {
+	GetDescribeDBInstancesOutput() *DescribeDBInstancesOutput
+}
+
+var GraphQLDescribeDBInstancesOutputType *github_com_graphql_go_graphql.Object
+
+type DomainMembershipGetter interface {
+	GetDomainMembership() *DomainMembership
+}
+
+var GraphQLDomainMembershipType *github_com_graphql_go_graphql.Object
+
 type EndpointGetter interface {
 	GetEndpoint() *Endpoint
 }
 
 var GraphQLEndpointType *github_com_graphql_go_graphql.Object
+
+type FilterGetter interface {
+	GetFilter() *Filter
+}
+
+var GraphQLFilterType *github_com_graphql_go_graphql.Object
 
 type OptionGroupMembershipGetter interface {
 	GetOptionGroupMembership() *OptionGroupMembership
@@ -2283,6 +2701,25 @@ func init() {
 						return nil, fmt.Errorf("field DbiResourceId not resolved")
 					},
 				},
+				"DomainMemberships": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLDomainMembershipType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DBInstance)
+						if ok {
+							return obj.DomainMemberships, nil
+						}
+						inter, ok := p.Source.(DBInstanceGetter)
+						if ok {
+							face := inter.GetDBInstance()
+							if face == nil {
+								return nil, nil
+							}
+							return face.DomainMemberships, nil
+						}
+						return nil, fmt.Errorf("field DomainMemberships not resolved")
+					},
+				},
 				"Endpoint": &github_com_graphql_go_graphql.Field{
 					Type:        GraphQLEndpointType,
 					Description: "",
@@ -2700,6 +3137,31 @@ func init() {
 							return face.GetPreferredMaintenanceWindow(), nil
 						}
 						return nil, fmt.Errorf("field PreferredMaintenanceWindow not resolved")
+					},
+				},
+				"PromotionTier": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.Int,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DBInstance)
+						if ok {
+							if obj.PromotionTier == nil {
+								return nil, nil
+							}
+							return obj.GetPromotionTier(), nil
+						}
+						inter, ok := p.Source.(DBInstanceGetter)
+						if ok {
+							face := inter.GetDBInstance()
+							if face == nil {
+								return nil, nil
+							}
+							if face.PromotionTier == nil {
+								return nil, nil
+							}
+							return face.GetPromotionTier(), nil
+						}
+						return nil, fmt.Errorf("field PromotionTier not resolved")
 					},
 				},
 				"PubliclyAccessible": &github_com_graphql_go_graphql.Field{
@@ -3263,6 +3725,268 @@ func init() {
 			}
 		}),
 	})
+	GraphQLDescribeDBInstancesInputType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "rdsDescribeDBInstancesInput",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"DBInstanceIdentifier": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeDBInstancesInput)
+						if ok {
+							if obj.DBInstanceIdentifier == nil {
+								return nil, nil
+							}
+							return obj.GetDBInstanceIdentifier(), nil
+						}
+						inter, ok := p.Source.(DescribeDBInstancesInputGetter)
+						if ok {
+							face := inter.GetDescribeDBInstancesInput()
+							if face == nil {
+								return nil, nil
+							}
+							if face.DBInstanceIdentifier == nil {
+								return nil, nil
+							}
+							return face.GetDBInstanceIdentifier(), nil
+						}
+						return nil, fmt.Errorf("field DBInstanceIdentifier not resolved")
+					},
+				},
+				"Filters": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLFilterType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeDBInstancesInput)
+						if ok {
+							return obj.Filters, nil
+						}
+						inter, ok := p.Source.(DescribeDBInstancesInputGetter)
+						if ok {
+							face := inter.GetDescribeDBInstancesInput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Filters, nil
+						}
+						return nil, fmt.Errorf("field Filters not resolved")
+					},
+				},
+				"Marker": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeDBInstancesInput)
+						if ok {
+							if obj.Marker == nil {
+								return nil, nil
+							}
+							return obj.GetMarker(), nil
+						}
+						inter, ok := p.Source.(DescribeDBInstancesInputGetter)
+						if ok {
+							face := inter.GetDescribeDBInstancesInput()
+							if face == nil {
+								return nil, nil
+							}
+							if face.Marker == nil {
+								return nil, nil
+							}
+							return face.GetMarker(), nil
+						}
+						return nil, fmt.Errorf("field Marker not resolved")
+					},
+				},
+				"MaxRecords": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.Int,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeDBInstancesInput)
+						if ok {
+							if obj.MaxRecords == nil {
+								return nil, nil
+							}
+							return obj.GetMaxRecords(), nil
+						}
+						inter, ok := p.Source.(DescribeDBInstancesInputGetter)
+						if ok {
+							face := inter.GetDescribeDBInstancesInput()
+							if face == nil {
+								return nil, nil
+							}
+							if face.MaxRecords == nil {
+								return nil, nil
+							}
+							return face.GetMaxRecords(), nil
+						}
+						return nil, fmt.Errorf("field MaxRecords not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLDescribeDBInstancesOutputType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "rdsDescribeDBInstancesOutput",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"DBInstances": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLDBInstanceType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeDBInstancesOutput)
+						if ok {
+							return obj.DBInstances, nil
+						}
+						inter, ok := p.Source.(DescribeDBInstancesOutputGetter)
+						if ok {
+							face := inter.GetDescribeDBInstancesOutput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.DBInstances, nil
+						}
+						return nil, fmt.Errorf("field DBInstances not resolved")
+					},
+				},
+				"Marker": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeDBInstancesOutput)
+						if ok {
+							if obj.Marker == nil {
+								return nil, nil
+							}
+							return obj.GetMarker(), nil
+						}
+						inter, ok := p.Source.(DescribeDBInstancesOutputGetter)
+						if ok {
+							face := inter.GetDescribeDBInstancesOutput()
+							if face == nil {
+								return nil, nil
+							}
+							if face.Marker == nil {
+								return nil, nil
+							}
+							return face.GetMarker(), nil
+						}
+						return nil, fmt.Errorf("field Marker not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLDomainMembershipType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "rdsDomainMembership",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"Domain": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DomainMembership)
+						if ok {
+							if obj.Domain == nil {
+								return nil, nil
+							}
+							return obj.GetDomain(), nil
+						}
+						inter, ok := p.Source.(DomainMembershipGetter)
+						if ok {
+							face := inter.GetDomainMembership()
+							if face == nil {
+								return nil, nil
+							}
+							if face.Domain == nil {
+								return nil, nil
+							}
+							return face.GetDomain(), nil
+						}
+						return nil, fmt.Errorf("field Domain not resolved")
+					},
+				},
+				"FQDN": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DomainMembership)
+						if ok {
+							if obj.FQDN == nil {
+								return nil, nil
+							}
+							return obj.GetFQDN(), nil
+						}
+						inter, ok := p.Source.(DomainMembershipGetter)
+						if ok {
+							face := inter.GetDomainMembership()
+							if face == nil {
+								return nil, nil
+							}
+							if face.FQDN == nil {
+								return nil, nil
+							}
+							return face.GetFQDN(), nil
+						}
+						return nil, fmt.Errorf("field FQDN not resolved")
+					},
+				},
+				"IAMRoleName": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DomainMembership)
+						if ok {
+							if obj.IAMRoleName == nil {
+								return nil, nil
+							}
+							return obj.GetIAMRoleName(), nil
+						}
+						inter, ok := p.Source.(DomainMembershipGetter)
+						if ok {
+							face := inter.GetDomainMembership()
+							if face == nil {
+								return nil, nil
+							}
+							if face.IAMRoleName == nil {
+								return nil, nil
+							}
+							return face.GetIAMRoleName(), nil
+						}
+						return nil, fmt.Errorf("field IAMRoleName not resolved")
+					},
+				},
+				"Status": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DomainMembership)
+						if ok {
+							if obj.Status == nil {
+								return nil, nil
+							}
+							return obj.GetStatus(), nil
+						}
+						inter, ok := p.Source.(DomainMembershipGetter)
+						if ok {
+							face := inter.GetDomainMembership()
+							if face == nil {
+								return nil, nil
+							}
+							if face.Status == nil {
+								return nil, nil
+							}
+							return face.GetStatus(), nil
+						}
+						return nil, fmt.Errorf("field Status not resolved")
+					},
+				},
+			}
+		}),
+	})
 	GraphQLEndpointType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
 		Name:        "rdsEndpoint",
 		Description: "",
@@ -3341,6 +4065,58 @@ func init() {
 							return face.GetPort(), nil
 						}
 						return nil, fmt.Errorf("field Port not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLFilterType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "rdsFilter",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"Name": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Filter)
+						if ok {
+							if obj.Name == nil {
+								return nil, nil
+							}
+							return obj.GetName(), nil
+						}
+						inter, ok := p.Source.(FilterGetter)
+						if ok {
+							face := inter.GetFilter()
+							if face == nil {
+								return nil, nil
+							}
+							if face.Name == nil {
+								return nil, nil
+							}
+							return face.GetName(), nil
+						}
+						return nil, fmt.Errorf("field Name not resolved")
+					},
+				},
+				"Values": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(github_com_graphql_go_graphql.String),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Filter)
+						if ok {
+							return obj.Values, nil
+						}
+						inter, ok := p.Source.(FilterGetter)
+						if ok {
+							face := inter.GetFilter()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Values, nil
+						}
+						return nil, fmt.Errorf("field Values not resolved")
 					},
 				},
 			}
@@ -3926,72 +4702,79 @@ func NewPopulatedDBInstance(r randyTypes, easy bool) *DBInstance {
 		this.DbiResourceId = &v17
 	}
 	if r.Intn(10) != 0 {
+		v18 := r.Intn(5)
+		this.DomainMemberships = make([]*DomainMembership, v18)
+		for i := 0; i < v18; i++ {
+			this.DomainMemberships[i] = NewPopulatedDomainMembership(r, easy)
+		}
+	}
+	if r.Intn(10) != 0 {
 		this.Endpoint = NewPopulatedEndpoint(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		v18 := randStringTypes(r)
-		this.Engine = &v18
-	}
-	if r.Intn(10) != 0 {
 		v19 := randStringTypes(r)
-		this.EngineVersion = &v19
+		this.Engine = &v19
 	}
 	if r.Intn(10) != 0 {
 		v20 := randStringTypes(r)
-		this.EnhancedMonitoringResourceArn = &v20
+		this.EngineVersion = &v20
 	}
 	if r.Intn(10) != 0 {
-		v21 := int64(r.Int63())
-		if r.Intn(2) == 0 {
-			v21 *= -1
-		}
-		this.InstanceCreateTime = &v21
+		v21 := randStringTypes(r)
+		this.EnhancedMonitoringResourceArn = &v21
 	}
 	if r.Intn(10) != 0 {
 		v22 := int64(r.Int63())
 		if r.Intn(2) == 0 {
 			v22 *= -1
 		}
-		this.Iops = &v22
+		this.InstanceCreateTime = &v22
 	}
 	if r.Intn(10) != 0 {
-		v23 := randStringTypes(r)
-		this.KmsKeyId = &v23
-	}
-	if r.Intn(10) != 0 {
-		v24 := int64(r.Int63())
+		v23 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v24 *= -1
+			v23 *= -1
 		}
-		this.LatestRestorableTime = &v24
+		this.Iops = &v23
 	}
 	if r.Intn(10) != 0 {
-		v25 := randStringTypes(r)
-		this.LicenseModel = &v25
+		v24 := randStringTypes(r)
+		this.KmsKeyId = &v24
+	}
+	if r.Intn(10) != 0 {
+		v25 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v25 *= -1
+		}
+		this.LatestRestorableTime = &v25
 	}
 	if r.Intn(10) != 0 {
 		v26 := randStringTypes(r)
-		this.MasterUsername = &v26
+		this.LicenseModel = &v26
 	}
 	if r.Intn(10) != 0 {
-		v27 := int64(r.Int63())
+		v27 := randStringTypes(r)
+		this.MasterUsername = &v27
+	}
+	if r.Intn(10) != 0 {
+		v28 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v27 *= -1
+			v28 *= -1
 		}
-		this.MonitoringInterval = &v27
+		this.MonitoringInterval = &v28
 	}
 	if r.Intn(10) != 0 {
-		v28 := randStringTypes(r)
-		this.MonitoringRoleArn = &v28
+		v29 := randStringTypes(r)
+		this.MonitoringRoleArn = &v29
 	}
 	if r.Intn(10) != 0 {
-		v29 := bool(bool(r.Intn(2) == 0))
-		this.MultiAZ = &v29
+		v30 := bool(bool(r.Intn(2) == 0))
+		this.MultiAZ = &v30
 	}
 	if r.Intn(10) != 0 {
-		v30 := r.Intn(5)
-		this.OptionGroupMemberships = make([]*OptionGroupMembership, v30)
-		for i := 0; i < v30; i++ {
+		v31 := r.Intn(5)
+		this.OptionGroupMemberships = make([]*OptionGroupMembership, v31)
+		for i := 0; i < v31; i++ {
 			this.OptionGroupMemberships[i] = NewPopulatedOptionGroupMembership(r, easy)
 		}
 	}
@@ -3999,60 +4782,67 @@ func NewPopulatedDBInstance(r randyTypes, easy bool) *DBInstance {
 		this.PendingModifiedValues = NewPopulatedPendingModifiedValues(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		v31 := randStringTypes(r)
-		this.PreferredBackupWindow = &v31
-	}
-	if r.Intn(10) != 0 {
 		v32 := randStringTypes(r)
-		this.PreferredMaintenanceWindow = &v32
+		this.PreferredBackupWindow = &v32
 	}
 	if r.Intn(10) != 0 {
-		v33 := bool(bool(r.Intn(2) == 0))
-		this.PubliclyAccessible = &v33
+		v33 := randStringTypes(r)
+		this.PreferredMaintenanceWindow = &v33
 	}
 	if r.Intn(10) != 0 {
-		v34 := r.Intn(10)
-		this.ReadReplicaDBInstanceIdentifiers = make([]string, v34)
-		for i := 0; i < v34; i++ {
+		v34 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v34 *= -1
+		}
+		this.PromotionTier = &v34
+	}
+	if r.Intn(10) != 0 {
+		v35 := bool(bool(r.Intn(2) == 0))
+		this.PubliclyAccessible = &v35
+	}
+	if r.Intn(10) != 0 {
+		v36 := r.Intn(10)
+		this.ReadReplicaDBInstanceIdentifiers = make([]string, v36)
+		for i := 0; i < v36; i++ {
 			this.ReadReplicaDBInstanceIdentifiers[i] = randStringTypes(r)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v35 := randStringTypes(r)
-		this.ReadReplicaSourceDBInstanceIdentifier = &v35
+		v37 := randStringTypes(r)
+		this.ReadReplicaSourceDBInstanceIdentifier = &v37
 	}
 	if r.Intn(10) != 0 {
-		v36 := randStringTypes(r)
-		this.SecondaryAvailabilityZone = &v36
+		v38 := randStringTypes(r)
+		this.SecondaryAvailabilityZone = &v38
 	}
 	if r.Intn(10) != 0 {
-		v37 := r.Intn(5)
-		this.StatusInfos = make([]*DBInstanceStatusInfo, v37)
-		for i := 0; i < v37; i++ {
+		v39 := r.Intn(5)
+		this.StatusInfos = make([]*DBInstanceStatusInfo, v39)
+		for i := 0; i < v39; i++ {
 			this.StatusInfos[i] = NewPopulatedDBInstanceStatusInfo(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v38 := bool(bool(r.Intn(2) == 0))
-		this.StorageEncrypted = &v38
+		v40 := bool(bool(r.Intn(2) == 0))
+		this.StorageEncrypted = &v40
 	}
 	if r.Intn(10) != 0 {
-		v39 := randStringTypes(r)
-		this.StorageType = &v39
+		v41 := randStringTypes(r)
+		this.StorageType = &v41
 	}
 	if r.Intn(10) != 0 {
-		v40 := randStringTypes(r)
-		this.TdeCredentialArn = &v40
+		v42 := randStringTypes(r)
+		this.TdeCredentialArn = &v42
 	}
 	if r.Intn(10) != 0 {
-		v41 := r.Intn(5)
-		this.VpcSecurityGroups = make([]*VpcSecurityGroupMembership, v41)
-		for i := 0; i < v41; i++ {
+		v43 := r.Intn(5)
+		this.VpcSecurityGroups = make([]*VpcSecurityGroupMembership, v43)
+		for i := 0; i < v43; i++ {
 			this.VpcSecurityGroups[i] = NewPopulatedVpcSecurityGroupMembership(r, easy)
 		}
 	}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedTypes(r, 45)
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 47)
 	}
 	return this
 }
@@ -4060,20 +4850,20 @@ func NewPopulatedDBInstance(r randyTypes, easy bool) *DBInstance {
 func NewPopulatedDBInstanceStatusInfo(r randyTypes, easy bool) *DBInstanceStatusInfo {
 	this := &DBInstanceStatusInfo{}
 	if r.Intn(10) != 0 {
-		v42 := randStringTypes(r)
-		this.Message = &v42
-	}
-	if r.Intn(10) != 0 {
-		v43 := bool(bool(r.Intn(2) == 0))
-		this.Normal = &v43
-	}
-	if r.Intn(10) != 0 {
 		v44 := randStringTypes(r)
-		this.Status = &v44
+		this.Message = &v44
 	}
 	if r.Intn(10) != 0 {
-		v45 := randStringTypes(r)
-		this.StatusType = &v45
+		v45 := bool(bool(r.Intn(2) == 0))
+		this.Normal = &v45
+	}
+	if r.Intn(10) != 0 {
+		v46 := randStringTypes(r)
+		this.Status = &v46
+	}
+	if r.Intn(10) != 0 {
+		v47 := randStringTypes(r)
+		this.StatusType = &v47
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 6)
@@ -4084,12 +4874,12 @@ func NewPopulatedDBInstanceStatusInfo(r randyTypes, easy bool) *DBInstanceStatus
 func NewPopulatedDBParameterGroupStatus(r randyTypes, easy bool) *DBParameterGroupStatus {
 	this := &DBParameterGroupStatus{}
 	if r.Intn(10) != 0 {
-		v46 := randStringTypes(r)
-		this.DBParameterGroupName = &v46
+		v48 := randStringTypes(r)
+		this.DBParameterGroupName = &v48
 	}
 	if r.Intn(10) != 0 {
-		v47 := randStringTypes(r)
-		this.ParameterApplyStatus = &v47
+		v49 := randStringTypes(r)
+		this.ParameterApplyStatus = &v49
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
@@ -4100,12 +4890,12 @@ func NewPopulatedDBParameterGroupStatus(r randyTypes, easy bool) *DBParameterGro
 func NewPopulatedDBSecurityGroupMembership(r randyTypes, easy bool) *DBSecurityGroupMembership {
 	this := &DBSecurityGroupMembership{}
 	if r.Intn(10) != 0 {
-		v48 := randStringTypes(r)
-		this.DBSecurityGroupName = &v48
+		v50 := randStringTypes(r)
+		this.DBSecurityGroupName = &v50
 	}
 	if r.Intn(10) != 0 {
-		v49 := randStringTypes(r)
-		this.Status = &v49
+		v51 := randStringTypes(r)
+		this.Status = &v51
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
@@ -4116,27 +4906,27 @@ func NewPopulatedDBSecurityGroupMembership(r randyTypes, easy bool) *DBSecurityG
 func NewPopulatedDBSubnetGroup(r randyTypes, easy bool) *DBSubnetGroup {
 	this := &DBSubnetGroup{}
 	if r.Intn(10) != 0 {
-		v50 := randStringTypes(r)
-		this.DBSubnetGroupDescription = &v50
-	}
-	if r.Intn(10) != 0 {
-		v51 := randStringTypes(r)
-		this.DBSubnetGroupName = &v51
-	}
-	if r.Intn(10) != 0 {
 		v52 := randStringTypes(r)
-		this.SubnetGroupStatus = &v52
+		this.DBSubnetGroupDescription = &v52
 	}
 	if r.Intn(10) != 0 {
-		v53 := r.Intn(5)
-		this.Subnets = make([]*Subnet, v53)
-		for i := 0; i < v53; i++ {
+		v53 := randStringTypes(r)
+		this.DBSubnetGroupName = &v53
+	}
+	if r.Intn(10) != 0 {
+		v54 := randStringTypes(r)
+		this.SubnetGroupStatus = &v54
+	}
+	if r.Intn(10) != 0 {
+		v55 := r.Intn(5)
+		this.Subnets = make([]*Subnet, v55)
+		for i := 0; i < v55; i++ {
 			this.Subnets[i] = NewPopulatedSubnet(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v54 := randStringTypes(r)
-		this.VpcId = &v54
+		v56 := randStringTypes(r)
+		this.VpcId = &v56
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 7)
@@ -4144,22 +4934,95 @@ func NewPopulatedDBSubnetGroup(r randyTypes, easy bool) *DBSubnetGroup {
 	return this
 }
 
+func NewPopulatedDescribeDBInstancesInput(r randyTypes, easy bool) *DescribeDBInstancesInput {
+	this := &DescribeDBInstancesInput{}
+	if r.Intn(10) != 0 {
+		v57 := randStringTypes(r)
+		this.DBInstanceIdentifier = &v57
+	}
+	if r.Intn(10) != 0 {
+		v58 := r.Intn(5)
+		this.Filters = make([]*Filter, v58)
+		for i := 0; i < v58; i++ {
+			this.Filters[i] = NewPopulatedFilter(r, easy)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v59 := randStringTypes(r)
+		this.Marker = &v59
+	}
+	if r.Intn(10) != 0 {
+		v60 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v60 *= -1
+		}
+		this.MaxRecords = &v60
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 6)
+	}
+	return this
+}
+
+func NewPopulatedDescribeDBInstancesOutput(r randyTypes, easy bool) *DescribeDBInstancesOutput {
+	this := &DescribeDBInstancesOutput{}
+	if r.Intn(10) != 0 {
+		v61 := r.Intn(5)
+		this.DBInstances = make([]*DBInstance, v61)
+		for i := 0; i < v61; i++ {
+			this.DBInstances[i] = NewPopulatedDBInstance(r, easy)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v62 := randStringTypes(r)
+		this.Marker = &v62
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
+	}
+	return this
+}
+
+func NewPopulatedDomainMembership(r randyTypes, easy bool) *DomainMembership {
+	this := &DomainMembership{}
+	if r.Intn(10) != 0 {
+		v63 := randStringTypes(r)
+		this.Domain = &v63
+	}
+	if r.Intn(10) != 0 {
+		v64 := randStringTypes(r)
+		this.FQDN = &v64
+	}
+	if r.Intn(10) != 0 {
+		v65 := randStringTypes(r)
+		this.IAMRoleName = &v65
+	}
+	if r.Intn(10) != 0 {
+		v66 := randStringTypes(r)
+		this.Status = &v66
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 6)
+	}
+	return this
+}
+
 func NewPopulatedEndpoint(r randyTypes, easy bool) *Endpoint {
 	this := &Endpoint{}
 	if r.Intn(10) != 0 {
-		v55 := randStringTypes(r)
-		this.Address = &v55
+		v67 := randStringTypes(r)
+		this.Address = &v67
 	}
 	if r.Intn(10) != 0 {
-		v56 := randStringTypes(r)
-		this.HostedZoneId = &v56
+		v68 := randStringTypes(r)
+		this.HostedZoneId = &v68
 	}
 	if r.Intn(10) != 0 {
-		v57 := int64(r.Int63())
+		v69 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v57 *= -1
+			v69 *= -1
 		}
-		this.Port = &v57
+		this.Port = &v69
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 5)
@@ -4167,15 +5030,34 @@ func NewPopulatedEndpoint(r randyTypes, easy bool) *Endpoint {
 	return this
 }
 
+func NewPopulatedFilter(r randyTypes, easy bool) *Filter {
+	this := &Filter{}
+	if r.Intn(10) != 0 {
+		v70 := randStringTypes(r)
+		this.Name = &v70
+	}
+	if r.Intn(10) != 0 {
+		v71 := r.Intn(10)
+		this.Values = make([]string, v71)
+		for i := 0; i < v71; i++ {
+			this.Values[i] = randStringTypes(r)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
+	}
+	return this
+}
+
 func NewPopulatedOptionGroupMembership(r randyTypes, easy bool) *OptionGroupMembership {
 	this := &OptionGroupMembership{}
 	if r.Intn(10) != 0 {
-		v58 := randStringTypes(r)
-		this.OptionGroupName = &v58
+		v72 := randStringTypes(r)
+		this.OptionGroupName = &v72
 	}
 	if r.Intn(10) != 0 {
-		v59 := randStringTypes(r)
-		this.Status = &v59
+		v73 := randStringTypes(r)
+		this.Status = &v73
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
@@ -4186,60 +5068,60 @@ func NewPopulatedOptionGroupMembership(r randyTypes, easy bool) *OptionGroupMemb
 func NewPopulatedPendingModifiedValues(r randyTypes, easy bool) *PendingModifiedValues {
 	this := &PendingModifiedValues{}
 	if r.Intn(10) != 0 {
-		v60 := int64(r.Int63())
+		v74 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v60 *= -1
+			v74 *= -1
 		}
-		this.AllocatedStorage = &v60
+		this.AllocatedStorage = &v74
 	}
 	if r.Intn(10) != 0 {
-		v61 := int64(r.Int63())
+		v75 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v61 *= -1
+			v75 *= -1
 		}
-		this.BackupRetentionPeriod = &v61
+		this.BackupRetentionPeriod = &v75
 	}
 	if r.Intn(10) != 0 {
-		v62 := randStringTypes(r)
-		this.CACertificateIdentifier = &v62
+		v76 := randStringTypes(r)
+		this.CACertificateIdentifier = &v76
 	}
 	if r.Intn(10) != 0 {
-		v63 := randStringTypes(r)
-		this.DBInstanceClass = &v63
+		v77 := randStringTypes(r)
+		this.DBInstanceClass = &v77
 	}
 	if r.Intn(10) != 0 {
-		v64 := randStringTypes(r)
-		this.DBInstanceIdentifier = &v64
+		v78 := randStringTypes(r)
+		this.DBInstanceIdentifier = &v78
 	}
 	if r.Intn(10) != 0 {
-		v65 := randStringTypes(r)
-		this.EngineVersion = &v65
+		v79 := randStringTypes(r)
+		this.EngineVersion = &v79
 	}
 	if r.Intn(10) != 0 {
-		v66 := int64(r.Int63())
+		v80 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v66 *= -1
+			v80 *= -1
 		}
-		this.Iops = &v66
+		this.Iops = &v80
 	}
 	if r.Intn(10) != 0 {
-		v67 := randStringTypes(r)
-		this.MasterUserPassword = &v67
+		v81 := randStringTypes(r)
+		this.MasterUserPassword = &v81
 	}
 	if r.Intn(10) != 0 {
-		v68 := bool(bool(r.Intn(2) == 0))
-		this.MultiAZ = &v68
+		v82 := bool(bool(r.Intn(2) == 0))
+		this.MultiAZ = &v82
 	}
 	if r.Intn(10) != 0 {
-		v69 := int64(r.Int63())
+		v83 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v69 *= -1
+			v83 *= -1
 		}
-		this.Port = &v69
+		this.Port = &v83
 	}
 	if r.Intn(10) != 0 {
-		v70 := randStringTypes(r)
-		this.StorageType = &v70
+		v84 := randStringTypes(r)
+		this.StorageType = &v84
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 13)
@@ -4253,12 +5135,12 @@ func NewPopulatedSubnet(r randyTypes, easy bool) *Subnet {
 		this.SubnetAvailabilityZone = NewPopulatedAvailabilityZone(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		v71 := randStringTypes(r)
-		this.SubnetIdentifier = &v71
+		v85 := randStringTypes(r)
+		this.SubnetIdentifier = &v85
 	}
 	if r.Intn(10) != 0 {
-		v72 := randStringTypes(r)
-		this.SubnetStatus = &v72
+		v86 := randStringTypes(r)
+		this.SubnetStatus = &v86
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 5)
@@ -4269,12 +5151,12 @@ func NewPopulatedSubnet(r randyTypes, easy bool) *Subnet {
 func NewPopulatedVpcSecurityGroupMembership(r randyTypes, easy bool) *VpcSecurityGroupMembership {
 	this := &VpcSecurityGroupMembership{}
 	if r.Intn(10) != 0 {
-		v73 := randStringTypes(r)
-		this.Status = &v73
+		v87 := randStringTypes(r)
+		this.Status = &v87
 	}
 	if r.Intn(10) != 0 {
-		v74 := randStringTypes(r)
-		this.VpcSecurityGroupId = &v74
+		v88 := randStringTypes(r)
+		this.VpcSecurityGroupId = &v88
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
@@ -4301,9 +5183,9 @@ func randUTF8RuneTypes(r randyTypes) rune {
 	return rune(ru + 61)
 }
 func randStringTypes(r randyTypes) string {
-	v75 := r.Intn(100)
-	tmps := make([]rune, v75)
-	for i := 0; i < v75; i++ {
+	v89 := r.Intn(100)
+	tmps := make([]rune, v89)
+	for i := 0; i < v89; i++ {
 		tmps[i] = randUTF8RuneTypes(r)
 	}
 	return string(tmps)
@@ -4325,11 +5207,11 @@ func randFieldTypes(data []byte, r randyTypes, fieldNumber int, wire int) []byte
 	switch wire {
 	case 0:
 		data = encodeVarintPopulateTypes(data, uint64(key))
-		v76 := r.Int63()
+		v90 := r.Int63()
 		if r.Intn(2) == 0 {
-			v76 *= -1
+			v90 *= -1
 		}
-		data = encodeVarintPopulateTypes(data, uint64(v76))
+		data = encodeVarintPopulateTypes(data, uint64(v90))
 	case 1:
 		data = encodeVarintPopulateTypes(data, uint64(key))
 		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))

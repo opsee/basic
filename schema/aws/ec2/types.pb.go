@@ -9,7 +9,18 @@ It is generated from these files:
 	types.proto
 
 It has these top-level messages:
+	DescribeInstancesInput
+	DescribeInstancesOutput
+	DescribeRouteTablesInput
+	DescribeRouteTablesOutput
+	DescribeSecurityGroupsInput
+	DescribeSecurityGroupsOutput
+	DescribeSubnetsInput
+	DescribeSubnetsOutput
+	DescribeVpcsInput
+	DescribeVpcsOutput
 	EbsInstanceBlockDevice
+	Filter
 	GroupIdentifier
 	IamInstanceProfile
 	Instance
@@ -25,6 +36,11 @@ It has these top-level messages:
 	Placement
 	PrefixListId
 	ProductCode
+	PropagatingVgw
+	Reservation
+	Route
+	RouteTable
+	RouteTableAssociation
 	SecurityGroup
 	StateReason
 	Subnet
@@ -48,6 +64,278 @@ import github_com_graphql_go_graphql "github.com/graphql-go/graphql"
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
+
+type DescribeInstancesInput struct {
+	DryRun           *bool     `protobuf:"varint,2,opt,name=DryRun" json:"DryRun,omitempty"`
+	Filters          []*Filter `protobuf:"bytes,3,rep,name=Filters" json:"Filters,omitempty"`
+	InstanceIds      []string  `protobuf:"bytes,4,rep,name=InstanceIds" json:"InstanceIds,omitempty"`
+	MaxResults       *int64    `protobuf:"zigzag64,5,opt,name=MaxResults" json:"MaxResults,omitempty"`
+	NextToken        *string   `protobuf:"bytes,6,opt,name=NextToken" json:"NextToken,omitempty"`
+	XXX_unrecognized []byte    `json:"-"`
+}
+
+func (m *DescribeInstancesInput) Reset()         { *m = DescribeInstancesInput{} }
+func (m *DescribeInstancesInput) String() string { return proto.CompactTextString(m) }
+func (*DescribeInstancesInput) ProtoMessage()    {}
+
+func (m *DescribeInstancesInput) GetDryRun() bool {
+	if m != nil && m.DryRun != nil {
+		return *m.DryRun
+	}
+	return false
+}
+
+func (m *DescribeInstancesInput) GetFilters() []*Filter {
+	if m != nil {
+		return m.Filters
+	}
+	return nil
+}
+
+func (m *DescribeInstancesInput) GetInstanceIds() []string {
+	if m != nil {
+		return m.InstanceIds
+	}
+	return nil
+}
+
+func (m *DescribeInstancesInput) GetMaxResults() int64 {
+	if m != nil && m.MaxResults != nil {
+		return *m.MaxResults
+	}
+	return 0
+}
+
+func (m *DescribeInstancesInput) GetNextToken() string {
+	if m != nil && m.NextToken != nil {
+		return *m.NextToken
+	}
+	return ""
+}
+
+type DescribeInstancesOutput struct {
+	NextToken        *string        `protobuf:"bytes,2,opt,name=NextToken" json:"NextToken,omitempty"`
+	Reservations     []*Reservation `protobuf:"bytes,3,rep,name=Reservations" json:"Reservations,omitempty"`
+	XXX_unrecognized []byte         `json:"-"`
+}
+
+func (m *DescribeInstancesOutput) Reset()         { *m = DescribeInstancesOutput{} }
+func (m *DescribeInstancesOutput) String() string { return proto.CompactTextString(m) }
+func (*DescribeInstancesOutput) ProtoMessage()    {}
+
+func (m *DescribeInstancesOutput) GetNextToken() string {
+	if m != nil && m.NextToken != nil {
+		return *m.NextToken
+	}
+	return ""
+}
+
+func (m *DescribeInstancesOutput) GetReservations() []*Reservation {
+	if m != nil {
+		return m.Reservations
+	}
+	return nil
+}
+
+type DescribeRouteTablesInput struct {
+	DryRun           *bool     `protobuf:"varint,2,opt,name=DryRun" json:"DryRun,omitempty"`
+	Filters          []*Filter `protobuf:"bytes,3,rep,name=Filters" json:"Filters,omitempty"`
+	RouteTableIds    []string  `protobuf:"bytes,4,rep,name=RouteTableIds" json:"RouteTableIds,omitempty"`
+	XXX_unrecognized []byte    `json:"-"`
+}
+
+func (m *DescribeRouteTablesInput) Reset()         { *m = DescribeRouteTablesInput{} }
+func (m *DescribeRouteTablesInput) String() string { return proto.CompactTextString(m) }
+func (*DescribeRouteTablesInput) ProtoMessage()    {}
+
+func (m *DescribeRouteTablesInput) GetDryRun() bool {
+	if m != nil && m.DryRun != nil {
+		return *m.DryRun
+	}
+	return false
+}
+
+func (m *DescribeRouteTablesInput) GetFilters() []*Filter {
+	if m != nil {
+		return m.Filters
+	}
+	return nil
+}
+
+func (m *DescribeRouteTablesInput) GetRouteTableIds() []string {
+	if m != nil {
+		return m.RouteTableIds
+	}
+	return nil
+}
+
+type DescribeRouteTablesOutput struct {
+	RouteTables      []*RouteTable `protobuf:"bytes,2,rep,name=RouteTables" json:"RouteTables,omitempty"`
+	XXX_unrecognized []byte        `json:"-"`
+}
+
+func (m *DescribeRouteTablesOutput) Reset()         { *m = DescribeRouteTablesOutput{} }
+func (m *DescribeRouteTablesOutput) String() string { return proto.CompactTextString(m) }
+func (*DescribeRouteTablesOutput) ProtoMessage()    {}
+
+func (m *DescribeRouteTablesOutput) GetRouteTables() []*RouteTable {
+	if m != nil {
+		return m.RouteTables
+	}
+	return nil
+}
+
+type DescribeSecurityGroupsInput struct {
+	DryRun           *bool     `protobuf:"varint,2,opt,name=DryRun" json:"DryRun,omitempty"`
+	Filters          []*Filter `protobuf:"bytes,3,rep,name=Filters" json:"Filters,omitempty"`
+	GroupIds         []string  `protobuf:"bytes,4,rep,name=GroupIds" json:"GroupIds,omitempty"`
+	GroupNames       []string  `protobuf:"bytes,5,rep,name=GroupNames" json:"GroupNames,omitempty"`
+	XXX_unrecognized []byte    `json:"-"`
+}
+
+func (m *DescribeSecurityGroupsInput) Reset()         { *m = DescribeSecurityGroupsInput{} }
+func (m *DescribeSecurityGroupsInput) String() string { return proto.CompactTextString(m) }
+func (*DescribeSecurityGroupsInput) ProtoMessage()    {}
+
+func (m *DescribeSecurityGroupsInput) GetDryRun() bool {
+	if m != nil && m.DryRun != nil {
+		return *m.DryRun
+	}
+	return false
+}
+
+func (m *DescribeSecurityGroupsInput) GetFilters() []*Filter {
+	if m != nil {
+		return m.Filters
+	}
+	return nil
+}
+
+func (m *DescribeSecurityGroupsInput) GetGroupIds() []string {
+	if m != nil {
+		return m.GroupIds
+	}
+	return nil
+}
+
+func (m *DescribeSecurityGroupsInput) GetGroupNames() []string {
+	if m != nil {
+		return m.GroupNames
+	}
+	return nil
+}
+
+type DescribeSecurityGroupsOutput struct {
+	SecurityGroups   []*SecurityGroup `protobuf:"bytes,2,rep,name=SecurityGroups" json:"SecurityGroups,omitempty"`
+	XXX_unrecognized []byte           `json:"-"`
+}
+
+func (m *DescribeSecurityGroupsOutput) Reset()         { *m = DescribeSecurityGroupsOutput{} }
+func (m *DescribeSecurityGroupsOutput) String() string { return proto.CompactTextString(m) }
+func (*DescribeSecurityGroupsOutput) ProtoMessage()    {}
+
+func (m *DescribeSecurityGroupsOutput) GetSecurityGroups() []*SecurityGroup {
+	if m != nil {
+		return m.SecurityGroups
+	}
+	return nil
+}
+
+type DescribeSubnetsInput struct {
+	DryRun           *bool     `protobuf:"varint,2,opt,name=DryRun" json:"DryRun,omitempty"`
+	Filters          []*Filter `protobuf:"bytes,3,rep,name=Filters" json:"Filters,omitempty"`
+	SubnetIds        []string  `protobuf:"bytes,4,rep,name=SubnetIds" json:"SubnetIds,omitempty"`
+	XXX_unrecognized []byte    `json:"-"`
+}
+
+func (m *DescribeSubnetsInput) Reset()         { *m = DescribeSubnetsInput{} }
+func (m *DescribeSubnetsInput) String() string { return proto.CompactTextString(m) }
+func (*DescribeSubnetsInput) ProtoMessage()    {}
+
+func (m *DescribeSubnetsInput) GetDryRun() bool {
+	if m != nil && m.DryRun != nil {
+		return *m.DryRun
+	}
+	return false
+}
+
+func (m *DescribeSubnetsInput) GetFilters() []*Filter {
+	if m != nil {
+		return m.Filters
+	}
+	return nil
+}
+
+func (m *DescribeSubnetsInput) GetSubnetIds() []string {
+	if m != nil {
+		return m.SubnetIds
+	}
+	return nil
+}
+
+type DescribeSubnetsOutput struct {
+	Subnets          []*Subnet `protobuf:"bytes,2,rep,name=Subnets" json:"Subnets,omitempty"`
+	XXX_unrecognized []byte    `json:"-"`
+}
+
+func (m *DescribeSubnetsOutput) Reset()         { *m = DescribeSubnetsOutput{} }
+func (m *DescribeSubnetsOutput) String() string { return proto.CompactTextString(m) }
+func (*DescribeSubnetsOutput) ProtoMessage()    {}
+
+func (m *DescribeSubnetsOutput) GetSubnets() []*Subnet {
+	if m != nil {
+		return m.Subnets
+	}
+	return nil
+}
+
+type DescribeVpcsInput struct {
+	DryRun           *bool     `protobuf:"varint,2,opt,name=DryRun" json:"DryRun,omitempty"`
+	Filters          []*Filter `protobuf:"bytes,3,rep,name=Filters" json:"Filters,omitempty"`
+	VpcIds           []string  `protobuf:"bytes,4,rep,name=VpcIds" json:"VpcIds,omitempty"`
+	XXX_unrecognized []byte    `json:"-"`
+}
+
+func (m *DescribeVpcsInput) Reset()         { *m = DescribeVpcsInput{} }
+func (m *DescribeVpcsInput) String() string { return proto.CompactTextString(m) }
+func (*DescribeVpcsInput) ProtoMessage()    {}
+
+func (m *DescribeVpcsInput) GetDryRun() bool {
+	if m != nil && m.DryRun != nil {
+		return *m.DryRun
+	}
+	return false
+}
+
+func (m *DescribeVpcsInput) GetFilters() []*Filter {
+	if m != nil {
+		return m.Filters
+	}
+	return nil
+}
+
+func (m *DescribeVpcsInput) GetVpcIds() []string {
+	if m != nil {
+		return m.VpcIds
+	}
+	return nil
+}
+
+type DescribeVpcsOutput struct {
+	Vpcs             []*Vpc `protobuf:"bytes,2,rep,name=Vpcs" json:"Vpcs,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
+}
+
+func (m *DescribeVpcsOutput) Reset()         { *m = DescribeVpcsOutput{} }
+func (m *DescribeVpcsOutput) String() string { return proto.CompactTextString(m) }
+func (*DescribeVpcsOutput) ProtoMessage()    {}
+
+func (m *DescribeVpcsOutput) GetVpcs() []*Vpc {
+	if m != nil {
+		return m.Vpcs
+	}
+	return nil
+}
 
 type EbsInstanceBlockDevice struct {
 	AttachTime          *int64  `protobuf:"fixed64,2,opt,name=AttachTime" json:"AttachTime,omitempty"`
@@ -87,6 +375,30 @@ func (m *EbsInstanceBlockDevice) GetVolumeId() string {
 		return *m.VolumeId
 	}
 	return ""
+}
+
+type Filter struct {
+	Name             *string  `protobuf:"bytes,2,opt,name=Name" json:"Name,omitempty"`
+	Values           []string `protobuf:"bytes,3,rep,name=Values" json:"Values,omitempty"`
+	XXX_unrecognized []byte   `json:"-"`
+}
+
+func (m *Filter) Reset()         { *m = Filter{} }
+func (m *Filter) String() string { return proto.CompactTextString(m) }
+func (*Filter) ProtoMessage()    {}
+
+func (m *Filter) GetName() string {
+	if m != nil && m.Name != nil {
+		return *m.Name
+	}
+	return ""
+}
+
+func (m *Filter) GetValues() []string {
+	if m != nil {
+		return m.Values
+	}
+	return nil
 }
 
 type GroupIdentifier struct {
@@ -905,6 +1217,254 @@ func (m *ProductCode) GetProductCodeType() string {
 	return ""
 }
 
+type PropagatingVgw struct {
+	GatewayId        *string `protobuf:"bytes,2,opt,name=GatewayId" json:"GatewayId,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
+}
+
+func (m *PropagatingVgw) Reset()         { *m = PropagatingVgw{} }
+func (m *PropagatingVgw) String() string { return proto.CompactTextString(m) }
+func (*PropagatingVgw) ProtoMessage()    {}
+
+func (m *PropagatingVgw) GetGatewayId() string {
+	if m != nil && m.GatewayId != nil {
+		return *m.GatewayId
+	}
+	return ""
+}
+
+type Reservation struct {
+	Groups           []*GroupIdentifier `protobuf:"bytes,2,rep,name=Groups" json:"Groups,omitempty"`
+	Instances        []*Instance        `protobuf:"bytes,3,rep,name=Instances" json:"Instances,omitempty"`
+	OwnerId          *string            `protobuf:"bytes,4,opt,name=OwnerId" json:"OwnerId,omitempty"`
+	RequesterId      *string            `protobuf:"bytes,5,opt,name=RequesterId" json:"RequesterId,omitempty"`
+	ReservationId    *string            `protobuf:"bytes,6,opt,name=ReservationId" json:"ReservationId,omitempty"`
+	XXX_unrecognized []byte             `json:"-"`
+}
+
+func (m *Reservation) Reset()         { *m = Reservation{} }
+func (m *Reservation) String() string { return proto.CompactTextString(m) }
+func (*Reservation) ProtoMessage()    {}
+
+func (m *Reservation) GetGroups() []*GroupIdentifier {
+	if m != nil {
+		return m.Groups
+	}
+	return nil
+}
+
+func (m *Reservation) GetInstances() []*Instance {
+	if m != nil {
+		return m.Instances
+	}
+	return nil
+}
+
+func (m *Reservation) GetOwnerId() string {
+	if m != nil && m.OwnerId != nil {
+		return *m.OwnerId
+	}
+	return ""
+}
+
+func (m *Reservation) GetRequesterId() string {
+	if m != nil && m.RequesterId != nil {
+		return *m.RequesterId
+	}
+	return ""
+}
+
+func (m *Reservation) GetReservationId() string {
+	if m != nil && m.ReservationId != nil {
+		return *m.ReservationId
+	}
+	return ""
+}
+
+type Route struct {
+	DestinationCidrBlock    *string `protobuf:"bytes,2,opt,name=DestinationCidrBlock" json:"DestinationCidrBlock,omitempty"`
+	DestinationPrefixListId *string `protobuf:"bytes,3,opt,name=DestinationPrefixListId" json:"DestinationPrefixListId,omitempty"`
+	GatewayId               *string `protobuf:"bytes,4,opt,name=GatewayId" json:"GatewayId,omitempty"`
+	InstanceId              *string `protobuf:"bytes,5,opt,name=InstanceId" json:"InstanceId,omitempty"`
+	InstanceOwnerId         *string `protobuf:"bytes,6,opt,name=InstanceOwnerId" json:"InstanceOwnerId,omitempty"`
+	NatGatewayId            *string `protobuf:"bytes,7,opt,name=NatGatewayId" json:"NatGatewayId,omitempty"`
+	NetworkInterfaceId      *string `protobuf:"bytes,8,opt,name=NetworkInterfaceId" json:"NetworkInterfaceId,omitempty"`
+	Origin                  *string `protobuf:"bytes,9,opt,name=Origin" json:"Origin,omitempty"`
+	State                   *string `protobuf:"bytes,10,opt,name=State" json:"State,omitempty"`
+	VpcPeeringConnectionId  *string `protobuf:"bytes,11,opt,name=VpcPeeringConnectionId" json:"VpcPeeringConnectionId,omitempty"`
+	XXX_unrecognized        []byte  `json:"-"`
+}
+
+func (m *Route) Reset()         { *m = Route{} }
+func (m *Route) String() string { return proto.CompactTextString(m) }
+func (*Route) ProtoMessage()    {}
+
+func (m *Route) GetDestinationCidrBlock() string {
+	if m != nil && m.DestinationCidrBlock != nil {
+		return *m.DestinationCidrBlock
+	}
+	return ""
+}
+
+func (m *Route) GetDestinationPrefixListId() string {
+	if m != nil && m.DestinationPrefixListId != nil {
+		return *m.DestinationPrefixListId
+	}
+	return ""
+}
+
+func (m *Route) GetGatewayId() string {
+	if m != nil && m.GatewayId != nil {
+		return *m.GatewayId
+	}
+	return ""
+}
+
+func (m *Route) GetInstanceId() string {
+	if m != nil && m.InstanceId != nil {
+		return *m.InstanceId
+	}
+	return ""
+}
+
+func (m *Route) GetInstanceOwnerId() string {
+	if m != nil && m.InstanceOwnerId != nil {
+		return *m.InstanceOwnerId
+	}
+	return ""
+}
+
+func (m *Route) GetNatGatewayId() string {
+	if m != nil && m.NatGatewayId != nil {
+		return *m.NatGatewayId
+	}
+	return ""
+}
+
+func (m *Route) GetNetworkInterfaceId() string {
+	if m != nil && m.NetworkInterfaceId != nil {
+		return *m.NetworkInterfaceId
+	}
+	return ""
+}
+
+func (m *Route) GetOrigin() string {
+	if m != nil && m.Origin != nil {
+		return *m.Origin
+	}
+	return ""
+}
+
+func (m *Route) GetState() string {
+	if m != nil && m.State != nil {
+		return *m.State
+	}
+	return ""
+}
+
+func (m *Route) GetVpcPeeringConnectionId() string {
+	if m != nil && m.VpcPeeringConnectionId != nil {
+		return *m.VpcPeeringConnectionId
+	}
+	return ""
+}
+
+type RouteTable struct {
+	Associations     []*RouteTableAssociation `protobuf:"bytes,2,rep,name=Associations" json:"Associations,omitempty"`
+	PropagatingVgws  []*PropagatingVgw        `protobuf:"bytes,3,rep,name=PropagatingVgws" json:"PropagatingVgws,omitempty"`
+	RouteTableId     *string                  `protobuf:"bytes,4,opt,name=RouteTableId" json:"RouteTableId,omitempty"`
+	Routes           []*Route                 `protobuf:"bytes,5,rep,name=Routes" json:"Routes,omitempty"`
+	Tags             []*Tag                   `protobuf:"bytes,6,rep,name=Tags" json:"Tags,omitempty"`
+	VpcId            *string                  `protobuf:"bytes,7,opt,name=VpcId" json:"VpcId,omitempty"`
+	XXX_unrecognized []byte                   `json:"-"`
+}
+
+func (m *RouteTable) Reset()         { *m = RouteTable{} }
+func (m *RouteTable) String() string { return proto.CompactTextString(m) }
+func (*RouteTable) ProtoMessage()    {}
+
+func (m *RouteTable) GetAssociations() []*RouteTableAssociation {
+	if m != nil {
+		return m.Associations
+	}
+	return nil
+}
+
+func (m *RouteTable) GetPropagatingVgws() []*PropagatingVgw {
+	if m != nil {
+		return m.PropagatingVgws
+	}
+	return nil
+}
+
+func (m *RouteTable) GetRouteTableId() string {
+	if m != nil && m.RouteTableId != nil {
+		return *m.RouteTableId
+	}
+	return ""
+}
+
+func (m *RouteTable) GetRoutes() []*Route {
+	if m != nil {
+		return m.Routes
+	}
+	return nil
+}
+
+func (m *RouteTable) GetTags() []*Tag {
+	if m != nil {
+		return m.Tags
+	}
+	return nil
+}
+
+func (m *RouteTable) GetVpcId() string {
+	if m != nil && m.VpcId != nil {
+		return *m.VpcId
+	}
+	return ""
+}
+
+type RouteTableAssociation struct {
+	Main                    *bool   `protobuf:"varint,2,opt,name=Main" json:"Main,omitempty"`
+	RouteTableAssociationId *string `protobuf:"bytes,3,opt,name=RouteTableAssociationId" json:"RouteTableAssociationId,omitempty"`
+	RouteTableId            *string `protobuf:"bytes,4,opt,name=RouteTableId" json:"RouteTableId,omitempty"`
+	SubnetId                *string `protobuf:"bytes,5,opt,name=SubnetId" json:"SubnetId,omitempty"`
+	XXX_unrecognized        []byte  `json:"-"`
+}
+
+func (m *RouteTableAssociation) Reset()         { *m = RouteTableAssociation{} }
+func (m *RouteTableAssociation) String() string { return proto.CompactTextString(m) }
+func (*RouteTableAssociation) ProtoMessage()    {}
+
+func (m *RouteTableAssociation) GetMain() bool {
+	if m != nil && m.Main != nil {
+		return *m.Main
+	}
+	return false
+}
+
+func (m *RouteTableAssociation) GetRouteTableAssociationId() string {
+	if m != nil && m.RouteTableAssociationId != nil {
+		return *m.RouteTableAssociationId
+	}
+	return ""
+}
+
+func (m *RouteTableAssociation) GetRouteTableId() string {
+	if m != nil && m.RouteTableId != nil {
+		return *m.RouteTableId
+	}
+	return ""
+}
+
+func (m *RouteTableAssociation) GetSubnetId() string {
+	if m != nil && m.SubnetId != nil {
+		return *m.SubnetId
+	}
+	return ""
+}
+
 type SecurityGroup struct {
 	Description         *string         `protobuf:"bytes,2,opt,name=Description" json:"Description,omitempty"`
 	GroupId             *string         `protobuf:"bytes,3,opt,name=GroupId" json:"GroupId,omitempty"`
@@ -1226,7 +1786,18 @@ func (m *Vpc) GetVpcId() string {
 }
 
 func init() {
+	proto.RegisterType((*DescribeInstancesInput)(nil), "opsee.aws.ec2.DescribeInstancesInput")
+	proto.RegisterType((*DescribeInstancesOutput)(nil), "opsee.aws.ec2.DescribeInstancesOutput")
+	proto.RegisterType((*DescribeRouteTablesInput)(nil), "opsee.aws.ec2.DescribeRouteTablesInput")
+	proto.RegisterType((*DescribeRouteTablesOutput)(nil), "opsee.aws.ec2.DescribeRouteTablesOutput")
+	proto.RegisterType((*DescribeSecurityGroupsInput)(nil), "opsee.aws.ec2.DescribeSecurityGroupsInput")
+	proto.RegisterType((*DescribeSecurityGroupsOutput)(nil), "opsee.aws.ec2.DescribeSecurityGroupsOutput")
+	proto.RegisterType((*DescribeSubnetsInput)(nil), "opsee.aws.ec2.DescribeSubnetsInput")
+	proto.RegisterType((*DescribeSubnetsOutput)(nil), "opsee.aws.ec2.DescribeSubnetsOutput")
+	proto.RegisterType((*DescribeVpcsInput)(nil), "opsee.aws.ec2.DescribeVpcsInput")
+	proto.RegisterType((*DescribeVpcsOutput)(nil), "opsee.aws.ec2.DescribeVpcsOutput")
 	proto.RegisterType((*EbsInstanceBlockDevice)(nil), "opsee.aws.ec2.EbsInstanceBlockDevice")
+	proto.RegisterType((*Filter)(nil), "opsee.aws.ec2.Filter")
 	proto.RegisterType((*GroupIdentifier)(nil), "opsee.aws.ec2.GroupIdentifier")
 	proto.RegisterType((*IamInstanceProfile)(nil), "opsee.aws.ec2.IamInstanceProfile")
 	proto.RegisterType((*Instance)(nil), "opsee.aws.ec2.Instance")
@@ -1242,12 +1813,517 @@ func init() {
 	proto.RegisterType((*Placement)(nil), "opsee.aws.ec2.Placement")
 	proto.RegisterType((*PrefixListId)(nil), "opsee.aws.ec2.PrefixListId")
 	proto.RegisterType((*ProductCode)(nil), "opsee.aws.ec2.ProductCode")
+	proto.RegisterType((*PropagatingVgw)(nil), "opsee.aws.ec2.PropagatingVgw")
+	proto.RegisterType((*Reservation)(nil), "opsee.aws.ec2.Reservation")
+	proto.RegisterType((*Route)(nil), "opsee.aws.ec2.Route")
+	proto.RegisterType((*RouteTable)(nil), "opsee.aws.ec2.RouteTable")
+	proto.RegisterType((*RouteTableAssociation)(nil), "opsee.aws.ec2.RouteTableAssociation")
 	proto.RegisterType((*SecurityGroup)(nil), "opsee.aws.ec2.SecurityGroup")
 	proto.RegisterType((*StateReason)(nil), "opsee.aws.ec2.StateReason")
 	proto.RegisterType((*Subnet)(nil), "opsee.aws.ec2.Subnet")
 	proto.RegisterType((*Tag)(nil), "opsee.aws.ec2.Tag")
 	proto.RegisterType((*UserIdGroupPair)(nil), "opsee.aws.ec2.UserIdGroupPair")
 	proto.RegisterType((*Vpc)(nil), "opsee.aws.ec2.Vpc")
+}
+func (this *DescribeInstancesInput) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*DescribeInstancesInput)
+	if !ok {
+		that2, ok := that.(DescribeInstancesInput)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if this.DryRun != nil && that1.DryRun != nil {
+		if *this.DryRun != *that1.DryRun {
+			return false
+		}
+	} else if this.DryRun != nil {
+		return false
+	} else if that1.DryRun != nil {
+		return false
+	}
+	if len(this.Filters) != len(that1.Filters) {
+		return false
+	}
+	for i := range this.Filters {
+		if !this.Filters[i].Equal(that1.Filters[i]) {
+			return false
+		}
+	}
+	if len(this.InstanceIds) != len(that1.InstanceIds) {
+		return false
+	}
+	for i := range this.InstanceIds {
+		if this.InstanceIds[i] != that1.InstanceIds[i] {
+			return false
+		}
+	}
+	if this.MaxResults != nil && that1.MaxResults != nil {
+		if *this.MaxResults != *that1.MaxResults {
+			return false
+		}
+	} else if this.MaxResults != nil {
+		return false
+	} else if that1.MaxResults != nil {
+		return false
+	}
+	if this.NextToken != nil && that1.NextToken != nil {
+		if *this.NextToken != *that1.NextToken {
+			return false
+		}
+	} else if this.NextToken != nil {
+		return false
+	} else if that1.NextToken != nil {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *DescribeInstancesOutput) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*DescribeInstancesOutput)
+	if !ok {
+		that2, ok := that.(DescribeInstancesOutput)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if this.NextToken != nil && that1.NextToken != nil {
+		if *this.NextToken != *that1.NextToken {
+			return false
+		}
+	} else if this.NextToken != nil {
+		return false
+	} else if that1.NextToken != nil {
+		return false
+	}
+	if len(this.Reservations) != len(that1.Reservations) {
+		return false
+	}
+	for i := range this.Reservations {
+		if !this.Reservations[i].Equal(that1.Reservations[i]) {
+			return false
+		}
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *DescribeRouteTablesInput) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*DescribeRouteTablesInput)
+	if !ok {
+		that2, ok := that.(DescribeRouteTablesInput)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if this.DryRun != nil && that1.DryRun != nil {
+		if *this.DryRun != *that1.DryRun {
+			return false
+		}
+	} else if this.DryRun != nil {
+		return false
+	} else if that1.DryRun != nil {
+		return false
+	}
+	if len(this.Filters) != len(that1.Filters) {
+		return false
+	}
+	for i := range this.Filters {
+		if !this.Filters[i].Equal(that1.Filters[i]) {
+			return false
+		}
+	}
+	if len(this.RouteTableIds) != len(that1.RouteTableIds) {
+		return false
+	}
+	for i := range this.RouteTableIds {
+		if this.RouteTableIds[i] != that1.RouteTableIds[i] {
+			return false
+		}
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *DescribeRouteTablesOutput) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*DescribeRouteTablesOutput)
+	if !ok {
+		that2, ok := that.(DescribeRouteTablesOutput)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if len(this.RouteTables) != len(that1.RouteTables) {
+		return false
+	}
+	for i := range this.RouteTables {
+		if !this.RouteTables[i].Equal(that1.RouteTables[i]) {
+			return false
+		}
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *DescribeSecurityGroupsInput) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*DescribeSecurityGroupsInput)
+	if !ok {
+		that2, ok := that.(DescribeSecurityGroupsInput)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if this.DryRun != nil && that1.DryRun != nil {
+		if *this.DryRun != *that1.DryRun {
+			return false
+		}
+	} else if this.DryRun != nil {
+		return false
+	} else if that1.DryRun != nil {
+		return false
+	}
+	if len(this.Filters) != len(that1.Filters) {
+		return false
+	}
+	for i := range this.Filters {
+		if !this.Filters[i].Equal(that1.Filters[i]) {
+			return false
+		}
+	}
+	if len(this.GroupIds) != len(that1.GroupIds) {
+		return false
+	}
+	for i := range this.GroupIds {
+		if this.GroupIds[i] != that1.GroupIds[i] {
+			return false
+		}
+	}
+	if len(this.GroupNames) != len(that1.GroupNames) {
+		return false
+	}
+	for i := range this.GroupNames {
+		if this.GroupNames[i] != that1.GroupNames[i] {
+			return false
+		}
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *DescribeSecurityGroupsOutput) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*DescribeSecurityGroupsOutput)
+	if !ok {
+		that2, ok := that.(DescribeSecurityGroupsOutput)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if len(this.SecurityGroups) != len(that1.SecurityGroups) {
+		return false
+	}
+	for i := range this.SecurityGroups {
+		if !this.SecurityGroups[i].Equal(that1.SecurityGroups[i]) {
+			return false
+		}
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *DescribeSubnetsInput) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*DescribeSubnetsInput)
+	if !ok {
+		that2, ok := that.(DescribeSubnetsInput)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if this.DryRun != nil && that1.DryRun != nil {
+		if *this.DryRun != *that1.DryRun {
+			return false
+		}
+	} else if this.DryRun != nil {
+		return false
+	} else if that1.DryRun != nil {
+		return false
+	}
+	if len(this.Filters) != len(that1.Filters) {
+		return false
+	}
+	for i := range this.Filters {
+		if !this.Filters[i].Equal(that1.Filters[i]) {
+			return false
+		}
+	}
+	if len(this.SubnetIds) != len(that1.SubnetIds) {
+		return false
+	}
+	for i := range this.SubnetIds {
+		if this.SubnetIds[i] != that1.SubnetIds[i] {
+			return false
+		}
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *DescribeSubnetsOutput) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*DescribeSubnetsOutput)
+	if !ok {
+		that2, ok := that.(DescribeSubnetsOutput)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if len(this.Subnets) != len(that1.Subnets) {
+		return false
+	}
+	for i := range this.Subnets {
+		if !this.Subnets[i].Equal(that1.Subnets[i]) {
+			return false
+		}
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *DescribeVpcsInput) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*DescribeVpcsInput)
+	if !ok {
+		that2, ok := that.(DescribeVpcsInput)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if this.DryRun != nil && that1.DryRun != nil {
+		if *this.DryRun != *that1.DryRun {
+			return false
+		}
+	} else if this.DryRun != nil {
+		return false
+	} else if that1.DryRun != nil {
+		return false
+	}
+	if len(this.Filters) != len(that1.Filters) {
+		return false
+	}
+	for i := range this.Filters {
+		if !this.Filters[i].Equal(that1.Filters[i]) {
+			return false
+		}
+	}
+	if len(this.VpcIds) != len(that1.VpcIds) {
+		return false
+	}
+	for i := range this.VpcIds {
+		if this.VpcIds[i] != that1.VpcIds[i] {
+			return false
+		}
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *DescribeVpcsOutput) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*DescribeVpcsOutput)
+	if !ok {
+		that2, ok := that.(DescribeVpcsOutput)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if len(this.Vpcs) != len(that1.Vpcs) {
+		return false
+	}
+	for i := range this.Vpcs {
+		if !this.Vpcs[i].Equal(that1.Vpcs[i]) {
+			return false
+		}
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
 }
 func (this *EbsInstanceBlockDevice) Equal(that interface{}) bool {
 	if that == nil {
@@ -1309,6 +2385,53 @@ func (this *EbsInstanceBlockDevice) Equal(that interface{}) bool {
 		return false
 	} else if that1.VolumeId != nil {
 		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *Filter) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Filter)
+	if !ok {
+		that2, ok := that.(Filter)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if this.Name != nil && that1.Name != nil {
+		if *this.Name != *that1.Name {
+			return false
+		}
+	} else if this.Name != nil {
+		return false
+	} else if that1.Name != nil {
+		return false
+	}
+	if len(this.Values) != len(that1.Values) {
+		return false
+	}
+	for i := range this.Values {
+		if this.Values[i] != that1.Values[i] {
+			return false
+		}
 	}
 	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
@@ -2484,6 +3607,384 @@ func (this *ProductCode) Equal(that interface{}) bool {
 	}
 	return true
 }
+func (this *PropagatingVgw) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*PropagatingVgw)
+	if !ok {
+		that2, ok := that.(PropagatingVgw)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if this.GatewayId != nil && that1.GatewayId != nil {
+		if *this.GatewayId != *that1.GatewayId {
+			return false
+		}
+	} else if this.GatewayId != nil {
+		return false
+	} else if that1.GatewayId != nil {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *Reservation) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Reservation)
+	if !ok {
+		that2, ok := that.(Reservation)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if len(this.Groups) != len(that1.Groups) {
+		return false
+	}
+	for i := range this.Groups {
+		if !this.Groups[i].Equal(that1.Groups[i]) {
+			return false
+		}
+	}
+	if len(this.Instances) != len(that1.Instances) {
+		return false
+	}
+	for i := range this.Instances {
+		if !this.Instances[i].Equal(that1.Instances[i]) {
+			return false
+		}
+	}
+	if this.OwnerId != nil && that1.OwnerId != nil {
+		if *this.OwnerId != *that1.OwnerId {
+			return false
+		}
+	} else if this.OwnerId != nil {
+		return false
+	} else if that1.OwnerId != nil {
+		return false
+	}
+	if this.RequesterId != nil && that1.RequesterId != nil {
+		if *this.RequesterId != *that1.RequesterId {
+			return false
+		}
+	} else if this.RequesterId != nil {
+		return false
+	} else if that1.RequesterId != nil {
+		return false
+	}
+	if this.ReservationId != nil && that1.ReservationId != nil {
+		if *this.ReservationId != *that1.ReservationId {
+			return false
+		}
+	} else if this.ReservationId != nil {
+		return false
+	} else if that1.ReservationId != nil {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *Route) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*Route)
+	if !ok {
+		that2, ok := that.(Route)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if this.DestinationCidrBlock != nil && that1.DestinationCidrBlock != nil {
+		if *this.DestinationCidrBlock != *that1.DestinationCidrBlock {
+			return false
+		}
+	} else if this.DestinationCidrBlock != nil {
+		return false
+	} else if that1.DestinationCidrBlock != nil {
+		return false
+	}
+	if this.DestinationPrefixListId != nil && that1.DestinationPrefixListId != nil {
+		if *this.DestinationPrefixListId != *that1.DestinationPrefixListId {
+			return false
+		}
+	} else if this.DestinationPrefixListId != nil {
+		return false
+	} else if that1.DestinationPrefixListId != nil {
+		return false
+	}
+	if this.GatewayId != nil && that1.GatewayId != nil {
+		if *this.GatewayId != *that1.GatewayId {
+			return false
+		}
+	} else if this.GatewayId != nil {
+		return false
+	} else if that1.GatewayId != nil {
+		return false
+	}
+	if this.InstanceId != nil && that1.InstanceId != nil {
+		if *this.InstanceId != *that1.InstanceId {
+			return false
+		}
+	} else if this.InstanceId != nil {
+		return false
+	} else if that1.InstanceId != nil {
+		return false
+	}
+	if this.InstanceOwnerId != nil && that1.InstanceOwnerId != nil {
+		if *this.InstanceOwnerId != *that1.InstanceOwnerId {
+			return false
+		}
+	} else if this.InstanceOwnerId != nil {
+		return false
+	} else if that1.InstanceOwnerId != nil {
+		return false
+	}
+	if this.NatGatewayId != nil && that1.NatGatewayId != nil {
+		if *this.NatGatewayId != *that1.NatGatewayId {
+			return false
+		}
+	} else if this.NatGatewayId != nil {
+		return false
+	} else if that1.NatGatewayId != nil {
+		return false
+	}
+	if this.NetworkInterfaceId != nil && that1.NetworkInterfaceId != nil {
+		if *this.NetworkInterfaceId != *that1.NetworkInterfaceId {
+			return false
+		}
+	} else if this.NetworkInterfaceId != nil {
+		return false
+	} else if that1.NetworkInterfaceId != nil {
+		return false
+	}
+	if this.Origin != nil && that1.Origin != nil {
+		if *this.Origin != *that1.Origin {
+			return false
+		}
+	} else if this.Origin != nil {
+		return false
+	} else if that1.Origin != nil {
+		return false
+	}
+	if this.State != nil && that1.State != nil {
+		if *this.State != *that1.State {
+			return false
+		}
+	} else if this.State != nil {
+		return false
+	} else if that1.State != nil {
+		return false
+	}
+	if this.VpcPeeringConnectionId != nil && that1.VpcPeeringConnectionId != nil {
+		if *this.VpcPeeringConnectionId != *that1.VpcPeeringConnectionId {
+			return false
+		}
+	} else if this.VpcPeeringConnectionId != nil {
+		return false
+	} else if that1.VpcPeeringConnectionId != nil {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *RouteTable) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*RouteTable)
+	if !ok {
+		that2, ok := that.(RouteTable)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if len(this.Associations) != len(that1.Associations) {
+		return false
+	}
+	for i := range this.Associations {
+		if !this.Associations[i].Equal(that1.Associations[i]) {
+			return false
+		}
+	}
+	if len(this.PropagatingVgws) != len(that1.PropagatingVgws) {
+		return false
+	}
+	for i := range this.PropagatingVgws {
+		if !this.PropagatingVgws[i].Equal(that1.PropagatingVgws[i]) {
+			return false
+		}
+	}
+	if this.RouteTableId != nil && that1.RouteTableId != nil {
+		if *this.RouteTableId != *that1.RouteTableId {
+			return false
+		}
+	} else if this.RouteTableId != nil {
+		return false
+	} else if that1.RouteTableId != nil {
+		return false
+	}
+	if len(this.Routes) != len(that1.Routes) {
+		return false
+	}
+	for i := range this.Routes {
+		if !this.Routes[i].Equal(that1.Routes[i]) {
+			return false
+		}
+	}
+	if len(this.Tags) != len(that1.Tags) {
+		return false
+	}
+	for i := range this.Tags {
+		if !this.Tags[i].Equal(that1.Tags[i]) {
+			return false
+		}
+	}
+	if this.VpcId != nil && that1.VpcId != nil {
+		if *this.VpcId != *that1.VpcId {
+			return false
+		}
+	} else if this.VpcId != nil {
+		return false
+	} else if that1.VpcId != nil {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *RouteTableAssociation) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*RouteTableAssociation)
+	if !ok {
+		that2, ok := that.(RouteTableAssociation)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if this.Main != nil && that1.Main != nil {
+		if *this.Main != *that1.Main {
+			return false
+		}
+	} else if this.Main != nil {
+		return false
+	} else if that1.Main != nil {
+		return false
+	}
+	if this.RouteTableAssociationId != nil && that1.RouteTableAssociationId != nil {
+		if *this.RouteTableAssociationId != *that1.RouteTableAssociationId {
+			return false
+		}
+	} else if this.RouteTableAssociationId != nil {
+		return false
+	} else if that1.RouteTableAssociationId != nil {
+		return false
+	}
+	if this.RouteTableId != nil && that1.RouteTableId != nil {
+		if *this.RouteTableId != *that1.RouteTableId {
+			return false
+		}
+	} else if this.RouteTableId != nil {
+		return false
+	} else if that1.RouteTableId != nil {
+		return false
+	}
+	if this.SubnetId != nil && that1.SubnetId != nil {
+		if *this.SubnetId != *that1.SubnetId {
+			return false
+		}
+	} else if this.SubnetId != nil {
+		return false
+	} else if that1.SubnetId != nil {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
 func (this *SecurityGroup) Equal(that interface{}) bool {
 	if that == nil {
 		if this == nil {
@@ -2966,11 +4467,77 @@ func (this *Vpc) Equal(that interface{}) bool {
 	return true
 }
 
+type DescribeInstancesInputGetter interface {
+	GetDescribeInstancesInput() *DescribeInstancesInput
+}
+
+var GraphQLDescribeInstancesInputType *github_com_graphql_go_graphql.Object
+
+type DescribeInstancesOutputGetter interface {
+	GetDescribeInstancesOutput() *DescribeInstancesOutput
+}
+
+var GraphQLDescribeInstancesOutputType *github_com_graphql_go_graphql.Object
+
+type DescribeRouteTablesInputGetter interface {
+	GetDescribeRouteTablesInput() *DescribeRouteTablesInput
+}
+
+var GraphQLDescribeRouteTablesInputType *github_com_graphql_go_graphql.Object
+
+type DescribeRouteTablesOutputGetter interface {
+	GetDescribeRouteTablesOutput() *DescribeRouteTablesOutput
+}
+
+var GraphQLDescribeRouteTablesOutputType *github_com_graphql_go_graphql.Object
+
+type DescribeSecurityGroupsInputGetter interface {
+	GetDescribeSecurityGroupsInput() *DescribeSecurityGroupsInput
+}
+
+var GraphQLDescribeSecurityGroupsInputType *github_com_graphql_go_graphql.Object
+
+type DescribeSecurityGroupsOutputGetter interface {
+	GetDescribeSecurityGroupsOutput() *DescribeSecurityGroupsOutput
+}
+
+var GraphQLDescribeSecurityGroupsOutputType *github_com_graphql_go_graphql.Object
+
+type DescribeSubnetsInputGetter interface {
+	GetDescribeSubnetsInput() *DescribeSubnetsInput
+}
+
+var GraphQLDescribeSubnetsInputType *github_com_graphql_go_graphql.Object
+
+type DescribeSubnetsOutputGetter interface {
+	GetDescribeSubnetsOutput() *DescribeSubnetsOutput
+}
+
+var GraphQLDescribeSubnetsOutputType *github_com_graphql_go_graphql.Object
+
+type DescribeVpcsInputGetter interface {
+	GetDescribeVpcsInput() *DescribeVpcsInput
+}
+
+var GraphQLDescribeVpcsInputType *github_com_graphql_go_graphql.Object
+
+type DescribeVpcsOutputGetter interface {
+	GetDescribeVpcsOutput() *DescribeVpcsOutput
+}
+
+var GraphQLDescribeVpcsOutputType *github_com_graphql_go_graphql.Object
+
 type EbsInstanceBlockDeviceGetter interface {
 	GetEbsInstanceBlockDevice() *EbsInstanceBlockDevice
 }
 
 var GraphQLEbsInstanceBlockDeviceType *github_com_graphql_go_graphql.Object
+
+type FilterGetter interface {
+	GetFilter() *Filter
+}
+
+var GraphQLFilterType *github_com_graphql_go_graphql.Object
 
 type GroupIdentifierGetter interface {
 	GetGroupIdentifier() *GroupIdentifier
@@ -3062,6 +4629,36 @@ type ProductCodeGetter interface {
 
 var GraphQLProductCodeType *github_com_graphql_go_graphql.Object
 
+type PropagatingVgwGetter interface {
+	GetPropagatingVgw() *PropagatingVgw
+}
+
+var GraphQLPropagatingVgwType *github_com_graphql_go_graphql.Object
+
+type ReservationGetter interface {
+	GetReservation() *Reservation
+}
+
+var GraphQLReservationType *github_com_graphql_go_graphql.Object
+
+type RouteGetter interface {
+	GetRoute() *Route
+}
+
+var GraphQLRouteType *github_com_graphql_go_graphql.Object
+
+type RouteTableGetter interface {
+	GetRouteTable() *RouteTable
+}
+
+var GraphQLRouteTableType *github_com_graphql_go_graphql.Object
+
+type RouteTableAssociationGetter interface {
+	GetRouteTableAssociation() *RouteTableAssociation
+}
+
+var GraphQLRouteTableAssociationType *github_com_graphql_go_graphql.Object
+
 type SecurityGroupGetter interface {
 	GetSecurityGroup() *SecurityGroup
 }
@@ -3099,6 +4696,590 @@ type VpcGetter interface {
 var GraphQLVpcType *github_com_graphql_go_graphql.Object
 
 func init() {
+	GraphQLDescribeInstancesInputType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "ec2DescribeInstancesInput",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"DryRun": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.Boolean,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeInstancesInput)
+						if ok {
+							if obj.DryRun == nil {
+								return nil, nil
+							}
+							return obj.GetDryRun(), nil
+						}
+						inter, ok := p.Source.(DescribeInstancesInputGetter)
+						if ok {
+							face := inter.GetDescribeInstancesInput()
+							if face == nil {
+								return nil, nil
+							}
+							if face.DryRun == nil {
+								return nil, nil
+							}
+							return face.GetDryRun(), nil
+						}
+						return nil, fmt.Errorf("field DryRun not resolved")
+					},
+				},
+				"Filters": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLFilterType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeInstancesInput)
+						if ok {
+							return obj.Filters, nil
+						}
+						inter, ok := p.Source.(DescribeInstancesInputGetter)
+						if ok {
+							face := inter.GetDescribeInstancesInput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Filters, nil
+						}
+						return nil, fmt.Errorf("field Filters not resolved")
+					},
+				},
+				"InstanceIds": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(github_com_graphql_go_graphql.String),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeInstancesInput)
+						if ok {
+							return obj.InstanceIds, nil
+						}
+						inter, ok := p.Source.(DescribeInstancesInputGetter)
+						if ok {
+							face := inter.GetDescribeInstancesInput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.InstanceIds, nil
+						}
+						return nil, fmt.Errorf("field InstanceIds not resolved")
+					},
+				},
+				"MaxResults": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.Int,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeInstancesInput)
+						if ok {
+							if obj.MaxResults == nil {
+								return nil, nil
+							}
+							return obj.GetMaxResults(), nil
+						}
+						inter, ok := p.Source.(DescribeInstancesInputGetter)
+						if ok {
+							face := inter.GetDescribeInstancesInput()
+							if face == nil {
+								return nil, nil
+							}
+							if face.MaxResults == nil {
+								return nil, nil
+							}
+							return face.GetMaxResults(), nil
+						}
+						return nil, fmt.Errorf("field MaxResults not resolved")
+					},
+				},
+				"NextToken": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeInstancesInput)
+						if ok {
+							if obj.NextToken == nil {
+								return nil, nil
+							}
+							return obj.GetNextToken(), nil
+						}
+						inter, ok := p.Source.(DescribeInstancesInputGetter)
+						if ok {
+							face := inter.GetDescribeInstancesInput()
+							if face == nil {
+								return nil, nil
+							}
+							if face.NextToken == nil {
+								return nil, nil
+							}
+							return face.GetNextToken(), nil
+						}
+						return nil, fmt.Errorf("field NextToken not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLDescribeInstancesOutputType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "ec2DescribeInstancesOutput",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"NextToken": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeInstancesOutput)
+						if ok {
+							if obj.NextToken == nil {
+								return nil, nil
+							}
+							return obj.GetNextToken(), nil
+						}
+						inter, ok := p.Source.(DescribeInstancesOutputGetter)
+						if ok {
+							face := inter.GetDescribeInstancesOutput()
+							if face == nil {
+								return nil, nil
+							}
+							if face.NextToken == nil {
+								return nil, nil
+							}
+							return face.GetNextToken(), nil
+						}
+						return nil, fmt.Errorf("field NextToken not resolved")
+					},
+				},
+				"Reservations": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLReservationType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeInstancesOutput)
+						if ok {
+							return obj.Reservations, nil
+						}
+						inter, ok := p.Source.(DescribeInstancesOutputGetter)
+						if ok {
+							face := inter.GetDescribeInstancesOutput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Reservations, nil
+						}
+						return nil, fmt.Errorf("field Reservations not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLDescribeRouteTablesInputType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "ec2DescribeRouteTablesInput",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"DryRun": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.Boolean,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeRouteTablesInput)
+						if ok {
+							if obj.DryRun == nil {
+								return nil, nil
+							}
+							return obj.GetDryRun(), nil
+						}
+						inter, ok := p.Source.(DescribeRouteTablesInputGetter)
+						if ok {
+							face := inter.GetDescribeRouteTablesInput()
+							if face == nil {
+								return nil, nil
+							}
+							if face.DryRun == nil {
+								return nil, nil
+							}
+							return face.GetDryRun(), nil
+						}
+						return nil, fmt.Errorf("field DryRun not resolved")
+					},
+				},
+				"Filters": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLFilterType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeRouteTablesInput)
+						if ok {
+							return obj.Filters, nil
+						}
+						inter, ok := p.Source.(DescribeRouteTablesInputGetter)
+						if ok {
+							face := inter.GetDescribeRouteTablesInput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Filters, nil
+						}
+						return nil, fmt.Errorf("field Filters not resolved")
+					},
+				},
+				"RouteTableIds": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(github_com_graphql_go_graphql.String),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeRouteTablesInput)
+						if ok {
+							return obj.RouteTableIds, nil
+						}
+						inter, ok := p.Source.(DescribeRouteTablesInputGetter)
+						if ok {
+							face := inter.GetDescribeRouteTablesInput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.RouteTableIds, nil
+						}
+						return nil, fmt.Errorf("field RouteTableIds not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLDescribeRouteTablesOutputType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "ec2DescribeRouteTablesOutput",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"RouteTables": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLRouteTableType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeRouteTablesOutput)
+						if ok {
+							return obj.RouteTables, nil
+						}
+						inter, ok := p.Source.(DescribeRouteTablesOutputGetter)
+						if ok {
+							face := inter.GetDescribeRouteTablesOutput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.RouteTables, nil
+						}
+						return nil, fmt.Errorf("field RouteTables not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLDescribeSecurityGroupsInputType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "ec2DescribeSecurityGroupsInput",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"DryRun": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.Boolean,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeSecurityGroupsInput)
+						if ok {
+							if obj.DryRun == nil {
+								return nil, nil
+							}
+							return obj.GetDryRun(), nil
+						}
+						inter, ok := p.Source.(DescribeSecurityGroupsInputGetter)
+						if ok {
+							face := inter.GetDescribeSecurityGroupsInput()
+							if face == nil {
+								return nil, nil
+							}
+							if face.DryRun == nil {
+								return nil, nil
+							}
+							return face.GetDryRun(), nil
+						}
+						return nil, fmt.Errorf("field DryRun not resolved")
+					},
+				},
+				"Filters": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLFilterType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeSecurityGroupsInput)
+						if ok {
+							return obj.Filters, nil
+						}
+						inter, ok := p.Source.(DescribeSecurityGroupsInputGetter)
+						if ok {
+							face := inter.GetDescribeSecurityGroupsInput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Filters, nil
+						}
+						return nil, fmt.Errorf("field Filters not resolved")
+					},
+				},
+				"GroupIds": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(github_com_graphql_go_graphql.String),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeSecurityGroupsInput)
+						if ok {
+							return obj.GroupIds, nil
+						}
+						inter, ok := p.Source.(DescribeSecurityGroupsInputGetter)
+						if ok {
+							face := inter.GetDescribeSecurityGroupsInput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.GroupIds, nil
+						}
+						return nil, fmt.Errorf("field GroupIds not resolved")
+					},
+				},
+				"GroupNames": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(github_com_graphql_go_graphql.String),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeSecurityGroupsInput)
+						if ok {
+							return obj.GroupNames, nil
+						}
+						inter, ok := p.Source.(DescribeSecurityGroupsInputGetter)
+						if ok {
+							face := inter.GetDescribeSecurityGroupsInput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.GroupNames, nil
+						}
+						return nil, fmt.Errorf("field GroupNames not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLDescribeSecurityGroupsOutputType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "ec2DescribeSecurityGroupsOutput",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"SecurityGroups": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLSecurityGroupType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeSecurityGroupsOutput)
+						if ok {
+							return obj.SecurityGroups, nil
+						}
+						inter, ok := p.Source.(DescribeSecurityGroupsOutputGetter)
+						if ok {
+							face := inter.GetDescribeSecurityGroupsOutput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.SecurityGroups, nil
+						}
+						return nil, fmt.Errorf("field SecurityGroups not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLDescribeSubnetsInputType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "ec2DescribeSubnetsInput",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"DryRun": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.Boolean,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeSubnetsInput)
+						if ok {
+							if obj.DryRun == nil {
+								return nil, nil
+							}
+							return obj.GetDryRun(), nil
+						}
+						inter, ok := p.Source.(DescribeSubnetsInputGetter)
+						if ok {
+							face := inter.GetDescribeSubnetsInput()
+							if face == nil {
+								return nil, nil
+							}
+							if face.DryRun == nil {
+								return nil, nil
+							}
+							return face.GetDryRun(), nil
+						}
+						return nil, fmt.Errorf("field DryRun not resolved")
+					},
+				},
+				"Filters": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLFilterType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeSubnetsInput)
+						if ok {
+							return obj.Filters, nil
+						}
+						inter, ok := p.Source.(DescribeSubnetsInputGetter)
+						if ok {
+							face := inter.GetDescribeSubnetsInput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Filters, nil
+						}
+						return nil, fmt.Errorf("field Filters not resolved")
+					},
+				},
+				"SubnetIds": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(github_com_graphql_go_graphql.String),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeSubnetsInput)
+						if ok {
+							return obj.SubnetIds, nil
+						}
+						inter, ok := p.Source.(DescribeSubnetsInputGetter)
+						if ok {
+							face := inter.GetDescribeSubnetsInput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.SubnetIds, nil
+						}
+						return nil, fmt.Errorf("field SubnetIds not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLDescribeSubnetsOutputType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "ec2DescribeSubnetsOutput",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"Subnets": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLSubnetType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeSubnetsOutput)
+						if ok {
+							return obj.Subnets, nil
+						}
+						inter, ok := p.Source.(DescribeSubnetsOutputGetter)
+						if ok {
+							face := inter.GetDescribeSubnetsOutput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Subnets, nil
+						}
+						return nil, fmt.Errorf("field Subnets not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLDescribeVpcsInputType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "ec2DescribeVpcsInput",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"DryRun": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.Boolean,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeVpcsInput)
+						if ok {
+							if obj.DryRun == nil {
+								return nil, nil
+							}
+							return obj.GetDryRun(), nil
+						}
+						inter, ok := p.Source.(DescribeVpcsInputGetter)
+						if ok {
+							face := inter.GetDescribeVpcsInput()
+							if face == nil {
+								return nil, nil
+							}
+							if face.DryRun == nil {
+								return nil, nil
+							}
+							return face.GetDryRun(), nil
+						}
+						return nil, fmt.Errorf("field DryRun not resolved")
+					},
+				},
+				"Filters": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLFilterType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeVpcsInput)
+						if ok {
+							return obj.Filters, nil
+						}
+						inter, ok := p.Source.(DescribeVpcsInputGetter)
+						if ok {
+							face := inter.GetDescribeVpcsInput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Filters, nil
+						}
+						return nil, fmt.Errorf("field Filters not resolved")
+					},
+				},
+				"VpcIds": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(github_com_graphql_go_graphql.String),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeVpcsInput)
+						if ok {
+							return obj.VpcIds, nil
+						}
+						inter, ok := p.Source.(DescribeVpcsInputGetter)
+						if ok {
+							face := inter.GetDescribeVpcsInput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.VpcIds, nil
+						}
+						return nil, fmt.Errorf("field VpcIds not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLDescribeVpcsOutputType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "ec2DescribeVpcsOutput",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"Vpcs": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLVpcType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeVpcsOutput)
+						if ok {
+							return obj.Vpcs, nil
+						}
+						inter, ok := p.Source.(DescribeVpcsOutputGetter)
+						if ok {
+							face := inter.GetDescribeVpcsOutput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Vpcs, nil
+						}
+						return nil, fmt.Errorf("field Vpcs not resolved")
+					},
+				},
+			}
+		}),
+	})
 	GraphQLEbsInstanceBlockDeviceType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
 		Name:        "ec2EbsInstanceBlockDevice",
 		Description: "",
@@ -3202,6 +5383,58 @@ func init() {
 							return face.GetVolumeId(), nil
 						}
 						return nil, fmt.Errorf("field VolumeId not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLFilterType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "ec2Filter",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"Name": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Filter)
+						if ok {
+							if obj.Name == nil {
+								return nil, nil
+							}
+							return obj.GetName(), nil
+						}
+						inter, ok := p.Source.(FilterGetter)
+						if ok {
+							face := inter.GetFilter()
+							if face == nil {
+								return nil, nil
+							}
+							if face.Name == nil {
+								return nil, nil
+							}
+							return face.GetName(), nil
+						}
+						return nil, fmt.Errorf("field Name not resolved")
+					},
+				},
+				"Values": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(github_com_graphql_go_graphql.String),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Filter)
+						if ok {
+							return obj.Values, nil
+						}
+						inter, ok := p.Source.(FilterGetter)
+						if ok {
+							face := inter.GetFilter()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Values, nil
+						}
+						return nil, fmt.Errorf("field Values not resolved")
 					},
 				},
 			}
@@ -5442,6 +7675,660 @@ func init() {
 			}
 		}),
 	})
+	GraphQLPropagatingVgwType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "ec2PropagatingVgw",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"GatewayId": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*PropagatingVgw)
+						if ok {
+							if obj.GatewayId == nil {
+								return nil, nil
+							}
+							return obj.GetGatewayId(), nil
+						}
+						inter, ok := p.Source.(PropagatingVgwGetter)
+						if ok {
+							face := inter.GetPropagatingVgw()
+							if face == nil {
+								return nil, nil
+							}
+							if face.GatewayId == nil {
+								return nil, nil
+							}
+							return face.GetGatewayId(), nil
+						}
+						return nil, fmt.Errorf("field GatewayId not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLReservationType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "ec2Reservation",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"Groups": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLGroupIdentifierType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Reservation)
+						if ok {
+							return obj.Groups, nil
+						}
+						inter, ok := p.Source.(ReservationGetter)
+						if ok {
+							face := inter.GetReservation()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Groups, nil
+						}
+						return nil, fmt.Errorf("field Groups not resolved")
+					},
+				},
+				"Instances": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLInstanceType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Reservation)
+						if ok {
+							return obj.Instances, nil
+						}
+						inter, ok := p.Source.(ReservationGetter)
+						if ok {
+							face := inter.GetReservation()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Instances, nil
+						}
+						return nil, fmt.Errorf("field Instances not resolved")
+					},
+				},
+				"OwnerId": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Reservation)
+						if ok {
+							if obj.OwnerId == nil {
+								return nil, nil
+							}
+							return obj.GetOwnerId(), nil
+						}
+						inter, ok := p.Source.(ReservationGetter)
+						if ok {
+							face := inter.GetReservation()
+							if face == nil {
+								return nil, nil
+							}
+							if face.OwnerId == nil {
+								return nil, nil
+							}
+							return face.GetOwnerId(), nil
+						}
+						return nil, fmt.Errorf("field OwnerId not resolved")
+					},
+				},
+				"RequesterId": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Reservation)
+						if ok {
+							if obj.RequesterId == nil {
+								return nil, nil
+							}
+							return obj.GetRequesterId(), nil
+						}
+						inter, ok := p.Source.(ReservationGetter)
+						if ok {
+							face := inter.GetReservation()
+							if face == nil {
+								return nil, nil
+							}
+							if face.RequesterId == nil {
+								return nil, nil
+							}
+							return face.GetRequesterId(), nil
+						}
+						return nil, fmt.Errorf("field RequesterId not resolved")
+					},
+				},
+				"ReservationId": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Reservation)
+						if ok {
+							if obj.ReservationId == nil {
+								return nil, nil
+							}
+							return obj.GetReservationId(), nil
+						}
+						inter, ok := p.Source.(ReservationGetter)
+						if ok {
+							face := inter.GetReservation()
+							if face == nil {
+								return nil, nil
+							}
+							if face.ReservationId == nil {
+								return nil, nil
+							}
+							return face.GetReservationId(), nil
+						}
+						return nil, fmt.Errorf("field ReservationId not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLRouteType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "ec2Route",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"DestinationCidrBlock": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Route)
+						if ok {
+							if obj.DestinationCidrBlock == nil {
+								return nil, nil
+							}
+							return obj.GetDestinationCidrBlock(), nil
+						}
+						inter, ok := p.Source.(RouteGetter)
+						if ok {
+							face := inter.GetRoute()
+							if face == nil {
+								return nil, nil
+							}
+							if face.DestinationCidrBlock == nil {
+								return nil, nil
+							}
+							return face.GetDestinationCidrBlock(), nil
+						}
+						return nil, fmt.Errorf("field DestinationCidrBlock not resolved")
+					},
+				},
+				"DestinationPrefixListId": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Route)
+						if ok {
+							if obj.DestinationPrefixListId == nil {
+								return nil, nil
+							}
+							return obj.GetDestinationPrefixListId(), nil
+						}
+						inter, ok := p.Source.(RouteGetter)
+						if ok {
+							face := inter.GetRoute()
+							if face == nil {
+								return nil, nil
+							}
+							if face.DestinationPrefixListId == nil {
+								return nil, nil
+							}
+							return face.GetDestinationPrefixListId(), nil
+						}
+						return nil, fmt.Errorf("field DestinationPrefixListId not resolved")
+					},
+				},
+				"GatewayId": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Route)
+						if ok {
+							if obj.GatewayId == nil {
+								return nil, nil
+							}
+							return obj.GetGatewayId(), nil
+						}
+						inter, ok := p.Source.(RouteGetter)
+						if ok {
+							face := inter.GetRoute()
+							if face == nil {
+								return nil, nil
+							}
+							if face.GatewayId == nil {
+								return nil, nil
+							}
+							return face.GetGatewayId(), nil
+						}
+						return nil, fmt.Errorf("field GatewayId not resolved")
+					},
+				},
+				"InstanceId": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Route)
+						if ok {
+							if obj.InstanceId == nil {
+								return nil, nil
+							}
+							return obj.GetInstanceId(), nil
+						}
+						inter, ok := p.Source.(RouteGetter)
+						if ok {
+							face := inter.GetRoute()
+							if face == nil {
+								return nil, nil
+							}
+							if face.InstanceId == nil {
+								return nil, nil
+							}
+							return face.GetInstanceId(), nil
+						}
+						return nil, fmt.Errorf("field InstanceId not resolved")
+					},
+				},
+				"InstanceOwnerId": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Route)
+						if ok {
+							if obj.InstanceOwnerId == nil {
+								return nil, nil
+							}
+							return obj.GetInstanceOwnerId(), nil
+						}
+						inter, ok := p.Source.(RouteGetter)
+						if ok {
+							face := inter.GetRoute()
+							if face == nil {
+								return nil, nil
+							}
+							if face.InstanceOwnerId == nil {
+								return nil, nil
+							}
+							return face.GetInstanceOwnerId(), nil
+						}
+						return nil, fmt.Errorf("field InstanceOwnerId not resolved")
+					},
+				},
+				"NatGatewayId": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Route)
+						if ok {
+							if obj.NatGatewayId == nil {
+								return nil, nil
+							}
+							return obj.GetNatGatewayId(), nil
+						}
+						inter, ok := p.Source.(RouteGetter)
+						if ok {
+							face := inter.GetRoute()
+							if face == nil {
+								return nil, nil
+							}
+							if face.NatGatewayId == nil {
+								return nil, nil
+							}
+							return face.GetNatGatewayId(), nil
+						}
+						return nil, fmt.Errorf("field NatGatewayId not resolved")
+					},
+				},
+				"NetworkInterfaceId": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Route)
+						if ok {
+							if obj.NetworkInterfaceId == nil {
+								return nil, nil
+							}
+							return obj.GetNetworkInterfaceId(), nil
+						}
+						inter, ok := p.Source.(RouteGetter)
+						if ok {
+							face := inter.GetRoute()
+							if face == nil {
+								return nil, nil
+							}
+							if face.NetworkInterfaceId == nil {
+								return nil, nil
+							}
+							return face.GetNetworkInterfaceId(), nil
+						}
+						return nil, fmt.Errorf("field NetworkInterfaceId not resolved")
+					},
+				},
+				"Origin": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Route)
+						if ok {
+							if obj.Origin == nil {
+								return nil, nil
+							}
+							return obj.GetOrigin(), nil
+						}
+						inter, ok := p.Source.(RouteGetter)
+						if ok {
+							face := inter.GetRoute()
+							if face == nil {
+								return nil, nil
+							}
+							if face.Origin == nil {
+								return nil, nil
+							}
+							return face.GetOrigin(), nil
+						}
+						return nil, fmt.Errorf("field Origin not resolved")
+					},
+				},
+				"State": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Route)
+						if ok {
+							if obj.State == nil {
+								return nil, nil
+							}
+							return obj.GetState(), nil
+						}
+						inter, ok := p.Source.(RouteGetter)
+						if ok {
+							face := inter.GetRoute()
+							if face == nil {
+								return nil, nil
+							}
+							if face.State == nil {
+								return nil, nil
+							}
+							return face.GetState(), nil
+						}
+						return nil, fmt.Errorf("field State not resolved")
+					},
+				},
+				"VpcPeeringConnectionId": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*Route)
+						if ok {
+							if obj.VpcPeeringConnectionId == nil {
+								return nil, nil
+							}
+							return obj.GetVpcPeeringConnectionId(), nil
+						}
+						inter, ok := p.Source.(RouteGetter)
+						if ok {
+							face := inter.GetRoute()
+							if face == nil {
+								return nil, nil
+							}
+							if face.VpcPeeringConnectionId == nil {
+								return nil, nil
+							}
+							return face.GetVpcPeeringConnectionId(), nil
+						}
+						return nil, fmt.Errorf("field VpcPeeringConnectionId not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLRouteTableType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "ec2RouteTable",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"Associations": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLRouteTableAssociationType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*RouteTable)
+						if ok {
+							return obj.Associations, nil
+						}
+						inter, ok := p.Source.(RouteTableGetter)
+						if ok {
+							face := inter.GetRouteTable()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Associations, nil
+						}
+						return nil, fmt.Errorf("field Associations not resolved")
+					},
+				},
+				"PropagatingVgws": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLPropagatingVgwType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*RouteTable)
+						if ok {
+							return obj.PropagatingVgws, nil
+						}
+						inter, ok := p.Source.(RouteTableGetter)
+						if ok {
+							face := inter.GetRouteTable()
+							if face == nil {
+								return nil, nil
+							}
+							return face.PropagatingVgws, nil
+						}
+						return nil, fmt.Errorf("field PropagatingVgws not resolved")
+					},
+				},
+				"RouteTableId": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*RouteTable)
+						if ok {
+							if obj.RouteTableId == nil {
+								return nil, nil
+							}
+							return obj.GetRouteTableId(), nil
+						}
+						inter, ok := p.Source.(RouteTableGetter)
+						if ok {
+							face := inter.GetRouteTable()
+							if face == nil {
+								return nil, nil
+							}
+							if face.RouteTableId == nil {
+								return nil, nil
+							}
+							return face.GetRouteTableId(), nil
+						}
+						return nil, fmt.Errorf("field RouteTableId not resolved")
+					},
+				},
+				"Routes": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLRouteType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*RouteTable)
+						if ok {
+							return obj.Routes, nil
+						}
+						inter, ok := p.Source.(RouteTableGetter)
+						if ok {
+							face := inter.GetRouteTable()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Routes, nil
+						}
+						return nil, fmt.Errorf("field Routes not resolved")
+					},
+				},
+				"Tags": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLTagType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*RouteTable)
+						if ok {
+							return obj.Tags, nil
+						}
+						inter, ok := p.Source.(RouteTableGetter)
+						if ok {
+							face := inter.GetRouteTable()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Tags, nil
+						}
+						return nil, fmt.Errorf("field Tags not resolved")
+					},
+				},
+				"VpcId": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*RouteTable)
+						if ok {
+							if obj.VpcId == nil {
+								return nil, nil
+							}
+							return obj.GetVpcId(), nil
+						}
+						inter, ok := p.Source.(RouteTableGetter)
+						if ok {
+							face := inter.GetRouteTable()
+							if face == nil {
+								return nil, nil
+							}
+							if face.VpcId == nil {
+								return nil, nil
+							}
+							return face.GetVpcId(), nil
+						}
+						return nil, fmt.Errorf("field VpcId not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLRouteTableAssociationType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "ec2RouteTableAssociation",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"Main": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.Boolean,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*RouteTableAssociation)
+						if ok {
+							if obj.Main == nil {
+								return nil, nil
+							}
+							return obj.GetMain(), nil
+						}
+						inter, ok := p.Source.(RouteTableAssociationGetter)
+						if ok {
+							face := inter.GetRouteTableAssociation()
+							if face == nil {
+								return nil, nil
+							}
+							if face.Main == nil {
+								return nil, nil
+							}
+							return face.GetMain(), nil
+						}
+						return nil, fmt.Errorf("field Main not resolved")
+					},
+				},
+				"RouteTableAssociationId": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*RouteTableAssociation)
+						if ok {
+							if obj.RouteTableAssociationId == nil {
+								return nil, nil
+							}
+							return obj.GetRouteTableAssociationId(), nil
+						}
+						inter, ok := p.Source.(RouteTableAssociationGetter)
+						if ok {
+							face := inter.GetRouteTableAssociation()
+							if face == nil {
+								return nil, nil
+							}
+							if face.RouteTableAssociationId == nil {
+								return nil, nil
+							}
+							return face.GetRouteTableAssociationId(), nil
+						}
+						return nil, fmt.Errorf("field RouteTableAssociationId not resolved")
+					},
+				},
+				"RouteTableId": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*RouteTableAssociation)
+						if ok {
+							if obj.RouteTableId == nil {
+								return nil, nil
+							}
+							return obj.GetRouteTableId(), nil
+						}
+						inter, ok := p.Source.(RouteTableAssociationGetter)
+						if ok {
+							face := inter.GetRouteTableAssociation()
+							if face == nil {
+								return nil, nil
+							}
+							if face.RouteTableId == nil {
+								return nil, nil
+							}
+							return face.GetRouteTableId(), nil
+						}
+						return nil, fmt.Errorf("field RouteTableId not resolved")
+					},
+				},
+				"SubnetId": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*RouteTableAssociation)
+						if ok {
+							if obj.SubnetId == nil {
+								return nil, nil
+							}
+							return obj.GetSubnetId(), nil
+						}
+						inter, ok := p.Source.(RouteTableAssociationGetter)
+						if ok {
+							face := inter.GetRouteTableAssociation()
+							if face == nil {
+								return nil, nil
+							}
+							if face.SubnetId == nil {
+								return nil, nil
+							}
+							return face.GetSubnetId(), nil
+						}
+						return nil, fmt.Errorf("field SubnetId not resolved")
+					},
+				},
+			}
+		}),
+	})
 	GraphQLSecurityGroupType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
 		Name:        "ec2SecurityGroup",
 		Description: "",
@@ -6311,26 +9198,129 @@ func init() {
 		}),
 	})
 }
-func NewPopulatedEbsInstanceBlockDevice(r randyTypes, easy bool) *EbsInstanceBlockDevice {
-	this := &EbsInstanceBlockDevice{}
+func NewPopulatedDescribeInstancesInput(r randyTypes, easy bool) *DescribeInstancesInput {
+	this := &DescribeInstancesInput{}
 	if r.Intn(10) != 0 {
-		v1 := int64(r.Int63())
-		if r.Intn(2) == 0 {
-			v1 *= -1
+		v1 := bool(bool(r.Intn(2) == 0))
+		this.DryRun = &v1
+	}
+	if r.Intn(10) != 0 {
+		v2 := r.Intn(5)
+		this.Filters = make([]*Filter, v2)
+		for i := 0; i < v2; i++ {
+			this.Filters[i] = NewPopulatedFilter(r, easy)
 		}
-		this.AttachTime = &v1
 	}
 	if r.Intn(10) != 0 {
-		v2 := bool(bool(r.Intn(2) == 0))
-		this.DeleteOnTermination = &v2
+		v3 := r.Intn(10)
+		this.InstanceIds = make([]string, v3)
+		for i := 0; i < v3; i++ {
+			this.InstanceIds[i] = randStringTypes(r)
+		}
 	}
 	if r.Intn(10) != 0 {
-		v3 := randStringTypes(r)
-		this.Status = &v3
+		v4 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v4 *= -1
+		}
+		this.MaxResults = &v4
 	}
 	if r.Intn(10) != 0 {
-		v4 := randStringTypes(r)
-		this.VolumeId = &v4
+		v5 := randStringTypes(r)
+		this.NextToken = &v5
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 7)
+	}
+	return this
+}
+
+func NewPopulatedDescribeInstancesOutput(r randyTypes, easy bool) *DescribeInstancesOutput {
+	this := &DescribeInstancesOutput{}
+	if r.Intn(10) != 0 {
+		v6 := randStringTypes(r)
+		this.NextToken = &v6
+	}
+	if r.Intn(10) != 0 {
+		v7 := r.Intn(5)
+		this.Reservations = make([]*Reservation, v7)
+		for i := 0; i < v7; i++ {
+			this.Reservations[i] = NewPopulatedReservation(r, easy)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
+	}
+	return this
+}
+
+func NewPopulatedDescribeRouteTablesInput(r randyTypes, easy bool) *DescribeRouteTablesInput {
+	this := &DescribeRouteTablesInput{}
+	if r.Intn(10) != 0 {
+		v8 := bool(bool(r.Intn(2) == 0))
+		this.DryRun = &v8
+	}
+	if r.Intn(10) != 0 {
+		v9 := r.Intn(5)
+		this.Filters = make([]*Filter, v9)
+		for i := 0; i < v9; i++ {
+			this.Filters[i] = NewPopulatedFilter(r, easy)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v10 := r.Intn(10)
+		this.RouteTableIds = make([]string, v10)
+		for i := 0; i < v10; i++ {
+			this.RouteTableIds[i] = randStringTypes(r)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 5)
+	}
+	return this
+}
+
+func NewPopulatedDescribeRouteTablesOutput(r randyTypes, easy bool) *DescribeRouteTablesOutput {
+	this := &DescribeRouteTablesOutput{}
+	if r.Intn(10) != 0 {
+		v11 := r.Intn(5)
+		this.RouteTables = make([]*RouteTable, v11)
+		for i := 0; i < v11; i++ {
+			this.RouteTables[i] = NewPopulatedRouteTable(r, easy)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 3)
+	}
+	return this
+}
+
+func NewPopulatedDescribeSecurityGroupsInput(r randyTypes, easy bool) *DescribeSecurityGroupsInput {
+	this := &DescribeSecurityGroupsInput{}
+	if r.Intn(10) != 0 {
+		v12 := bool(bool(r.Intn(2) == 0))
+		this.DryRun = &v12
+	}
+	if r.Intn(10) != 0 {
+		v13 := r.Intn(5)
+		this.Filters = make([]*Filter, v13)
+		for i := 0; i < v13; i++ {
+			this.Filters[i] = NewPopulatedFilter(r, easy)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v14 := r.Intn(10)
+		this.GroupIds = make([]string, v14)
+		for i := 0; i < v14; i++ {
+			this.GroupIds[i] = randStringTypes(r)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v15 := r.Intn(10)
+		this.GroupNames = make([]string, v15)
+		for i := 0; i < v15; i++ {
+			this.GroupNames[i] = randStringTypes(r)
+		}
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 6)
@@ -6338,15 +9328,158 @@ func NewPopulatedEbsInstanceBlockDevice(r randyTypes, easy bool) *EbsInstanceBlo
 	return this
 }
 
+func NewPopulatedDescribeSecurityGroupsOutput(r randyTypes, easy bool) *DescribeSecurityGroupsOutput {
+	this := &DescribeSecurityGroupsOutput{}
+	if r.Intn(10) != 0 {
+		v16 := r.Intn(5)
+		this.SecurityGroups = make([]*SecurityGroup, v16)
+		for i := 0; i < v16; i++ {
+			this.SecurityGroups[i] = NewPopulatedSecurityGroup(r, easy)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 3)
+	}
+	return this
+}
+
+func NewPopulatedDescribeSubnetsInput(r randyTypes, easy bool) *DescribeSubnetsInput {
+	this := &DescribeSubnetsInput{}
+	if r.Intn(10) != 0 {
+		v17 := bool(bool(r.Intn(2) == 0))
+		this.DryRun = &v17
+	}
+	if r.Intn(10) != 0 {
+		v18 := r.Intn(5)
+		this.Filters = make([]*Filter, v18)
+		for i := 0; i < v18; i++ {
+			this.Filters[i] = NewPopulatedFilter(r, easy)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v19 := r.Intn(10)
+		this.SubnetIds = make([]string, v19)
+		for i := 0; i < v19; i++ {
+			this.SubnetIds[i] = randStringTypes(r)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 5)
+	}
+	return this
+}
+
+func NewPopulatedDescribeSubnetsOutput(r randyTypes, easy bool) *DescribeSubnetsOutput {
+	this := &DescribeSubnetsOutput{}
+	if r.Intn(10) != 0 {
+		v20 := r.Intn(5)
+		this.Subnets = make([]*Subnet, v20)
+		for i := 0; i < v20; i++ {
+			this.Subnets[i] = NewPopulatedSubnet(r, easy)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 3)
+	}
+	return this
+}
+
+func NewPopulatedDescribeVpcsInput(r randyTypes, easy bool) *DescribeVpcsInput {
+	this := &DescribeVpcsInput{}
+	if r.Intn(10) != 0 {
+		v21 := bool(bool(r.Intn(2) == 0))
+		this.DryRun = &v21
+	}
+	if r.Intn(10) != 0 {
+		v22 := r.Intn(5)
+		this.Filters = make([]*Filter, v22)
+		for i := 0; i < v22; i++ {
+			this.Filters[i] = NewPopulatedFilter(r, easy)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v23 := r.Intn(10)
+		this.VpcIds = make([]string, v23)
+		for i := 0; i < v23; i++ {
+			this.VpcIds[i] = randStringTypes(r)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 5)
+	}
+	return this
+}
+
+func NewPopulatedDescribeVpcsOutput(r randyTypes, easy bool) *DescribeVpcsOutput {
+	this := &DescribeVpcsOutput{}
+	if r.Intn(10) != 0 {
+		v24 := r.Intn(5)
+		this.Vpcs = make([]*Vpc, v24)
+		for i := 0; i < v24; i++ {
+			this.Vpcs[i] = NewPopulatedVpc(r, easy)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 3)
+	}
+	return this
+}
+
+func NewPopulatedEbsInstanceBlockDevice(r randyTypes, easy bool) *EbsInstanceBlockDevice {
+	this := &EbsInstanceBlockDevice{}
+	if r.Intn(10) != 0 {
+		v25 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v25 *= -1
+		}
+		this.AttachTime = &v25
+	}
+	if r.Intn(10) != 0 {
+		v26 := bool(bool(r.Intn(2) == 0))
+		this.DeleteOnTermination = &v26
+	}
+	if r.Intn(10) != 0 {
+		v27 := randStringTypes(r)
+		this.Status = &v27
+	}
+	if r.Intn(10) != 0 {
+		v28 := randStringTypes(r)
+		this.VolumeId = &v28
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 6)
+	}
+	return this
+}
+
+func NewPopulatedFilter(r randyTypes, easy bool) *Filter {
+	this := &Filter{}
+	if r.Intn(10) != 0 {
+		v29 := randStringTypes(r)
+		this.Name = &v29
+	}
+	if r.Intn(10) != 0 {
+		v30 := r.Intn(10)
+		this.Values = make([]string, v30)
+		for i := 0; i < v30; i++ {
+			this.Values[i] = randStringTypes(r)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
+	}
+	return this
+}
+
 func NewPopulatedGroupIdentifier(r randyTypes, easy bool) *GroupIdentifier {
 	this := &GroupIdentifier{}
 	if r.Intn(10) != 0 {
-		v5 := randStringTypes(r)
-		this.GroupId = &v5
+		v31 := randStringTypes(r)
+		this.GroupId = &v31
 	}
 	if r.Intn(10) != 0 {
-		v6 := randStringTypes(r)
-		this.GroupName = &v6
+		v32 := randStringTypes(r)
+		this.GroupName = &v32
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
@@ -6357,12 +9490,12 @@ func NewPopulatedGroupIdentifier(r randyTypes, easy bool) *GroupIdentifier {
 func NewPopulatedIamInstanceProfile(r randyTypes, easy bool) *IamInstanceProfile {
 	this := &IamInstanceProfile{}
 	if r.Intn(10) != 0 {
-		v7 := randStringTypes(r)
-		this.Arn = &v7
+		v33 := randStringTypes(r)
+		this.Arn = &v33
 	}
 	if r.Intn(10) != 0 {
-		v8 := randStringTypes(r)
-		this.Id = &v8
+		v34 := randStringTypes(r)
+		this.Id = &v34
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
@@ -6373,76 +9506,76 @@ func NewPopulatedIamInstanceProfile(r randyTypes, easy bool) *IamInstanceProfile
 func NewPopulatedInstance(r randyTypes, easy bool) *Instance {
 	this := &Instance{}
 	if r.Intn(10) != 0 {
-		v9 := int64(r.Int63())
+		v35 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v9 *= -1
+			v35 *= -1
 		}
-		this.AmiLaunchIndex = &v9
+		this.AmiLaunchIndex = &v35
 	}
 	if r.Intn(10) != 0 {
-		v10 := randStringTypes(r)
-		this.Architecture = &v10
+		v36 := randStringTypes(r)
+		this.Architecture = &v36
 	}
 	if r.Intn(10) != 0 {
-		v11 := r.Intn(5)
-		this.BlockDeviceMappings = make([]*InstanceBlockDeviceMapping, v11)
-		for i := 0; i < v11; i++ {
+		v37 := r.Intn(5)
+		this.BlockDeviceMappings = make([]*InstanceBlockDeviceMapping, v37)
+		for i := 0; i < v37; i++ {
 			this.BlockDeviceMappings[i] = NewPopulatedInstanceBlockDeviceMapping(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v12 := randStringTypes(r)
-		this.ClientToken = &v12
+		v38 := randStringTypes(r)
+		this.ClientToken = &v38
 	}
 	if r.Intn(10) != 0 {
-		v13 := bool(bool(r.Intn(2) == 0))
-		this.EbsOptimized = &v13
+		v39 := bool(bool(r.Intn(2) == 0))
+		this.EbsOptimized = &v39
 	}
 	if r.Intn(10) != 0 {
-		v14 := randStringTypes(r)
-		this.Hypervisor = &v14
+		v40 := randStringTypes(r)
+		this.Hypervisor = &v40
 	}
 	if r.Intn(10) != 0 {
 		this.IamInstanceProfile = NewPopulatedIamInstanceProfile(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		v15 := randStringTypes(r)
-		this.ImageId = &v15
+		v41 := randStringTypes(r)
+		this.ImageId = &v41
 	}
 	if r.Intn(10) != 0 {
-		v16 := randStringTypes(r)
-		this.InstanceId = &v16
+		v42 := randStringTypes(r)
+		this.InstanceId = &v42
 	}
 	if r.Intn(10) != 0 {
-		v17 := randStringTypes(r)
-		this.InstanceLifecycle = &v17
+		v43 := randStringTypes(r)
+		this.InstanceLifecycle = &v43
 	}
 	if r.Intn(10) != 0 {
-		v18 := randStringTypes(r)
-		this.InstanceType = &v18
+		v44 := randStringTypes(r)
+		this.InstanceType = &v44
 	}
 	if r.Intn(10) != 0 {
-		v19 := randStringTypes(r)
-		this.KernelId = &v19
+		v45 := randStringTypes(r)
+		this.KernelId = &v45
 	}
 	if r.Intn(10) != 0 {
-		v20 := randStringTypes(r)
-		this.KeyName = &v20
+		v46 := randStringTypes(r)
+		this.KeyName = &v46
 	}
 	if r.Intn(10) != 0 {
-		v21 := int64(r.Int63())
+		v47 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v21 *= -1
+			v47 *= -1
 		}
-		this.LaunchTime = &v21
+		this.LaunchTime = &v47
 	}
 	if r.Intn(10) != 0 {
 		this.Monitoring = NewPopulatedMonitoring(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		v22 := r.Intn(5)
-		this.NetworkInterfaces = make([]*InstanceNetworkInterface, v22)
-		for i := 0; i < v22; i++ {
+		v48 := r.Intn(5)
+		this.NetworkInterfaces = make([]*InstanceNetworkInterface, v48)
+		for i := 0; i < v48; i++ {
 			this.NetworkInterfaces[i] = NewPopulatedInstanceNetworkInterface(r, easy)
 		}
 	}
@@ -6450,62 +9583,62 @@ func NewPopulatedInstance(r randyTypes, easy bool) *Instance {
 		this.Placement = NewPopulatedPlacement(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		v23 := randStringTypes(r)
-		this.Platform = &v23
+		v49 := randStringTypes(r)
+		this.Platform = &v49
 	}
 	if r.Intn(10) != 0 {
-		v24 := randStringTypes(r)
-		this.PrivateDnsName = &v24
+		v50 := randStringTypes(r)
+		this.PrivateDnsName = &v50
 	}
 	if r.Intn(10) != 0 {
-		v25 := randStringTypes(r)
-		this.PrivateIpAddress = &v25
+		v51 := randStringTypes(r)
+		this.PrivateIpAddress = &v51
 	}
 	if r.Intn(10) != 0 {
-		v26 := r.Intn(5)
-		this.ProductCodes = make([]*ProductCode, v26)
-		for i := 0; i < v26; i++ {
+		v52 := r.Intn(5)
+		this.ProductCodes = make([]*ProductCode, v52)
+		for i := 0; i < v52; i++ {
 			this.ProductCodes[i] = NewPopulatedProductCode(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v27 := randStringTypes(r)
-		this.PublicDnsName = &v27
+		v53 := randStringTypes(r)
+		this.PublicDnsName = &v53
 	}
 	if r.Intn(10) != 0 {
-		v28 := randStringTypes(r)
-		this.PublicIpAddress = &v28
+		v54 := randStringTypes(r)
+		this.PublicIpAddress = &v54
 	}
 	if r.Intn(10) != 0 {
-		v29 := randStringTypes(r)
-		this.RamdiskId = &v29
+		v55 := randStringTypes(r)
+		this.RamdiskId = &v55
 	}
 	if r.Intn(10) != 0 {
-		v30 := randStringTypes(r)
-		this.RootDeviceName = &v30
+		v56 := randStringTypes(r)
+		this.RootDeviceName = &v56
 	}
 	if r.Intn(10) != 0 {
-		v31 := randStringTypes(r)
-		this.RootDeviceType = &v31
+		v57 := randStringTypes(r)
+		this.RootDeviceType = &v57
 	}
 	if r.Intn(10) != 0 {
-		v32 := r.Intn(5)
-		this.SecurityGroups = make([]*GroupIdentifier, v32)
-		for i := 0; i < v32; i++ {
+		v58 := r.Intn(5)
+		this.SecurityGroups = make([]*GroupIdentifier, v58)
+		for i := 0; i < v58; i++ {
 			this.SecurityGroups[i] = NewPopulatedGroupIdentifier(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v33 := bool(bool(r.Intn(2) == 0))
-		this.SourceDestCheck = &v33
+		v59 := bool(bool(r.Intn(2) == 0))
+		this.SourceDestCheck = &v59
 	}
 	if r.Intn(10) != 0 {
-		v34 := randStringTypes(r)
-		this.SpotInstanceRequestId = &v34
+		v60 := randStringTypes(r)
+		this.SpotInstanceRequestId = &v60
 	}
 	if r.Intn(10) != 0 {
-		v35 := randStringTypes(r)
-		this.SriovNetSupport = &v35
+		v61 := randStringTypes(r)
+		this.SriovNetSupport = &v61
 	}
 	if r.Intn(10) != 0 {
 		this.State = NewPopulatedInstanceState(r, easy)
@@ -6514,27 +9647,27 @@ func NewPopulatedInstance(r randyTypes, easy bool) *Instance {
 		this.StateReason = NewPopulatedStateReason(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		v36 := randStringTypes(r)
-		this.StateTransitionReason = &v36
+		v62 := randStringTypes(r)
+		this.StateTransitionReason = &v62
 	}
 	if r.Intn(10) != 0 {
-		v37 := randStringTypes(r)
-		this.SubnetId = &v37
+		v63 := randStringTypes(r)
+		this.SubnetId = &v63
 	}
 	if r.Intn(10) != 0 {
-		v38 := r.Intn(5)
-		this.Tags = make([]*Tag, v38)
-		for i := 0; i < v38; i++ {
+		v64 := r.Intn(5)
+		this.Tags = make([]*Tag, v64)
+		for i := 0; i < v64; i++ {
 			this.Tags[i] = NewPopulatedTag(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v39 := randStringTypes(r)
-		this.VirtualizationType = &v39
+		v65 := randStringTypes(r)
+		this.VirtualizationType = &v65
 	}
 	if r.Intn(10) != 0 {
-		v40 := randStringTypes(r)
-		this.VpcId = &v40
+		v66 := randStringTypes(r)
+		this.VpcId = &v66
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 39)
@@ -6545,8 +9678,8 @@ func NewPopulatedInstance(r randyTypes, easy bool) *Instance {
 func NewPopulatedInstanceBlockDeviceMapping(r randyTypes, easy bool) *InstanceBlockDeviceMapping {
 	this := &InstanceBlockDeviceMapping{}
 	if r.Intn(10) != 0 {
-		v41 := randStringTypes(r)
-		this.DeviceName = &v41
+		v67 := randStringTypes(r)
+		this.DeviceName = &v67
 	}
 	if r.Intn(10) != 0 {
 		this.Ebs = NewPopulatedEbsInstanceBlockDevice(r, easy)
@@ -6566,58 +9699,58 @@ func NewPopulatedInstanceNetworkInterface(r randyTypes, easy bool) *InstanceNetw
 		this.Attachment = NewPopulatedInstanceNetworkInterfaceAttachment(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		v42 := randStringTypes(r)
-		this.Description = &v42
+		v68 := randStringTypes(r)
+		this.Description = &v68
 	}
 	if r.Intn(10) != 0 {
-		v43 := r.Intn(5)
-		this.Groups = make([]*GroupIdentifier, v43)
-		for i := 0; i < v43; i++ {
+		v69 := r.Intn(5)
+		this.Groups = make([]*GroupIdentifier, v69)
+		for i := 0; i < v69; i++ {
 			this.Groups[i] = NewPopulatedGroupIdentifier(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v44 := randStringTypes(r)
-		this.MacAddress = &v44
+		v70 := randStringTypes(r)
+		this.MacAddress = &v70
 	}
 	if r.Intn(10) != 0 {
-		v45 := randStringTypes(r)
-		this.NetworkInterfaceId = &v45
+		v71 := randStringTypes(r)
+		this.NetworkInterfaceId = &v71
 	}
 	if r.Intn(10) != 0 {
-		v46 := randStringTypes(r)
-		this.OwnerId = &v46
+		v72 := randStringTypes(r)
+		this.OwnerId = &v72
 	}
 	if r.Intn(10) != 0 {
-		v47 := randStringTypes(r)
-		this.PrivateDnsName = &v47
+		v73 := randStringTypes(r)
+		this.PrivateDnsName = &v73
 	}
 	if r.Intn(10) != 0 {
-		v48 := randStringTypes(r)
-		this.PrivateIpAddress = &v48
+		v74 := randStringTypes(r)
+		this.PrivateIpAddress = &v74
 	}
 	if r.Intn(10) != 0 {
-		v49 := r.Intn(5)
-		this.PrivateIpAddresses = make([]*InstancePrivateIpAddress, v49)
-		for i := 0; i < v49; i++ {
+		v75 := r.Intn(5)
+		this.PrivateIpAddresses = make([]*InstancePrivateIpAddress, v75)
+		for i := 0; i < v75; i++ {
 			this.PrivateIpAddresses[i] = NewPopulatedInstancePrivateIpAddress(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v50 := bool(bool(r.Intn(2) == 0))
-		this.SourceDestCheck = &v50
+		v76 := bool(bool(r.Intn(2) == 0))
+		this.SourceDestCheck = &v76
 	}
 	if r.Intn(10) != 0 {
-		v51 := randStringTypes(r)
-		this.Status = &v51
+		v77 := randStringTypes(r)
+		this.Status = &v77
 	}
 	if r.Intn(10) != 0 {
-		v52 := randStringTypes(r)
-		this.SubnetId = &v52
+		v78 := randStringTypes(r)
+		this.SubnetId = &v78
 	}
 	if r.Intn(10) != 0 {
-		v53 := randStringTypes(r)
-		this.VpcId = &v53
+		v79 := randStringTypes(r)
+		this.VpcId = &v79
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 16)
@@ -6628,16 +9761,16 @@ func NewPopulatedInstanceNetworkInterface(r randyTypes, easy bool) *InstanceNetw
 func NewPopulatedInstanceNetworkInterfaceAssociation(r randyTypes, easy bool) *InstanceNetworkInterfaceAssociation {
 	this := &InstanceNetworkInterfaceAssociation{}
 	if r.Intn(10) != 0 {
-		v54 := randStringTypes(r)
-		this.IpOwnerId = &v54
+		v80 := randStringTypes(r)
+		this.IpOwnerId = &v80
 	}
 	if r.Intn(10) != 0 {
-		v55 := randStringTypes(r)
-		this.PublicDnsName = &v55
+		v81 := randStringTypes(r)
+		this.PublicDnsName = &v81
 	}
 	if r.Intn(10) != 0 {
-		v56 := randStringTypes(r)
-		this.PublicIp = &v56
+		v82 := randStringTypes(r)
+		this.PublicIp = &v82
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 5)
@@ -6648,30 +9781,30 @@ func NewPopulatedInstanceNetworkInterfaceAssociation(r randyTypes, easy bool) *I
 func NewPopulatedInstanceNetworkInterfaceAttachment(r randyTypes, easy bool) *InstanceNetworkInterfaceAttachment {
 	this := &InstanceNetworkInterfaceAttachment{}
 	if r.Intn(10) != 0 {
-		v57 := int64(r.Int63())
+		v83 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v57 *= -1
+			v83 *= -1
 		}
-		this.AttachTime = &v57
+		this.AttachTime = &v83
 	}
 	if r.Intn(10) != 0 {
-		v58 := randStringTypes(r)
-		this.AttachmentId = &v58
+		v84 := randStringTypes(r)
+		this.AttachmentId = &v84
 	}
 	if r.Intn(10) != 0 {
-		v59 := bool(bool(r.Intn(2) == 0))
-		this.DeleteOnTermination = &v59
+		v85 := bool(bool(r.Intn(2) == 0))
+		this.DeleteOnTermination = &v85
 	}
 	if r.Intn(10) != 0 {
-		v60 := int64(r.Int63())
+		v86 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v60 *= -1
+			v86 *= -1
 		}
-		this.DeviceIndex = &v60
+		this.DeviceIndex = &v86
 	}
 	if r.Intn(10) != 0 {
-		v61 := randStringTypes(r)
-		this.Status = &v61
+		v87 := randStringTypes(r)
+		this.Status = &v87
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 7)
@@ -6685,16 +9818,16 @@ func NewPopulatedInstancePrivateIpAddress(r randyTypes, easy bool) *InstancePriv
 		this.Association = NewPopulatedInstanceNetworkInterfaceAssociation(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		v62 := bool(bool(r.Intn(2) == 0))
-		this.Primary = &v62
+		v88 := bool(bool(r.Intn(2) == 0))
+		this.Primary = &v88
 	}
 	if r.Intn(10) != 0 {
-		v63 := randStringTypes(r)
-		this.PrivateDnsName = &v63
+		v89 := randStringTypes(r)
+		this.PrivateDnsName = &v89
 	}
 	if r.Intn(10) != 0 {
-		v64 := randStringTypes(r)
-		this.PrivateIpAddress = &v64
+		v90 := randStringTypes(r)
+		this.PrivateIpAddress = &v90
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 6)
@@ -6705,15 +9838,15 @@ func NewPopulatedInstancePrivateIpAddress(r randyTypes, easy bool) *InstancePriv
 func NewPopulatedInstanceState(r randyTypes, easy bool) *InstanceState {
 	this := &InstanceState{}
 	if r.Intn(10) != 0 {
-		v65 := int64(r.Int63())
+		v91 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v65 *= -1
+			v91 *= -1
 		}
-		this.Code = &v65
+		this.Code = &v91
 	}
 	if r.Intn(10) != 0 {
-		v66 := randStringTypes(r)
-		this.Name = &v66
+		v92 := randStringTypes(r)
+		this.Name = &v92
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
@@ -6724,41 +9857,41 @@ func NewPopulatedInstanceState(r randyTypes, easy bool) *InstanceState {
 func NewPopulatedIpPermission(r randyTypes, easy bool) *IpPermission {
 	this := &IpPermission{}
 	if r.Intn(10) != 0 {
-		v67 := int64(r.Int63())
+		v93 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v67 *= -1
+			v93 *= -1
 		}
-		this.FromPort = &v67
+		this.FromPort = &v93
 	}
 	if r.Intn(10) != 0 {
-		v68 := randStringTypes(r)
-		this.IpProtocol = &v68
+		v94 := randStringTypes(r)
+		this.IpProtocol = &v94
 	}
 	if r.Intn(10) != 0 {
-		v69 := r.Intn(5)
-		this.IpRanges = make([]*IpRange, v69)
-		for i := 0; i < v69; i++ {
+		v95 := r.Intn(5)
+		this.IpRanges = make([]*IpRange, v95)
+		for i := 0; i < v95; i++ {
 			this.IpRanges[i] = NewPopulatedIpRange(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v70 := r.Intn(5)
-		this.PrefixListIds = make([]*PrefixListId, v70)
-		for i := 0; i < v70; i++ {
+		v96 := r.Intn(5)
+		this.PrefixListIds = make([]*PrefixListId, v96)
+		for i := 0; i < v96; i++ {
 			this.PrefixListIds[i] = NewPopulatedPrefixListId(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v71 := int64(r.Int63())
+		v97 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v71 *= -1
+			v97 *= -1
 		}
-		this.ToPort = &v71
+		this.ToPort = &v97
 	}
 	if r.Intn(10) != 0 {
-		v72 := r.Intn(5)
-		this.UserIdGroupPairs = make([]*UserIdGroupPair, v72)
-		for i := 0; i < v72; i++ {
+		v98 := r.Intn(5)
+		this.UserIdGroupPairs = make([]*UserIdGroupPair, v98)
+		for i := 0; i < v98; i++ {
 			this.UserIdGroupPairs[i] = NewPopulatedUserIdGroupPair(r, easy)
 		}
 	}
@@ -6771,8 +9904,8 @@ func NewPopulatedIpPermission(r randyTypes, easy bool) *IpPermission {
 func NewPopulatedIpRange(r randyTypes, easy bool) *IpRange {
 	this := &IpRange{}
 	if r.Intn(10) != 0 {
-		v73 := randStringTypes(r)
-		this.CidrIp = &v73
+		v99 := randStringTypes(r)
+		this.CidrIp = &v99
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 3)
@@ -6783,8 +9916,8 @@ func NewPopulatedIpRange(r randyTypes, easy bool) *IpRange {
 func NewPopulatedMonitoring(r randyTypes, easy bool) *Monitoring {
 	this := &Monitoring{}
 	if r.Intn(10) != 0 {
-		v74 := randStringTypes(r)
-		this.State = &v74
+		v100 := randStringTypes(r)
+		this.State = &v100
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 3)
@@ -6795,24 +9928,24 @@ func NewPopulatedMonitoring(r randyTypes, easy bool) *Monitoring {
 func NewPopulatedPlacement(r randyTypes, easy bool) *Placement {
 	this := &Placement{}
 	if r.Intn(10) != 0 {
-		v75 := randStringTypes(r)
-		this.Affinity = &v75
+		v101 := randStringTypes(r)
+		this.Affinity = &v101
 	}
 	if r.Intn(10) != 0 {
-		v76 := randStringTypes(r)
-		this.AvailabilityZone = &v76
+		v102 := randStringTypes(r)
+		this.AvailabilityZone = &v102
 	}
 	if r.Intn(10) != 0 {
-		v77 := randStringTypes(r)
-		this.GroupName = &v77
+		v103 := randStringTypes(r)
+		this.GroupName = &v103
 	}
 	if r.Intn(10) != 0 {
-		v78 := randStringTypes(r)
-		this.HostId = &v78
+		v104 := randStringTypes(r)
+		this.HostId = &v104
 	}
 	if r.Intn(10) != 0 {
-		v79 := randStringTypes(r)
-		this.Tenancy = &v79
+		v105 := randStringTypes(r)
+		this.Tenancy = &v105
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 7)
@@ -6823,8 +9956,8 @@ func NewPopulatedPlacement(r randyTypes, easy bool) *Placement {
 func NewPopulatedPrefixListId(r randyTypes, easy bool) *PrefixListId {
 	this := &PrefixListId{}
 	if r.Intn(10) != 0 {
-		v80 := randStringTypes(r)
-		this.PrefixListId = &v80
+		v106 := randStringTypes(r)
+		this.PrefixListId = &v106
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 3)
@@ -6835,12 +9968,12 @@ func NewPopulatedPrefixListId(r randyTypes, easy bool) *PrefixListId {
 func NewPopulatedProductCode(r randyTypes, easy bool) *ProductCode {
 	this := &ProductCode{}
 	if r.Intn(10) != 0 {
-		v81 := randStringTypes(r)
-		this.ProductCodeId = &v81
+		v107 := randStringTypes(r)
+		this.ProductCodeId = &v107
 	}
 	if r.Intn(10) != 0 {
-		v82 := randStringTypes(r)
-		this.ProductCodeType = &v82
+		v108 := randStringTypes(r)
+		this.ProductCodeType = &v108
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
@@ -6848,48 +9981,210 @@ func NewPopulatedProductCode(r randyTypes, easy bool) *ProductCode {
 	return this
 }
 
-func NewPopulatedSecurityGroup(r randyTypes, easy bool) *SecurityGroup {
-	this := &SecurityGroup{}
+func NewPopulatedPropagatingVgw(r randyTypes, easy bool) *PropagatingVgw {
+	this := &PropagatingVgw{}
 	if r.Intn(10) != 0 {
-		v83 := randStringTypes(r)
-		this.Description = &v83
+		v109 := randStringTypes(r)
+		this.GatewayId = &v109
 	}
-	if r.Intn(10) != 0 {
-		v84 := randStringTypes(r)
-		this.GroupId = &v84
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 3)
 	}
+	return this
+}
+
+func NewPopulatedReservation(r randyTypes, easy bool) *Reservation {
+	this := &Reservation{}
 	if r.Intn(10) != 0 {
-		v85 := randStringTypes(r)
-		this.GroupName = &v85
-	}
-	if r.Intn(10) != 0 {
-		v86 := r.Intn(5)
-		this.IpPermissions = make([]*IpPermission, v86)
-		for i := 0; i < v86; i++ {
-			this.IpPermissions[i] = NewPopulatedIpPermission(r, easy)
+		v110 := r.Intn(5)
+		this.Groups = make([]*GroupIdentifier, v110)
+		for i := 0; i < v110; i++ {
+			this.Groups[i] = NewPopulatedGroupIdentifier(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v87 := r.Intn(5)
-		this.IpPermissionsEgress = make([]*IpPermission, v87)
-		for i := 0; i < v87; i++ {
-			this.IpPermissionsEgress[i] = NewPopulatedIpPermission(r, easy)
+		v111 := r.Intn(5)
+		this.Instances = make([]*Instance, v111)
+		for i := 0; i < v111; i++ {
+			this.Instances[i] = NewPopulatedInstance(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v88 := randStringTypes(r)
-		this.OwnerId = &v88
+		v112 := randStringTypes(r)
+		this.OwnerId = &v112
 	}
 	if r.Intn(10) != 0 {
-		v89 := r.Intn(5)
-		this.Tags = make([]*Tag, v89)
-		for i := 0; i < v89; i++ {
+		v113 := randStringTypes(r)
+		this.RequesterId = &v113
+	}
+	if r.Intn(10) != 0 {
+		v114 := randStringTypes(r)
+		this.ReservationId = &v114
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 7)
+	}
+	return this
+}
+
+func NewPopulatedRoute(r randyTypes, easy bool) *Route {
+	this := &Route{}
+	if r.Intn(10) != 0 {
+		v115 := randStringTypes(r)
+		this.DestinationCidrBlock = &v115
+	}
+	if r.Intn(10) != 0 {
+		v116 := randStringTypes(r)
+		this.DestinationPrefixListId = &v116
+	}
+	if r.Intn(10) != 0 {
+		v117 := randStringTypes(r)
+		this.GatewayId = &v117
+	}
+	if r.Intn(10) != 0 {
+		v118 := randStringTypes(r)
+		this.InstanceId = &v118
+	}
+	if r.Intn(10) != 0 {
+		v119 := randStringTypes(r)
+		this.InstanceOwnerId = &v119
+	}
+	if r.Intn(10) != 0 {
+		v120 := randStringTypes(r)
+		this.NatGatewayId = &v120
+	}
+	if r.Intn(10) != 0 {
+		v121 := randStringTypes(r)
+		this.NetworkInterfaceId = &v121
+	}
+	if r.Intn(10) != 0 {
+		v122 := randStringTypes(r)
+		this.Origin = &v122
+	}
+	if r.Intn(10) != 0 {
+		v123 := randStringTypes(r)
+		this.State = &v123
+	}
+	if r.Intn(10) != 0 {
+		v124 := randStringTypes(r)
+		this.VpcPeeringConnectionId = &v124
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 12)
+	}
+	return this
+}
+
+func NewPopulatedRouteTable(r randyTypes, easy bool) *RouteTable {
+	this := &RouteTable{}
+	if r.Intn(10) != 0 {
+		v125 := r.Intn(5)
+		this.Associations = make([]*RouteTableAssociation, v125)
+		for i := 0; i < v125; i++ {
+			this.Associations[i] = NewPopulatedRouteTableAssociation(r, easy)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v126 := r.Intn(5)
+		this.PropagatingVgws = make([]*PropagatingVgw, v126)
+		for i := 0; i < v126; i++ {
+			this.PropagatingVgws[i] = NewPopulatedPropagatingVgw(r, easy)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v127 := randStringTypes(r)
+		this.RouteTableId = &v127
+	}
+	if r.Intn(10) != 0 {
+		v128 := r.Intn(5)
+		this.Routes = make([]*Route, v128)
+		for i := 0; i < v128; i++ {
+			this.Routes[i] = NewPopulatedRoute(r, easy)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v129 := r.Intn(5)
+		this.Tags = make([]*Tag, v129)
+		for i := 0; i < v129; i++ {
 			this.Tags[i] = NewPopulatedTag(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v90 := randStringTypes(r)
-		this.VpcId = &v90
+		v130 := randStringTypes(r)
+		this.VpcId = &v130
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 8)
+	}
+	return this
+}
+
+func NewPopulatedRouteTableAssociation(r randyTypes, easy bool) *RouteTableAssociation {
+	this := &RouteTableAssociation{}
+	if r.Intn(10) != 0 {
+		v131 := bool(bool(r.Intn(2) == 0))
+		this.Main = &v131
+	}
+	if r.Intn(10) != 0 {
+		v132 := randStringTypes(r)
+		this.RouteTableAssociationId = &v132
+	}
+	if r.Intn(10) != 0 {
+		v133 := randStringTypes(r)
+		this.RouteTableId = &v133
+	}
+	if r.Intn(10) != 0 {
+		v134 := randStringTypes(r)
+		this.SubnetId = &v134
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 6)
+	}
+	return this
+}
+
+func NewPopulatedSecurityGroup(r randyTypes, easy bool) *SecurityGroup {
+	this := &SecurityGroup{}
+	if r.Intn(10) != 0 {
+		v135 := randStringTypes(r)
+		this.Description = &v135
+	}
+	if r.Intn(10) != 0 {
+		v136 := randStringTypes(r)
+		this.GroupId = &v136
+	}
+	if r.Intn(10) != 0 {
+		v137 := randStringTypes(r)
+		this.GroupName = &v137
+	}
+	if r.Intn(10) != 0 {
+		v138 := r.Intn(5)
+		this.IpPermissions = make([]*IpPermission, v138)
+		for i := 0; i < v138; i++ {
+			this.IpPermissions[i] = NewPopulatedIpPermission(r, easy)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v139 := r.Intn(5)
+		this.IpPermissionsEgress = make([]*IpPermission, v139)
+		for i := 0; i < v139; i++ {
+			this.IpPermissionsEgress[i] = NewPopulatedIpPermission(r, easy)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v140 := randStringTypes(r)
+		this.OwnerId = &v140
+	}
+	if r.Intn(10) != 0 {
+		v141 := r.Intn(5)
+		this.Tags = make([]*Tag, v141)
+		for i := 0; i < v141; i++ {
+			this.Tags[i] = NewPopulatedTag(r, easy)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v142 := randStringTypes(r)
+		this.VpcId = &v142
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 10)
@@ -6900,12 +10195,12 @@ func NewPopulatedSecurityGroup(r randyTypes, easy bool) *SecurityGroup {
 func NewPopulatedStateReason(r randyTypes, easy bool) *StateReason {
 	this := &StateReason{}
 	if r.Intn(10) != 0 {
-		v91 := randStringTypes(r)
-		this.Code = &v91
+		v143 := randStringTypes(r)
+		this.Code = &v143
 	}
 	if r.Intn(10) != 0 {
-		v92 := randStringTypes(r)
-		this.Message = &v92
+		v144 := randStringTypes(r)
+		this.Message = &v144
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
@@ -6916,46 +10211,46 @@ func NewPopulatedStateReason(r randyTypes, easy bool) *StateReason {
 func NewPopulatedSubnet(r randyTypes, easy bool) *Subnet {
 	this := &Subnet{}
 	if r.Intn(10) != 0 {
-		v93 := randStringTypes(r)
-		this.AvailabilityZone = &v93
+		v145 := randStringTypes(r)
+		this.AvailabilityZone = &v145
 	}
 	if r.Intn(10) != 0 {
-		v94 := int64(r.Int63())
+		v146 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v94 *= -1
+			v146 *= -1
 		}
-		this.AvailableIpAddressCount = &v94
+		this.AvailableIpAddressCount = &v146
 	}
 	if r.Intn(10) != 0 {
-		v95 := randStringTypes(r)
-		this.CidrBlock = &v95
+		v147 := randStringTypes(r)
+		this.CidrBlock = &v147
 	}
 	if r.Intn(10) != 0 {
-		v96 := bool(bool(r.Intn(2) == 0))
-		this.DefaultForAz = &v96
+		v148 := bool(bool(r.Intn(2) == 0))
+		this.DefaultForAz = &v148
 	}
 	if r.Intn(10) != 0 {
-		v97 := bool(bool(r.Intn(2) == 0))
-		this.MapPublicIpOnLaunch = &v97
+		v149 := bool(bool(r.Intn(2) == 0))
+		this.MapPublicIpOnLaunch = &v149
 	}
 	if r.Intn(10) != 0 {
-		v98 := randStringTypes(r)
-		this.State = &v98
+		v150 := randStringTypes(r)
+		this.State = &v150
 	}
 	if r.Intn(10) != 0 {
-		v99 := randStringTypes(r)
-		this.SubnetId = &v99
+		v151 := randStringTypes(r)
+		this.SubnetId = &v151
 	}
 	if r.Intn(10) != 0 {
-		v100 := r.Intn(5)
-		this.Tags = make([]*Tag, v100)
-		for i := 0; i < v100; i++ {
+		v152 := r.Intn(5)
+		this.Tags = make([]*Tag, v152)
+		for i := 0; i < v152; i++ {
 			this.Tags[i] = NewPopulatedTag(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v101 := randStringTypes(r)
-		this.VpcId = &v101
+		v153 := randStringTypes(r)
+		this.VpcId = &v153
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 11)
@@ -6966,12 +10261,12 @@ func NewPopulatedSubnet(r randyTypes, easy bool) *Subnet {
 func NewPopulatedTag(r randyTypes, easy bool) *Tag {
 	this := &Tag{}
 	if r.Intn(10) != 0 {
-		v102 := randStringTypes(r)
-		this.Key = &v102
+		v154 := randStringTypes(r)
+		this.Key = &v154
 	}
 	if r.Intn(10) != 0 {
-		v103 := randStringTypes(r)
-		this.Value = &v103
+		v155 := randStringTypes(r)
+		this.Value = &v155
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
@@ -6982,28 +10277,28 @@ func NewPopulatedTag(r randyTypes, easy bool) *Tag {
 func NewPopulatedUserIdGroupPair(r randyTypes, easy bool) *UserIdGroupPair {
 	this := &UserIdGroupPair{}
 	if r.Intn(10) != 0 {
-		v104 := randStringTypes(r)
-		this.GroupId = &v104
+		v156 := randStringTypes(r)
+		this.GroupId = &v156
 	}
 	if r.Intn(10) != 0 {
-		v105 := randStringTypes(r)
-		this.GroupName = &v105
+		v157 := randStringTypes(r)
+		this.GroupName = &v157
 	}
 	if r.Intn(10) != 0 {
-		v106 := randStringTypes(r)
-		this.PeeringStatus = &v106
+		v158 := randStringTypes(r)
+		this.PeeringStatus = &v158
 	}
 	if r.Intn(10) != 0 {
-		v107 := randStringTypes(r)
-		this.UserId = &v107
+		v159 := randStringTypes(r)
+		this.UserId = &v159
 	}
 	if r.Intn(10) != 0 {
-		v108 := randStringTypes(r)
-		this.VpcId = &v108
+		v160 := randStringTypes(r)
+		this.VpcId = &v160
 	}
 	if r.Intn(10) != 0 {
-		v109 := randStringTypes(r)
-		this.VpcPeeringConnectionId = &v109
+		v161 := randStringTypes(r)
+		this.VpcPeeringConnectionId = &v161
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 8)
@@ -7014,35 +10309,35 @@ func NewPopulatedUserIdGroupPair(r randyTypes, easy bool) *UserIdGroupPair {
 func NewPopulatedVpc(r randyTypes, easy bool) *Vpc {
 	this := &Vpc{}
 	if r.Intn(10) != 0 {
-		v110 := randStringTypes(r)
-		this.CidrBlock = &v110
+		v162 := randStringTypes(r)
+		this.CidrBlock = &v162
 	}
 	if r.Intn(10) != 0 {
-		v111 := randStringTypes(r)
-		this.DhcpOptionsId = &v111
+		v163 := randStringTypes(r)
+		this.DhcpOptionsId = &v163
 	}
 	if r.Intn(10) != 0 {
-		v112 := randStringTypes(r)
-		this.InstanceTenancy = &v112
+		v164 := randStringTypes(r)
+		this.InstanceTenancy = &v164
 	}
 	if r.Intn(10) != 0 {
-		v113 := bool(bool(r.Intn(2) == 0))
-		this.IsDefault = &v113
+		v165 := bool(bool(r.Intn(2) == 0))
+		this.IsDefault = &v165
 	}
 	if r.Intn(10) != 0 {
-		v114 := randStringTypes(r)
-		this.State = &v114
+		v166 := randStringTypes(r)
+		this.State = &v166
 	}
 	if r.Intn(10) != 0 {
-		v115 := r.Intn(5)
-		this.Tags = make([]*Tag, v115)
-		for i := 0; i < v115; i++ {
+		v167 := r.Intn(5)
+		this.Tags = make([]*Tag, v167)
+		for i := 0; i < v167; i++ {
 			this.Tags[i] = NewPopulatedTag(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v116 := randStringTypes(r)
-		this.VpcId = &v116
+		v168 := randStringTypes(r)
+		this.VpcId = &v168
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 9)
@@ -7069,9 +10364,9 @@ func randUTF8RuneTypes(r randyTypes) rune {
 	return rune(ru + 61)
 }
 func randStringTypes(r randyTypes) string {
-	v117 := r.Intn(100)
-	tmps := make([]rune, v117)
-	for i := 0; i < v117; i++ {
+	v169 := r.Intn(100)
+	tmps := make([]rune, v169)
+	for i := 0; i < v169; i++ {
 		tmps[i] = randUTF8RuneTypes(r)
 	}
 	return string(tmps)
@@ -7093,11 +10388,11 @@ func randFieldTypes(data []byte, r randyTypes, fieldNumber int, wire int) []byte
 	switch wire {
 	case 0:
 		data = encodeVarintPopulateTypes(data, uint64(key))
-		v118 := r.Int63()
+		v170 := r.Int63()
 		if r.Intn(2) == 0 {
-			v118 *= -1
+			v170 *= -1
 		}
-		data = encodeVarintPopulateTypes(data, uint64(v118))
+		data = encodeVarintPopulateTypes(data, uint64(v170))
 	case 1:
 		data = encodeVarintPopulateTypes(data, uint64(key))
 		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))

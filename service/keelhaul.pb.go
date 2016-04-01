@@ -9,8 +9,8 @@ import fmt "fmt"
 import math "math"
 import _ "github.com/opsee/protobuf/opseeproto"
 import _ "github.com/opsee/protobuf/opseeproto/types"
+import opsee "github.com/opsee/basic/schema"
 import opsee1 "github.com/opsee/basic/schema"
-import opsee2 "github.com/opsee/basic/schema"
 import opsee3 "github.com/opsee/basic/schema"
 import _ "github.com/opsee/basic/schema/aws/ec2"
 
@@ -35,14 +35,14 @@ func (m *ListBastionStatesRequest) String() string { return proto.CompactTextStr
 func (*ListBastionStatesRequest) ProtoMessage()    {}
 
 type ListBastionStatesResponse struct {
-	BastionStates []*opsee1.BastionState `protobuf:"bytes,1,rep,name=bastion_states" json:"bastion_states,omitempty"`
+	BastionStates []*opsee.BastionState `protobuf:"bytes,1,rep,name=bastion_states" json:"bastion_states,omitempty"`
 }
 
 func (m *ListBastionStatesResponse) Reset()         { *m = ListBastionStatesResponse{} }
 func (m *ListBastionStatesResponse) String() string { return proto.CompactTextString(m) }
 func (*ListBastionStatesResponse) ProtoMessage()    {}
 
-func (m *ListBastionStatesResponse) GetBastionStates() []*opsee1.BastionState {
+func (m *ListBastionStatesResponse) GetBastionStates() []*opsee.BastionState {
 	if m != nil {
 		return m.BastionStates
 	}
@@ -50,7 +50,7 @@ func (m *ListBastionStatesResponse) GetBastionStates() []*opsee1.BastionState {
 }
 
 type ScanVpcsRequest struct {
-	User      *opsee2.User `protobuf:"bytes,1,opt,name=user" json:"user,omitempty"`
+	User      *opsee1.User `protobuf:"bytes,1,opt,name=user" json:"user,omitempty"`
 	AccessKey string       `protobuf:"bytes,2,opt,name=access_key,proto3" json:"access_key,omitempty"`
 	SecretKey string       `protobuf:"bytes,3,opt,name=secret_key,proto3" json:"secret_key,omitempty"`
 	Region    string       `protobuf:"bytes,4,opt,name=region,proto3" json:"region,omitempty"`
@@ -60,7 +60,7 @@ func (m *ScanVpcsRequest) Reset()         { *m = ScanVpcsRequest{} }
 func (m *ScanVpcsRequest) String() string { return proto.CompactTextString(m) }
 func (*ScanVpcsRequest) ProtoMessage()    {}
 
-func (m *ScanVpcsRequest) GetUser() *opsee2.User {
+func (m *ScanVpcsRequest) GetUser() *opsee1.User {
 	if m != nil {
 		return m.User
 	}
@@ -83,7 +83,7 @@ func (m *ScanVpcsResponse) GetRegion() *opsee3.Region {
 }
 
 type LaunchStackRequest struct {
-	User         *opsee2.User `protobuf:"bytes,1,opt,name=user" json:"user,omitempty"`
+	User         *opsee1.User `protobuf:"bytes,1,opt,name=user" json:"user,omitempty"`
 	AccessKey    string       `protobuf:"bytes,2,opt,name=access_key,proto3" json:"access_key,omitempty"`
 	SecretKey    string       `protobuf:"bytes,3,opt,name=secret_key,proto3" json:"secret_key,omitempty"`
 	Region       string       `protobuf:"bytes,4,opt,name=region,proto3" json:"region,omitempty"`
@@ -96,7 +96,7 @@ func (m *LaunchStackRequest) Reset()         { *m = LaunchStackRequest{} }
 func (m *LaunchStackRequest) String() string { return proto.CompactTextString(m) }
 func (*LaunchStackRequest) ProtoMessage()    {}
 
-func (m *LaunchStackRequest) GetUser() *opsee2.User {
+func (m *LaunchStackRequest) GetUser() *opsee1.User {
 	if m != nil {
 		return m.User
 	}
@@ -501,7 +501,7 @@ func init() {
 		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
 			return github_com_graphql_go_graphql.Fields{
 				"bastion_states": &github_com_graphql_go_graphql.Field{
-					Type:        github_com_graphql_go_graphql.NewList(opsee1.GraphQLBastionStateType),
+					Type:        github_com_graphql_go_graphql.NewList(opsee.GraphQLBastionStateType),
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*ListBastionStatesResponse)
@@ -528,7 +528,7 @@ func init() {
 		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
 			return github_com_graphql_go_graphql.Fields{
 				"user": &github_com_graphql_go_graphql.Field{
-					Type:        opsee2.GraphQLUserType,
+					Type:        opsee1.GraphQLUserType,
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*ScanVpcsRequest)
@@ -651,7 +651,7 @@ func init() {
 		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
 			return github_com_graphql_go_graphql.Fields{
 				"user": &github_com_graphql_go_graphql.Field{
-					Type:        opsee2.GraphQLUserType,
+					Type:        opsee1.GraphQLUserType,
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*LaunchStackRequest)
@@ -1052,9 +1052,9 @@ func NewPopulatedListBastionStatesResponse(r randyKeelhaul, easy bool) *ListBast
 	this := &ListBastionStatesResponse{}
 	if r.Intn(10) != 0 {
 		v2 := r.Intn(5)
-		this.BastionStates = make([]*opsee1.BastionState, v2)
+		this.BastionStates = make([]*opsee.BastionState, v2)
 		for i := 0; i < v2; i++ {
-			this.BastionStates[i] = opsee1.NewPopulatedBastionState(r, easy)
+			this.BastionStates[i] = opsee.NewPopulatedBastionState(r, easy)
 		}
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -1065,7 +1065,7 @@ func NewPopulatedListBastionStatesResponse(r randyKeelhaul, easy bool) *ListBast
 func NewPopulatedScanVpcsRequest(r randyKeelhaul, easy bool) *ScanVpcsRequest {
 	this := &ScanVpcsRequest{}
 	if r.Intn(10) != 0 {
-		this.User = opsee2.NewPopulatedUser(r, easy)
+		this.User = opsee1.NewPopulatedUser(r, easy)
 	}
 	this.AccessKey = randStringKeelhaul(r)
 	this.SecretKey = randStringKeelhaul(r)
@@ -1088,7 +1088,7 @@ func NewPopulatedScanVpcsResponse(r randyKeelhaul, easy bool) *ScanVpcsResponse 
 func NewPopulatedLaunchStackRequest(r randyKeelhaul, easy bool) *LaunchStackRequest {
 	this := &LaunchStackRequest{}
 	if r.Intn(10) != 0 {
-		this.User = opsee2.NewPopulatedUser(r, easy)
+		this.User = opsee1.NewPopulatedUser(r, easy)
 	}
 	this.AccessKey = randStringKeelhaul(r)
 	this.SecretKey = randStringKeelhaul(r)

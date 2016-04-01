@@ -11,6 +11,8 @@ It is generated from these files:
 It has these top-level messages:
 	AppCookieStickinessPolicy
 	BackendServerDescription
+	DescribeLoadBalancersInput
+	DescribeLoadBalancersOutput
 	HealthCheck
 	Instance
 	LBCookieStickinessPolicy
@@ -83,6 +85,62 @@ func (m *BackendServerDescription) GetPolicyNames() []string {
 		return m.PolicyNames
 	}
 	return nil
+}
+
+type DescribeLoadBalancersInput struct {
+	LoadBalancerNames []string `protobuf:"bytes,2,rep,name=LoadBalancerNames" json:"LoadBalancerNames,omitempty"`
+	Marker            *string  `protobuf:"bytes,3,opt,name=Marker" json:"Marker,omitempty"`
+	PageSize          *int64   `protobuf:"zigzag64,4,opt,name=PageSize" json:"PageSize,omitempty"`
+	XXX_unrecognized  []byte   `json:"-"`
+}
+
+func (m *DescribeLoadBalancersInput) Reset()         { *m = DescribeLoadBalancersInput{} }
+func (m *DescribeLoadBalancersInput) String() string { return proto.CompactTextString(m) }
+func (*DescribeLoadBalancersInput) ProtoMessage()    {}
+
+func (m *DescribeLoadBalancersInput) GetLoadBalancerNames() []string {
+	if m != nil {
+		return m.LoadBalancerNames
+	}
+	return nil
+}
+
+func (m *DescribeLoadBalancersInput) GetMarker() string {
+	if m != nil && m.Marker != nil {
+		return *m.Marker
+	}
+	return ""
+}
+
+func (m *DescribeLoadBalancersInput) GetPageSize() int64 {
+	if m != nil && m.PageSize != nil {
+		return *m.PageSize
+	}
+	return 0
+}
+
+type DescribeLoadBalancersOutput struct {
+	LoadBalancerDescriptions []*LoadBalancerDescription `protobuf:"bytes,2,rep,name=LoadBalancerDescriptions" json:"LoadBalancerDescriptions,omitempty"`
+	NextMarker               *string                    `protobuf:"bytes,3,opt,name=NextMarker" json:"NextMarker,omitempty"`
+	XXX_unrecognized         []byte                     `json:"-"`
+}
+
+func (m *DescribeLoadBalancersOutput) Reset()         { *m = DescribeLoadBalancersOutput{} }
+func (m *DescribeLoadBalancersOutput) String() string { return proto.CompactTextString(m) }
+func (*DescribeLoadBalancersOutput) ProtoMessage()    {}
+
+func (m *DescribeLoadBalancersOutput) GetLoadBalancerDescriptions() []*LoadBalancerDescription {
+	if m != nil {
+		return m.LoadBalancerDescriptions
+	}
+	return nil
+}
+
+func (m *DescribeLoadBalancersOutput) GetNextMarker() string {
+	if m != nil && m.NextMarker != nil {
+		return *m.NextMarker
+	}
+	return ""
 }
 
 type HealthCheck struct {
@@ -440,6 +498,8 @@ func (m *SourceSecurityGroup) GetOwnerAlias() string {
 func init() {
 	proto.RegisterType((*AppCookieStickinessPolicy)(nil), "opsee.aws.elb.AppCookieStickinessPolicy")
 	proto.RegisterType((*BackendServerDescription)(nil), "opsee.aws.elb.BackendServerDescription")
+	proto.RegisterType((*DescribeLoadBalancersInput)(nil), "opsee.aws.elb.DescribeLoadBalancersInput")
+	proto.RegisterType((*DescribeLoadBalancersOutput)(nil), "opsee.aws.elb.DescribeLoadBalancersOutput")
 	proto.RegisterType((*HealthCheck)(nil), "opsee.aws.elb.HealthCheck")
 	proto.RegisterType((*Instance)(nil), "opsee.aws.elb.Instance")
 	proto.RegisterType((*LBCookieStickinessPolicy)(nil), "opsee.aws.elb.LBCookieStickinessPolicy")
@@ -538,6 +598,109 @@ func (this *BackendServerDescription) Equal(that interface{}) bool {
 		if this.PolicyNames[i] != that1.PolicyNames[i] {
 			return false
 		}
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *DescribeLoadBalancersInput) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*DescribeLoadBalancersInput)
+	if !ok {
+		that2, ok := that.(DescribeLoadBalancersInput)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if len(this.LoadBalancerNames) != len(that1.LoadBalancerNames) {
+		return false
+	}
+	for i := range this.LoadBalancerNames {
+		if this.LoadBalancerNames[i] != that1.LoadBalancerNames[i] {
+			return false
+		}
+	}
+	if this.Marker != nil && that1.Marker != nil {
+		if *this.Marker != *that1.Marker {
+			return false
+		}
+	} else if this.Marker != nil {
+		return false
+	} else if that1.Marker != nil {
+		return false
+	}
+	if this.PageSize != nil && that1.PageSize != nil {
+		if *this.PageSize != *that1.PageSize {
+			return false
+		}
+	} else if this.PageSize != nil {
+		return false
+	} else if that1.PageSize != nil {
+		return false
+	}
+	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+		return false
+	}
+	return true
+}
+func (this *DescribeLoadBalancersOutput) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*DescribeLoadBalancersOutput)
+	if !ok {
+		that2, ok := that.(DescribeLoadBalancersOutput)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if len(this.LoadBalancerDescriptions) != len(that1.LoadBalancerDescriptions) {
+		return false
+	}
+	for i := range this.LoadBalancerDescriptions {
+		if !this.LoadBalancerDescriptions[i].Equal(that1.LoadBalancerDescriptions[i]) {
+			return false
+		}
+	}
+	if this.NextMarker != nil && that1.NextMarker != nil {
+		if *this.NextMarker != *that1.NextMarker {
+			return false
+		}
+	} else if this.NextMarker != nil {
+		return false
+	} else if that1.NextMarker != nil {
+		return false
 	}
 	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
@@ -1087,6 +1250,18 @@ type BackendServerDescriptionGetter interface {
 
 var GraphQLBackendServerDescriptionType *github_com_graphql_go_graphql.Object
 
+type DescribeLoadBalancersInputGetter interface {
+	GetDescribeLoadBalancersInput() *DescribeLoadBalancersInput
+}
+
+var GraphQLDescribeLoadBalancersInputType *github_com_graphql_go_graphql.Object
+
+type DescribeLoadBalancersOutputGetter interface {
+	GetDescribeLoadBalancersOutput() *DescribeLoadBalancersOutput
+}
+
+var GraphQLDescribeLoadBalancersOutputType *github_com_graphql_go_graphql.Object
+
 type HealthCheckGetter interface {
 	GetHealthCheck() *HealthCheck
 }
@@ -1241,6 +1416,135 @@ func init() {
 							return face.PolicyNames, nil
 						}
 						return nil, fmt.Errorf("field PolicyNames not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLDescribeLoadBalancersInputType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "elbDescribeLoadBalancersInput",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"LoadBalancerNames": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(github_com_graphql_go_graphql.String),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeLoadBalancersInput)
+						if ok {
+							return obj.LoadBalancerNames, nil
+						}
+						inter, ok := p.Source.(DescribeLoadBalancersInputGetter)
+						if ok {
+							face := inter.GetDescribeLoadBalancersInput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.LoadBalancerNames, nil
+						}
+						return nil, fmt.Errorf("field LoadBalancerNames not resolved")
+					},
+				},
+				"Marker": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeLoadBalancersInput)
+						if ok {
+							if obj.Marker == nil {
+								return nil, nil
+							}
+							return obj.GetMarker(), nil
+						}
+						inter, ok := p.Source.(DescribeLoadBalancersInputGetter)
+						if ok {
+							face := inter.GetDescribeLoadBalancersInput()
+							if face == nil {
+								return nil, nil
+							}
+							if face.Marker == nil {
+								return nil, nil
+							}
+							return face.GetMarker(), nil
+						}
+						return nil, fmt.Errorf("field Marker not resolved")
+					},
+				},
+				"PageSize": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.Int,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeLoadBalancersInput)
+						if ok {
+							if obj.PageSize == nil {
+								return nil, nil
+							}
+							return obj.GetPageSize(), nil
+						}
+						inter, ok := p.Source.(DescribeLoadBalancersInputGetter)
+						if ok {
+							face := inter.GetDescribeLoadBalancersInput()
+							if face == nil {
+								return nil, nil
+							}
+							if face.PageSize == nil {
+								return nil, nil
+							}
+							return face.GetPageSize(), nil
+						}
+						return nil, fmt.Errorf("field PageSize not resolved")
+					},
+				},
+			}
+		}),
+	})
+	GraphQLDescribeLoadBalancersOutputType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "elbDescribeLoadBalancersOutput",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"LoadBalancerDescriptions": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLLoadBalancerDescriptionType),
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeLoadBalancersOutput)
+						if ok {
+							return obj.LoadBalancerDescriptions, nil
+						}
+						inter, ok := p.Source.(DescribeLoadBalancersOutputGetter)
+						if ok {
+							face := inter.GetDescribeLoadBalancersOutput()
+							if face == nil {
+								return nil, nil
+							}
+							return face.LoadBalancerDescriptions, nil
+						}
+						return nil, fmt.Errorf("field LoadBalancerDescriptions not resolved")
+					},
+				},
+				"NextMarker": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*DescribeLoadBalancersOutput)
+						if ok {
+							if obj.NextMarker == nil {
+								return nil, nil
+							}
+							return obj.GetNextMarker(), nil
+						}
+						inter, ok := p.Source.(DescribeLoadBalancersOutputGetter)
+						if ok {
+							face := inter.GetDescribeLoadBalancersOutput()
+							if face == nil {
+								return nil, nil
+							}
+							if face.NextMarker == nil {
+								return nil, nil
+							}
+							return face.GetNextMarker(), nil
+						}
+						return nil, fmt.Errorf("field NextMarker not resolved")
 					},
 				},
 			}
@@ -2189,39 +2493,84 @@ func NewPopulatedBackendServerDescription(r randyTypes, easy bool) *BackendServe
 	return this
 }
 
+func NewPopulatedDescribeLoadBalancersInput(r randyTypes, easy bool) *DescribeLoadBalancersInput {
+	this := &DescribeLoadBalancersInput{}
+	if r.Intn(10) != 0 {
+		v5 := r.Intn(10)
+		this.LoadBalancerNames = make([]string, v5)
+		for i := 0; i < v5; i++ {
+			this.LoadBalancerNames[i] = randStringTypes(r)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v6 := randStringTypes(r)
+		this.Marker = &v6
+	}
+	if r.Intn(10) != 0 {
+		v7 := int64(r.Int63())
+		if r.Intn(2) == 0 {
+			v7 *= -1
+		}
+		this.PageSize = &v7
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 5)
+	}
+	return this
+}
+
+func NewPopulatedDescribeLoadBalancersOutput(r randyTypes, easy bool) *DescribeLoadBalancersOutput {
+	this := &DescribeLoadBalancersOutput{}
+	if r.Intn(10) != 0 {
+		v8 := r.Intn(5)
+		this.LoadBalancerDescriptions = make([]*LoadBalancerDescription, v8)
+		for i := 0; i < v8; i++ {
+			this.LoadBalancerDescriptions[i] = NewPopulatedLoadBalancerDescription(r, easy)
+		}
+	}
+	if r.Intn(10) != 0 {
+		v9 := randStringTypes(r)
+		this.NextMarker = &v9
+	}
+	if !easy && r.Intn(10) != 0 {
+		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
+	}
+	return this
+}
+
 func NewPopulatedHealthCheck(r randyTypes, easy bool) *HealthCheck {
 	this := &HealthCheck{}
 	if r.Intn(10) != 0 {
-		v5 := int64(r.Int63())
+		v10 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v5 *= -1
+			v10 *= -1
 		}
-		this.HealthyThreshold = &v5
+		this.HealthyThreshold = &v10
 	}
 	if r.Intn(10) != 0 {
-		v6 := int64(r.Int63())
+		v11 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v6 *= -1
+			v11 *= -1
 		}
-		this.Interval = &v6
+		this.Interval = &v11
 	}
 	if r.Intn(10) != 0 {
-		v7 := randStringTypes(r)
-		this.Target = &v7
+		v12 := randStringTypes(r)
+		this.Target = &v12
 	}
 	if r.Intn(10) != 0 {
-		v8 := int64(r.Int63())
+		v13 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v8 *= -1
+			v13 *= -1
 		}
-		this.Timeout = &v8
+		this.Timeout = &v13
 	}
 	if r.Intn(10) != 0 {
-		v9 := int64(r.Int63())
+		v14 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v9 *= -1
+			v14 *= -1
 		}
-		this.UnhealthyThreshold = &v9
+		this.UnhealthyThreshold = &v14
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 7)
@@ -2232,8 +2581,8 @@ func NewPopulatedHealthCheck(r randyTypes, easy bool) *HealthCheck {
 func NewPopulatedInstance(r randyTypes, easy bool) *Instance {
 	this := &Instance{}
 	if r.Intn(10) != 0 {
-		v10 := randStringTypes(r)
-		this.InstanceId = &v10
+		v15 := randStringTypes(r)
+		this.InstanceId = &v15
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 3)
@@ -2244,15 +2593,15 @@ func NewPopulatedInstance(r randyTypes, easy bool) *Instance {
 func NewPopulatedLBCookieStickinessPolicy(r randyTypes, easy bool) *LBCookieStickinessPolicy {
 	this := &LBCookieStickinessPolicy{}
 	if r.Intn(10) != 0 {
-		v11 := int64(r.Int63())
+		v16 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v11 *= -1
+			v16 *= -1
 		}
-		this.CookieExpirationPeriod = &v11
+		this.CookieExpirationPeriod = &v16
 	}
 	if r.Intn(10) != 0 {
-		v12 := randStringTypes(r)
-		this.PolicyName = &v12
+		v17 := randStringTypes(r)
+		this.PolicyName = &v17
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
@@ -2263,30 +2612,30 @@ func NewPopulatedLBCookieStickinessPolicy(r randyTypes, easy bool) *LBCookieStic
 func NewPopulatedListener(r randyTypes, easy bool) *Listener {
 	this := &Listener{}
 	if r.Intn(10) != 0 {
-		v13 := int64(r.Int63())
+		v18 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v13 *= -1
+			v18 *= -1
 		}
-		this.InstancePort = &v13
+		this.InstancePort = &v18
 	}
 	if r.Intn(10) != 0 {
-		v14 := randStringTypes(r)
-		this.InstanceProtocol = &v14
+		v19 := randStringTypes(r)
+		this.InstanceProtocol = &v19
 	}
 	if r.Intn(10) != 0 {
-		v15 := int64(r.Int63())
+		v20 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v15 *= -1
+			v20 *= -1
 		}
-		this.LoadBalancerPort = &v15
+		this.LoadBalancerPort = &v20
 	}
 	if r.Intn(10) != 0 {
-		v16 := randStringTypes(r)
-		this.Protocol = &v16
+		v21 := randStringTypes(r)
+		this.Protocol = &v21
 	}
 	if r.Intn(10) != 0 {
-		v17 := randStringTypes(r)
-		this.SSLCertificateId = &v17
+		v22 := randStringTypes(r)
+		this.SSLCertificateId = &v22
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 7)
@@ -2300,9 +2649,9 @@ func NewPopulatedListenerDescription(r randyTypes, easy bool) *ListenerDescripti
 		this.Listener = NewPopulatedListener(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		v18 := r.Intn(10)
-		this.PolicyNames = make([]string, v18)
-		for i := 0; i < v18; i++ {
+		v23 := r.Intn(10)
+		this.PolicyNames = make([]string, v23)
+		for i := 0; i < v23; i++ {
 			this.PolicyNames[i] = randStringTypes(r)
 		}
 	}
@@ -2315,70 +2664,70 @@ func NewPopulatedListenerDescription(r randyTypes, easy bool) *ListenerDescripti
 func NewPopulatedLoadBalancerDescription(r randyTypes, easy bool) *LoadBalancerDescription {
 	this := &LoadBalancerDescription{}
 	if r.Intn(10) != 0 {
-		v19 := r.Intn(10)
-		this.AvailabilityZones = make([]string, v19)
-		for i := 0; i < v19; i++ {
+		v24 := r.Intn(10)
+		this.AvailabilityZones = make([]string, v24)
+		for i := 0; i < v24; i++ {
 			this.AvailabilityZones[i] = randStringTypes(r)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v20 := r.Intn(5)
-		this.BackendServerDescriptions = make([]*BackendServerDescription, v20)
-		for i := 0; i < v20; i++ {
+		v25 := r.Intn(5)
+		this.BackendServerDescriptions = make([]*BackendServerDescription, v25)
+		for i := 0; i < v25; i++ {
 			this.BackendServerDescriptions[i] = NewPopulatedBackendServerDescription(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v21 := randStringTypes(r)
-		this.CanonicalHostedZoneName = &v21
+		v26 := randStringTypes(r)
+		this.CanonicalHostedZoneName = &v26
 	}
 	if r.Intn(10) != 0 {
-		v22 := randStringTypes(r)
-		this.CanonicalHostedZoneNameID = &v22
+		v27 := randStringTypes(r)
+		this.CanonicalHostedZoneNameID = &v27
 	}
 	if r.Intn(10) != 0 {
-		v23 := int64(r.Int63())
+		v28 := int64(r.Int63())
 		if r.Intn(2) == 0 {
-			v23 *= -1
+			v28 *= -1
 		}
-		this.CreatedTime = &v23
+		this.CreatedTime = &v28
 	}
 	if r.Intn(10) != 0 {
-		v24 := randStringTypes(r)
-		this.DNSName = &v24
+		v29 := randStringTypes(r)
+		this.DNSName = &v29
 	}
 	if r.Intn(10) != 0 {
 		this.HealthCheck = NewPopulatedHealthCheck(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		v25 := r.Intn(5)
-		this.Instances = make([]*Instance, v25)
-		for i := 0; i < v25; i++ {
+		v30 := r.Intn(5)
+		this.Instances = make([]*Instance, v30)
+		for i := 0; i < v30; i++ {
 			this.Instances[i] = NewPopulatedInstance(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v26 := r.Intn(5)
-		this.ListenerDescriptions = make([]*ListenerDescription, v26)
-		for i := 0; i < v26; i++ {
+		v31 := r.Intn(5)
+		this.ListenerDescriptions = make([]*ListenerDescription, v31)
+		for i := 0; i < v31; i++ {
 			this.ListenerDescriptions[i] = NewPopulatedListenerDescription(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v27 := randStringTypes(r)
-		this.LoadBalancerName = &v27
+		v32 := randStringTypes(r)
+		this.LoadBalancerName = &v32
 	}
 	if r.Intn(10) != 0 {
 		this.Policies = NewPopulatedPolicies(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		v28 := randStringTypes(r)
-		this.Scheme = &v28
+		v33 := randStringTypes(r)
+		this.Scheme = &v33
 	}
 	if r.Intn(10) != 0 {
-		v29 := r.Intn(10)
-		this.SecurityGroups = make([]string, v29)
-		for i := 0; i < v29; i++ {
+		v34 := r.Intn(10)
+		this.SecurityGroups = make([]string, v34)
+		for i := 0; i < v34; i++ {
 			this.SecurityGroups[i] = randStringTypes(r)
 		}
 	}
@@ -2386,15 +2735,15 @@ func NewPopulatedLoadBalancerDescription(r randyTypes, easy bool) *LoadBalancerD
 		this.SourceSecurityGroup = NewPopulatedSourceSecurityGroup(r, easy)
 	}
 	if r.Intn(10) != 0 {
-		v30 := r.Intn(10)
-		this.Subnets = make([]string, v30)
-		for i := 0; i < v30; i++ {
+		v35 := r.Intn(10)
+		this.Subnets = make([]string, v35)
+		for i := 0; i < v35; i++ {
 			this.Subnets[i] = randStringTypes(r)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v31 := randStringTypes(r)
-		this.VPCId = &v31
+		v36 := randStringTypes(r)
+		this.VPCId = &v36
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 18)
@@ -2405,23 +2754,23 @@ func NewPopulatedLoadBalancerDescription(r randyTypes, easy bool) *LoadBalancerD
 func NewPopulatedPolicies(r randyTypes, easy bool) *Policies {
 	this := &Policies{}
 	if r.Intn(10) != 0 {
-		v32 := r.Intn(5)
-		this.AppCookieStickinessPolicies = make([]*AppCookieStickinessPolicy, v32)
-		for i := 0; i < v32; i++ {
+		v37 := r.Intn(5)
+		this.AppCookieStickinessPolicies = make([]*AppCookieStickinessPolicy, v37)
+		for i := 0; i < v37; i++ {
 			this.AppCookieStickinessPolicies[i] = NewPopulatedAppCookieStickinessPolicy(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v33 := r.Intn(5)
-		this.LBCookieStickinessPolicies = make([]*LBCookieStickinessPolicy, v33)
-		for i := 0; i < v33; i++ {
+		v38 := r.Intn(5)
+		this.LBCookieStickinessPolicies = make([]*LBCookieStickinessPolicy, v38)
+		for i := 0; i < v38; i++ {
 			this.LBCookieStickinessPolicies[i] = NewPopulatedLBCookieStickinessPolicy(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v34 := r.Intn(10)
-		this.OtherPolicies = make([]string, v34)
-		for i := 0; i < v34; i++ {
+		v39 := r.Intn(10)
+		this.OtherPolicies = make([]string, v39)
+		for i := 0; i < v39; i++ {
 			this.OtherPolicies[i] = randStringTypes(r)
 		}
 	}
@@ -2434,12 +2783,12 @@ func NewPopulatedPolicies(r randyTypes, easy bool) *Policies {
 func NewPopulatedSourceSecurityGroup(r randyTypes, easy bool) *SourceSecurityGroup {
 	this := &SourceSecurityGroup{}
 	if r.Intn(10) != 0 {
-		v35 := randStringTypes(r)
-		this.GroupName = &v35
+		v40 := randStringTypes(r)
+		this.GroupName = &v40
 	}
 	if r.Intn(10) != 0 {
-		v36 := randStringTypes(r)
-		this.OwnerAlias = &v36
+		v41 := randStringTypes(r)
+		this.OwnerAlias = &v41
 	}
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedTypes(r, 4)
@@ -2466,9 +2815,9 @@ func randUTF8RuneTypes(r randyTypes) rune {
 	return rune(ru + 61)
 }
 func randStringTypes(r randyTypes) string {
-	v37 := r.Intn(100)
-	tmps := make([]rune, v37)
-	for i := 0; i < v37; i++ {
+	v42 := r.Intn(100)
+	tmps := make([]rune, v42)
+	for i := 0; i < v42; i++ {
 		tmps[i] = randUTF8RuneTypes(r)
 	}
 	return string(tmps)
@@ -2490,11 +2839,11 @@ func randFieldTypes(data []byte, r randyTypes, fieldNumber int, wire int) []byte
 	switch wire {
 	case 0:
 		data = encodeVarintPopulateTypes(data, uint64(key))
-		v38 := r.Int63()
+		v43 := r.Int63()
 		if r.Intn(2) == 0 {
-			v38 *= -1
+			v43 *= -1
 		}
-		data = encodeVarintPopulateTypes(data, uint64(v38))
+		data = encodeVarintPopulateTypes(data, uint64(v43))
 	case 1:
 		data = encodeVarintPopulateTypes(data, uint64(key))
 		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
