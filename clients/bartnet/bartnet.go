@@ -13,7 +13,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/opsee/basic/schema"
 	"github.com/opsee/basic/service"
-	opsee_types "github.com/opsee/protobuf/opsee/proto/types"
+	opsee_types "github.com/opsee/protobuf/opseeproto/types"
 )
 
 type Client interface {
