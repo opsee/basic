@@ -17,6 +17,7 @@ It has these top-level messages:
 	Subnet
 	Group
 	Instance
+	OpseeBaseError
 	Target
 	Check
 	Assertion

@@ -1119,7 +1119,7 @@ func encodeVarintChecker(data []byte, offset int, v uint64) int {
 func NewPopulatedCheckResourceResponse(r randyChecker, easy bool) *CheckResourceResponse {
 	this := &CheckResourceResponse{}
 	this.Id = randStringChecker(r)
-	if r.Intn(10) != 0 {
+	if r.Intn(10) == 0 {
 		this.Check = opsee.NewPopulatedCheck(r, easy)
 	}
 	this.Error = randStringChecker(r)
@@ -1130,7 +1130,7 @@ func NewPopulatedCheckResourceResponse(r randyChecker, easy bool) *CheckResource
 
 func NewPopulatedResourceResponse(r randyChecker, easy bool) *ResourceResponse {
 	this := &ResourceResponse{}
-	if r.Intn(10) != 0 {
+	if r.Intn(10) == 0 {
 		v1 := r.Intn(5)
 		this.Responses = make([]*CheckResourceResponse, v1)
 		for i := 0; i < v1; i++ {
@@ -1144,7 +1144,7 @@ func NewPopulatedResourceResponse(r randyChecker, easy bool) *ResourceResponse {
 
 func NewPopulatedCheckResourceRequest(r randyChecker, easy bool) *CheckResourceRequest {
 	this := &CheckResourceRequest{}
-	if r.Intn(10) != 0 {
+	if r.Intn(10) == 0 {
 		v2 := r.Intn(5)
 		this.Checks = make([]*opsee.Check, v2)
 		for i := 0; i < v2; i++ {
@@ -1158,7 +1158,7 @@ func NewPopulatedCheckResourceRequest(r randyChecker, easy bool) *CheckResourceR
 
 func NewPopulatedResultsResource(r randyChecker, easy bool) *ResultsResource {
 	this := &ResultsResource{}
-	if r.Intn(10) != 0 {
+	if r.Intn(10) == 0 {
 		v3 := r.Intn(5)
 		this.Results = make([]*opsee.CheckResult, v3)
 		for i := 0; i < v3; i++ {
@@ -1179,7 +1179,7 @@ func NewPopulatedTestCheckRequest(r randyChecker, easy bool) *TestCheckRequest {
 	if r.Intn(10) != 0 {
 		this.Deadline = opsee_types1.NewPopulatedTimestamp(r, easy)
 	}
-	if r.Intn(10) != 0 {
+	if r.Intn(10) == 0 {
 		this.Check = opsee.NewPopulatedCheck(r, easy)
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -1189,7 +1189,7 @@ func NewPopulatedTestCheckRequest(r randyChecker, easy bool) *TestCheckRequest {
 
 func NewPopulatedTestCheckResponse(r randyChecker, easy bool) *TestCheckResponse {
 	this := &TestCheckResponse{}
-	if r.Intn(10) != 0 {
+	if r.Intn(10) == 0 {
 		v4 := r.Intn(5)
 		this.Responses = make([]*opsee.CheckResponse, v4)
 		for i := 0; i < v4; i++ {

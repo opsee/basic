@@ -15,6 +15,13 @@ option java_outer_classname = "BastionProto";
 option go_package = "schema";
 option (opseeproto.graphql) = true;
 
+message OpseeBaseError {
+	string errorCode = 1;
+	string errorMessage = 2;
+	//TODO(dan) make a message wrapping oneof for future error types
+	repeated OpseeBaseError errs = 3;
+}
+
 message Target {
 	string name = 1;
 	string type = 2 [(opseeproto.required) = true];
@@ -75,6 +82,7 @@ message CloudWatchResponse {
 	// The AWS CloudWatch metric namespace, e.g. AWS/RDS
 	string namespace = 1;
 	repeated Metric metrics = 2;
+	OpseeBaseError err = 3;
 }
 
 message Tag {
@@ -84,7 +92,7 @@ message Tag {
 
 message Metric {
 	string name = 1;
-	double value = 2;
+	double value = 2 [(opseeproto.required) = true];
 	repeated Tag tags = 3;
 	opsee.types.Timestamp timestamp = 4;
 	string unit = 5;	  // kbps, percent, ...

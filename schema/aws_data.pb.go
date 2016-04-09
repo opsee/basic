@@ -17,6 +17,7 @@
 		Subnet
 		Group
 		Instance
+		OpseeBaseError
 		Target
 		Check
 		Assertion

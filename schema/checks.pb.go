@@ -22,6 +22,25 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
+type OpseeBaseError struct {
+	ErrorCode    string `protobuf:"bytes,1,opt,name=errorCode,proto3" json:"errorCode,omitempty"`
+	ErrorMessage string `protobuf:"bytes,2,opt,name=errorMessage,proto3" json:"errorMessage,omitempty"`
+	// TODO(dan) make a message wrapping oneof for future error types
+	Errs []*OpseeBaseError `protobuf:"bytes,3,rep,name=errs" json:"errs,omitempty"`
+}
+
+func (m *OpseeBaseError) Reset()                    { *m = OpseeBaseError{} }
+func (m *OpseeBaseError) String() string            { return proto.CompactTextString(m) }
+func (*OpseeBaseError) ProtoMessage()               {}
+func (*OpseeBaseError) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{0} }
+
+func (m *OpseeBaseError) GetErrs() []*OpseeBaseError {
+	if m != nil {
+		return m.Errs
+	}
+	return nil
+}
+
 type Target struct {
 	Name    string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Type    string `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
@@ -32,7 +51,7 @@ type Target struct {
 func (m *Target) Reset()                    { *m = Target{} }
 func (m *Target) String() string            { return proto.CompactTextString(m) }
 func (*Target) ProtoMessage()               {}
-func (*Target) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{0} }
+func (*Target) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{1} }
 
 type Check struct {
 	Id         string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -52,7 +71,7 @@ type Check struct {
 func (m *Check) Reset()                    { *m = Check{} }
 func (m *Check) String() string            { return proto.CompactTextString(m) }
 func (*Check) ProtoMessage()               {}
-func (*Check) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{1} }
+func (*Check) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{2} }
 
 type isCheck_Spec interface {
 	isCheck_Spec()
@@ -214,7 +233,7 @@ type Assertion struct {
 func (m *Assertion) Reset()                    { *m = Assertion{} }
 func (m *Assertion) String() string            { return proto.CompactTextString(m) }
 func (*Assertion) ProtoMessage()               {}
-func (*Assertion) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{2} }
+func (*Assertion) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{3} }
 
 type Header struct {
 	Name   string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -224,7 +243,7 @@ type Header struct {
 func (m *Header) Reset()                    { *m = Header{} }
 func (m *Header) String() string            { return proto.CompactTextString(m) }
 func (*Header) ProtoMessage()               {}
-func (*Header) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{3} }
+func (*Header) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{4} }
 
 type HttpCheck struct {
 	Name     string    `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -239,7 +258,7 @@ type HttpCheck struct {
 func (m *HttpCheck) Reset()                    { *m = HttpCheck{} }
 func (m *HttpCheck) String() string            { return proto.CompactTextString(m) }
 func (*HttpCheck) ProtoMessage()               {}
-func (*HttpCheck) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{4} }
+func (*HttpCheck) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{5} }
 
 func (m *HttpCheck) GetHeaders() []*Header {
 	if m != nil {
@@ -255,7 +274,7 @@ type CloudWatchCheck struct {
 func (m *CloudWatchCheck) Reset()                    { *m = CloudWatchCheck{} }
 func (m *CloudWatchCheck) String() string            { return proto.CompactTextString(m) }
 func (*CloudWatchCheck) ProtoMessage()               {}
-func (*CloudWatchCheck) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{5} }
+func (*CloudWatchCheck) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{6} }
 
 func (m *CloudWatchCheck) GetMetrics() []*CloudWatchMetric {
 	if m != nil {
@@ -272,22 +291,30 @@ type CloudWatchMetric struct {
 func (m *CloudWatchMetric) Reset()                    { *m = CloudWatchMetric{} }
 func (m *CloudWatchMetric) String() string            { return proto.CompactTextString(m) }
 func (*CloudWatchMetric) ProtoMessage()               {}
-func (*CloudWatchMetric) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{6} }
+func (*CloudWatchMetric) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{7} }
 
 type CloudWatchResponse struct {
 	// The AWS CloudWatch metric namespace, e.g. AWS/RDS
-	Namespace string    `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
-	Metrics   []*Metric `protobuf:"bytes,2,rep,name=metrics" json:"metrics,omitempty"`
+	Namespace string          `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Metrics   []*Metric       `protobuf:"bytes,2,rep,name=metrics" json:"metrics,omitempty"`
+	Err       *OpseeBaseError `protobuf:"bytes,3,opt,name=err" json:"err,omitempty"`
 }
 
 func (m *CloudWatchResponse) Reset()                    { *m = CloudWatchResponse{} }
 func (m *CloudWatchResponse) String() string            { return proto.CompactTextString(m) }
 func (*CloudWatchResponse) ProtoMessage()               {}
-func (*CloudWatchResponse) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{7} }
+func (*CloudWatchResponse) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{8} }
 
 func (m *CloudWatchResponse) GetMetrics() []*Metric {
 	if m != nil {
 		return m.Metrics
+	}
+	return nil
+}
+
+func (m *CloudWatchResponse) GetErr() *OpseeBaseError {
+	if m != nil {
+		return m.Err
 	}
 	return nil
 }
@@ -300,7 +327,7 @@ type Tag struct {
 func (m *Tag) Reset()                    { *m = Tag{} }
 func (m *Tag) String() string            { return proto.CompactTextString(m) }
 func (*Tag) ProtoMessage()               {}
-func (*Tag) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{8} }
+func (*Tag) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{9} }
 
 type Metric struct {
 	Name      string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -314,7 +341,7 @@ type Metric struct {
 func (m *Metric) Reset()                    { *m = Metric{} }
 func (m *Metric) String() string            { return proto.CompactTextString(m) }
 func (*Metric) ProtoMessage()               {}
-func (*Metric) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{9} }
+func (*Metric) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{10} }
 
 func (m *Metric) GetTags() []*Tag {
 	if m != nil {
@@ -341,7 +368,7 @@ type HttpResponse struct {
 func (m *HttpResponse) Reset()                    { *m = HttpResponse{} }
 func (m *HttpResponse) String() string            { return proto.CompactTextString(m) }
 func (*HttpResponse) ProtoMessage()               {}
-func (*HttpResponse) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{10} }
+func (*HttpResponse) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{11} }
 
 func (m *HttpResponse) GetHeaders() []*Header {
 	if m != nil {
@@ -371,7 +398,7 @@ type CheckResponse struct {
 func (m *CheckResponse) Reset()                    { *m = CheckResponse{} }
 func (m *CheckResponse) String() string            { return proto.CompactTextString(m) }
 func (*CheckResponse) ProtoMessage()               {}
-func (*CheckResponse) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{11} }
+func (*CheckResponse) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{12} }
 
 type isCheckResponse_Reply interface {
 	isCheckResponse_Reply()
@@ -513,7 +540,7 @@ type CheckResult struct {
 func (m *CheckResult) Reset()                    { *m = CheckResult{} }
 func (m *CheckResult) String() string            { return proto.CompactTextString(m) }
 func (*CheckResult) ProtoMessage()               {}
-func (*CheckResult) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{12} }
+func (*CheckResult) Descriptor() ([]byte, []int) { return fileDescriptorChecks, []int{13} }
 
 func (m *CheckResult) GetTimestamp() *opsee_types.Timestamp {
 	if m != nil {
@@ -537,6 +564,7 @@ func (m *CheckResult) GetTarget() *Target {
 }
 
 func init() {
+	proto.RegisterType((*OpseeBaseError)(nil), "opsee.OpseeBaseError")
 	proto.RegisterType((*Target)(nil), "opsee.Target")
 	proto.RegisterType((*Check)(nil), "opsee.Check")
 	proto.RegisterType((*Assertion)(nil), "opsee.Assertion")
@@ -550,6 +578,47 @@ func init() {
 	proto.RegisterType((*HttpResponse)(nil), "opsee.HttpResponse")
 	proto.RegisterType((*CheckResponse)(nil), "opsee.CheckResponse")
 	proto.RegisterType((*CheckResult)(nil), "opsee.CheckResult")
+}
+func (this *OpseeBaseError) Equal(that interface{}) bool {
+	if that == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	}
+
+	that1, ok := that.(*OpseeBaseError)
+	if !ok {
+		that2, ok := that.(OpseeBaseError)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return true
+		}
+		return false
+	} else if this == nil {
+		return false
+	}
+	if this.ErrorCode != that1.ErrorCode {
+		return false
+	}
+	if this.ErrorMessage != that1.ErrorMessage {
+		return false
+	}
+	if len(this.Errs) != len(that1.Errs) {
+		return false
+	}
+	for i := range this.Errs {
+		if !this.Errs[i].Equal(that1.Errs[i]) {
+			return false
+		}
+	}
+	return true
 }
 func (this *Target) Equal(that interface{}) bool {
 	if that == nil {
@@ -954,6 +1023,9 @@ func (this *CloudWatchResponse) Equal(that interface{}) bool {
 			return false
 		}
 	}
+	if !this.Err.Equal(that1.Err) {
+		return false
+	}
 	return true
 }
 func (this *Tag) Equal(that interface{}) bool {
@@ -1256,6 +1328,12 @@ func (this *CheckResult) Equal(that interface{}) bool {
 	return true
 }
 
+type OpseeBaseErrorGetter interface {
+	GetOpseeBaseError() *OpseeBaseError
+}
+
+var GraphQLOpseeBaseErrorType *github_com_graphql_go_graphql.Object
+
 type TargetGetter interface {
 	GetTarget() *Target
 }
@@ -1336,20 +1414,85 @@ type CheckResultGetter interface {
 
 var GraphQLCheckResultType *github_com_graphql_go_graphql.Object
 
-func (g *Check_HttpCheck) GetHttpCheck() *HttpCheck {
-	return g.HttpCheck
-}
-func (g *Check_CloudwatchCheck) GetCloudWatchCheck() *CloudWatchCheck {
-	return g.CloudwatchCheck
-}
 func (g *CheckResponse_HttpResponse) GetHttpResponse() *HttpResponse {
 	return g.HttpResponse
 }
 func (g *CheckResponse_CloudwatchResponse) GetCloudWatchResponse() *CloudWatchResponse {
 	return g.CloudwatchResponse
 }
+func (g *Check_HttpCheck) GetHttpCheck() *HttpCheck {
+	return g.HttpCheck
+}
+func (g *Check_CloudwatchCheck) GetCloudWatchCheck() *CloudWatchCheck {
+	return g.CloudwatchCheck
+}
 
 func init() {
+	GraphQLOpseeBaseErrorType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
+		Name:        "schemaOpseeBaseError",
+		Description: "",
+		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
+			return github_com_graphql_go_graphql.Fields{
+				"errorCode": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*OpseeBaseError)
+						if ok {
+							return obj.ErrorCode, nil
+						}
+						inter, ok := p.Source.(OpseeBaseErrorGetter)
+						if ok {
+							face := inter.GetOpseeBaseError()
+							if face == nil {
+								return nil, nil
+							}
+							return face.ErrorCode, nil
+						}
+						return nil, fmt.Errorf("field errorCode not resolved")
+					},
+				},
+				"errorMessage": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.String,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*OpseeBaseError)
+						if ok {
+							return obj.ErrorMessage, nil
+						}
+						inter, ok := p.Source.(OpseeBaseErrorGetter)
+						if ok {
+							face := inter.GetOpseeBaseError()
+							if face == nil {
+								return nil, nil
+							}
+							return face.ErrorMessage, nil
+						}
+						return nil, fmt.Errorf("field errorMessage not resolved")
+					},
+				},
+				"errs": &github_com_graphql_go_graphql.Field{
+					Type:        github_com_graphql_go_graphql.NewList(GraphQLOpseeBaseErrorType),
+					Description: "TODO(dan) make a message wrapping oneof for future error types",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*OpseeBaseError)
+						if ok {
+							return obj.Errs, nil
+						}
+						inter, ok := p.Source.(OpseeBaseErrorGetter)
+						if ok {
+							face := inter.GetOpseeBaseError()
+							if face == nil {
+								return nil, nil
+							}
+							return face.Errs, nil
+						}
+						return nil, fmt.Errorf("field errs not resolved")
+					},
+				},
+			}
+		}),
+	})
 	GraphQLTargetType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
 		Name:        "schemaTarget",
 		Description: "",
@@ -2010,6 +2153,31 @@ func init() {
 						return nil, fmt.Errorf("field metrics not resolved")
 					},
 				},
+				"err": &github_com_graphql_go_graphql.Field{
+					Type:        GraphQLOpseeBaseErrorType,
+					Description: "",
+					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
+						obj, ok := p.Source.(*CloudWatchResponse)
+						if ok {
+							if obj.Err == nil {
+								return nil, nil
+							}
+							return obj.GetErr(), nil
+						}
+						inter, ok := p.Source.(CloudWatchResponseGetter)
+						if ok {
+							face := inter.GetCloudWatchResponse()
+							if face == nil {
+								return nil, nil
+							}
+							if face.Err == nil {
+								return nil, nil
+							}
+							return face.GetErr(), nil
+						}
+						return nil, fmt.Errorf("field err not resolved")
+					},
+				},
 			}
 		}),
 	})
@@ -2604,6 +2772,48 @@ func init() {
 		},
 	})
 }
+func (m *OpseeBaseError) Marshal() (data []byte, err error) {
+	size := m.Size()
+	data = make([]byte, size)
+	n, err := m.MarshalTo(data)
+	if err != nil {
+		return nil, err
+	}
+	return data[:n], nil
+}
+
+func (m *OpseeBaseError) MarshalTo(data []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.ErrorCode) > 0 {
+		data[i] = 0xa
+		i++
+		i = encodeVarintChecks(data, i, uint64(len(m.ErrorCode)))
+		i += copy(data[i:], m.ErrorCode)
+	}
+	if len(m.ErrorMessage) > 0 {
+		data[i] = 0x12
+		i++
+		i = encodeVarintChecks(data, i, uint64(len(m.ErrorMessage)))
+		i += copy(data[i:], m.ErrorMessage)
+	}
+	if len(m.Errs) > 0 {
+		for _, msg := range m.Errs {
+			data[i] = 0x1a
+			i++
+			i = encodeVarintChecks(data, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(data[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	return i, nil
+}
+
 func (m *Target) Marshal() (data []byte, err error) {
 	size := m.Size()
 	data = make([]byte, size)
@@ -3013,6 +3223,16 @@ func (m *CloudWatchResponse) MarshalTo(data []byte) (int, error) {
 			i += n
 		}
 	}
+	if m.Err != nil {
+		data[i] = 0x1a
+		i++
+		i = encodeVarintChecks(data, i, uint64(m.Err.Size()))
+		n7, err := m.Err.MarshalTo(data[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n7
+	}
 	return i, nil
 }
 
@@ -3088,11 +3308,11 @@ func (m *Metric) MarshalTo(data []byte) (int, error) {
 		data[i] = 0x22
 		i++
 		i = encodeVarintChecks(data, i, uint64(m.Timestamp.Size()))
-		n7, err := m.Timestamp.MarshalTo(data[i:])
+		n8, err := m.Timestamp.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n7
+		i += n8
 	}
 	if len(m.Unit) > 0 {
 		data[i] = 0x2a
@@ -3187,21 +3407,21 @@ func (m *CheckResponse) MarshalTo(data []byte) (int, error) {
 		data[i] = 0xa
 		i++
 		i = encodeVarintChecks(data, i, uint64(m.Target.Size()))
-		n8, err := m.Target.MarshalTo(data[i:])
+		n9, err := m.Target.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n8
+		i += n9
 	}
 	if m.Response != nil {
 		data[i] = 0x12
 		i++
 		i = encodeVarintChecks(data, i, uint64(m.Response.Size()))
-		n9, err := m.Response.MarshalTo(data[i:])
+		n10, err := m.Response.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n9
+		i += n10
 	}
 	if len(m.Error) > 0 {
 		data[i] = 0x1a
@@ -3220,11 +3440,11 @@ func (m *CheckResponse) MarshalTo(data []byte) (int, error) {
 		i++
 	}
 	if m.Reply != nil {
-		nn10, err := m.Reply.MarshalTo(data[i:])
+		nn11, err := m.Reply.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += nn10
+		i += nn11
 	}
 	return i, nil
 }
@@ -3237,11 +3457,11 @@ func (m *CheckResponse_HttpResponse) MarshalTo(data []byte) (int, error) {
 		data[i] = 0x6
 		i++
 		i = encodeVarintChecks(data, i, uint64(m.HttpResponse.Size()))
-		n11, err := m.HttpResponse.MarshalTo(data[i:])
+		n12, err := m.HttpResponse.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n11
+		i += n12
 	}
 	return i, nil
 }
@@ -3253,11 +3473,11 @@ func (m *CheckResponse_CloudwatchResponse) MarshalTo(data []byte) (int, error) {
 		data[i] = 0x6
 		i++
 		i = encodeVarintChecks(data, i, uint64(m.CloudwatchResponse.Size()))
-		n12, err := m.CloudwatchResponse.MarshalTo(data[i:])
+		n13, err := m.CloudwatchResponse.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n12
+		i += n13
 	}
 	return i, nil
 }
@@ -3292,11 +3512,11 @@ func (m *CheckResult) MarshalTo(data []byte) (int, error) {
 		data[i] = 0x1a
 		i++
 		i = encodeVarintChecks(data, i, uint64(m.Timestamp.Size()))
-		n13, err := m.Timestamp.MarshalTo(data[i:])
+		n14, err := m.Timestamp.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n13
+		i += n14
 	}
 	if m.Passing {
 		data[i] = 0x20
@@ -3324,11 +3544,11 @@ func (m *CheckResult) MarshalTo(data []byte) (int, error) {
 		data[i] = 0x32
 		i++
 		i = encodeVarintChecks(data, i, uint64(m.Target.Size()))
-		n14, err := m.Target.MarshalTo(data[i:])
+		n15, err := m.Target.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n14
+		i += n15
 	}
 	if len(m.CheckName) > 0 {
 		data[i] = 0x3a
@@ -3371,6 +3591,22 @@ func encodeVarintChecks(data []byte, offset int, v uint64) int {
 	data[offset] = uint8(v)
 	return offset + 1
 }
+func NewPopulatedOpseeBaseError(r randyChecks, easy bool) *OpseeBaseError {
+	this := &OpseeBaseError{}
+	this.ErrorCode = randStringChecks(r)
+	this.ErrorMessage = randStringChecks(r)
+	if r.Intn(10) == 0 {
+		v1 := r.Intn(5)
+		this.Errs = make([]*OpseeBaseError, v1)
+		for i := 0; i < v1; i++ {
+			this.Errs[i] = NewPopulatedOpseeBaseError(r, easy)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
 func NewPopulatedTarget(r randyChecks, easy bool) *Target {
 	this := &Target{}
 	this.Name = randStringChecks(r)
@@ -3400,16 +3636,16 @@ func NewPopulatedCheck(r randyChecks, easy bool) *Check {
 	}
 	this.Name = randStringChecks(r)
 	if r.Intn(10) != 0 {
-		v1 := r.Intn(5)
-		this.Assertions = make([]*Assertion, v1)
-		for i := 0; i < v1; i++ {
+		v2 := r.Intn(5)
+		this.Assertions = make([]*Assertion, v2)
+		for i := 0; i < v2; i++ {
 			this.Assertions[i] = NewPopulatedAssertion(r, easy)
 		}
 	}
-	if r.Intn(10) != 0 {
-		v2 := r.Intn(5)
-		this.Results = make([]*CheckResult, v2)
-		for i := 0; i < v2; i++ {
+	if r.Intn(10) == 0 {
+		v3 := r.Intn(5)
+		this.Results = make([]*CheckResult, v3)
+		for i := 0; i < v3; i++ {
 			this.Results[i] = NewPopulatedCheckResult(r, easy)
 		}
 	}
@@ -3449,9 +3685,9 @@ func NewPopulatedAssertion(r randyChecks, easy bool) *Assertion {
 func NewPopulatedHeader(r randyChecks, easy bool) *Header {
 	this := &Header{}
 	this.Name = randStringChecks(r)
-	v3 := r.Intn(10)
-	this.Values = make([]string, v3)
-	for i := 0; i < v3; i++ {
+	v4 := r.Intn(10)
+	this.Values = make([]string, v4)
+	for i := 0; i < v4; i++ {
 		this.Values[i] = randStringChecks(r)
 	}
 	if !easy && r.Intn(10) != 0 {
@@ -3470,9 +3706,9 @@ func NewPopulatedHttpCheck(r randyChecks, easy bool) *HttpCheck {
 	}
 	this.Verb = randStringChecks(r)
 	if r.Intn(10) != 0 {
-		v4 := r.Intn(5)
-		this.Headers = make([]*Header, v4)
-		for i := 0; i < v4; i++ {
+		v5 := r.Intn(5)
+		this.Headers = make([]*Header, v5)
+		for i := 0; i < v5; i++ {
 			this.Headers[i] = NewPopulatedHeader(r, easy)
 		}
 	}
@@ -3485,9 +3721,9 @@ func NewPopulatedHttpCheck(r randyChecks, easy bool) *HttpCheck {
 func NewPopulatedCloudWatchCheck(r randyChecks, easy bool) *CloudWatchCheck {
 	this := &CloudWatchCheck{}
 	if r.Intn(10) != 0 {
-		v5 := r.Intn(5)
-		this.Metrics = make([]*CloudWatchMetric, v5)
-		for i := 0; i < v5; i++ {
+		v6 := r.Intn(5)
+		this.Metrics = make([]*CloudWatchMetric, v6)
+		for i := 0; i < v6; i++ {
 			this.Metrics[i] = NewPopulatedCloudWatchMetric(r, easy)
 		}
 	}
@@ -3509,11 +3745,14 @@ func NewPopulatedCloudWatchResponse(r randyChecks, easy bool) *CloudWatchRespons
 	this := &CloudWatchResponse{}
 	this.Namespace = randStringChecks(r)
 	if r.Intn(10) != 0 {
-		v6 := r.Intn(5)
-		this.Metrics = make([]*Metric, v6)
-		for i := 0; i < v6; i++ {
+		v7 := r.Intn(5)
+		this.Metrics = make([]*Metric, v7)
+		for i := 0; i < v7; i++ {
 			this.Metrics[i] = NewPopulatedMetric(r, easy)
 		}
+	}
+	if r.Intn(10) == 0 {
+		this.Err = NewPopulatedOpseeBaseError(r, easy)
 	}
 	if !easy && r.Intn(10) != 0 {
 	}
@@ -3537,9 +3776,9 @@ func NewPopulatedMetric(r randyChecks, easy bool) *Metric {
 		this.Value *= -1
 	}
 	if r.Intn(10) != 0 {
-		v7 := r.Intn(5)
-		this.Tags = make([]*Tag, v7)
-		for i := 0; i < v7; i++ {
+		v8 := r.Intn(5)
+		this.Tags = make([]*Tag, v8)
+		for i := 0; i < v8; i++ {
 			this.Tags[i] = NewPopulatedTag(r, easy)
 		}
 	}
@@ -3561,16 +3800,16 @@ func NewPopulatedHttpResponse(r randyChecks, easy bool) *HttpResponse {
 	}
 	this.Body = randStringChecks(r)
 	if r.Intn(10) != 0 {
-		v8 := r.Intn(5)
-		this.Headers = make([]*Header, v8)
-		for i := 0; i < v8; i++ {
+		v9 := r.Intn(5)
+		this.Headers = make([]*Header, v9)
+		for i := 0; i < v9; i++ {
 			this.Headers[i] = NewPopulatedHeader(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v9 := r.Intn(5)
-		this.Metrics = make([]*Metric, v9)
-		for i := 0; i < v9; i++ {
+		v10 := r.Intn(5)
+		this.Metrics = make([]*Metric, v10)
+		for i := 0; i < v10; i++ {
 			this.Metrics[i] = NewPopulatedMetric(r, easy)
 		}
 	}
@@ -3620,10 +3859,10 @@ func NewPopulatedCheckResult(r randyChecks, easy bool) *CheckResult {
 		this.Timestamp = opsee_types.NewPopulatedTimestamp(r, easy)
 	}
 	this.Passing = bool(bool(r.Intn(2) == 0))
-	if r.Intn(10) != 0 {
-		v10 := r.Intn(5)
-		this.Responses = make([]*CheckResponse, v10)
-		for i := 0; i < v10; i++ {
+	if r.Intn(10) == 0 {
+		v11 := r.Intn(5)
+		this.Responses = make([]*CheckResponse, v11)
+		for i := 0; i < v11; i++ {
 			this.Responses[i] = NewPopulatedCheckResponse(r, easy)
 		}
 	}
@@ -3659,9 +3898,9 @@ func randUTF8RuneChecks(r randyChecks) rune {
 	return rune(ru + 61)
 }
 func randStringChecks(r randyChecks) string {
-	v11 := r.Intn(100)
-	tmps := make([]rune, v11)
-	for i := 0; i < v11; i++ {
+	v12 := r.Intn(100)
+	tmps := make([]rune, v12)
+	for i := 0; i < v12; i++ {
 		tmps[i] = randUTF8RuneChecks(r)
 	}
 	return string(tmps)
@@ -3683,11 +3922,11 @@ func randFieldChecks(data []byte, r randyChecks, fieldNumber int, wire int) []by
 	switch wire {
 	case 0:
 		data = encodeVarintPopulateChecks(data, uint64(key))
-		v12 := r.Int63()
+		v13 := r.Int63()
 		if r.Intn(2) == 0 {
-			v12 *= -1
+			v13 *= -1
 		}
-		data = encodeVarintPopulateChecks(data, uint64(v12))
+		data = encodeVarintPopulateChecks(data, uint64(v13))
 	case 1:
 		data = encodeVarintPopulateChecks(data, uint64(key))
 		data = append(data, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
@@ -3712,6 +3951,26 @@ func encodeVarintPopulateChecks(data []byte, v uint64) []byte {
 	data = append(data, uint8(v))
 	return data
 }
+func (m *OpseeBaseError) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.ErrorCode)
+	if l > 0 {
+		n += 1 + l + sovChecks(uint64(l))
+	}
+	l = len(m.ErrorMessage)
+	if l > 0 {
+		n += 1 + l + sovChecks(uint64(l))
+	}
+	if len(m.Errs) > 0 {
+		for _, e := range m.Errs {
+			l = e.Size()
+			n += 1 + l + sovChecks(uint64(l))
+		}
+	}
+	return n
+}
+
 func (m *Target) Size() (n int) {
 	var l int
 	_ = l
@@ -3908,6 +4167,10 @@ func (m *CloudWatchResponse) Size() (n int) {
 			n += 1 + l + sovChecks(uint64(l))
 		}
 	}
+	if m.Err != nil {
+		l = m.Err.Size()
+		n += 1 + l + sovChecks(uint64(l))
+	}
 	return n
 }
 
@@ -4077,6 +4340,145 @@ func sovChecks(x uint64) (n int) {
 }
 func sozChecks(x uint64) (n int) {
 	return sovChecks(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *OpseeBaseError) Unmarshal(data []byte) error {
+	l := len(data)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowChecks
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := data[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: OpseeBaseError: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: OpseeBaseError: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ErrorCode", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowChecks
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthChecks
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ErrorCode = string(data[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ErrorMessage", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowChecks
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthChecks
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ErrorMessage = string(data[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Errs", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowChecks
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthChecks
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Errs = append(m.Errs, &OpseeBaseError{})
+			if err := m.Errs[len(m.Errs)-1].Unmarshal(data[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipChecks(data[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthChecks
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *Target) Unmarshal(data []byte) error {
 	l := len(data)
@@ -5393,6 +5795,39 @@ func (m *CloudWatchResponse) Unmarshal(data []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Err", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowChecks
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthChecks
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Err == nil {
+				m.Err = &OpseeBaseError{}
+			}
+			if err := m.Err.Unmarshal(data[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipChecks(data[iNdEx:])
@@ -6538,69 +6973,73 @@ var (
 )
 
 var fileDescriptorChecks = []byte{
-	// 1012 bytes of a gzipped FileDescriptorProto
+	// 1079 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x94, 0x56, 0x4f, 0x6f, 0x1b, 0x45,
-	0x14, 0x67, 0xfd, 0x67, 0x6d, 0xbf, 0x38, 0x6d, 0x34, 0xad, 0x82, 0x5b, 0xd1, 0x34, 0x5a, 0x09,
-	0xb5, 0x12, 0xc5, 0x2e, 0xa1, 0x5c, 0x72, 0xab, 0xd3, 0x43, 0x90, 0x00, 0x55, 0x43, 0x24, 0x24,
-	0x38, 0x44, 0xeb, 0xf5, 0xc4, 0xbb, 0xaa, 0xbd, 0xbb, 0xda, 0x19, 0x17, 0xf9, 0x80, 0xc4, 0x07,
-	0xe1, 0xc4, 0x01, 0xb8, 0x70, 0x47, 0x9c, 0x38, 0x22, 0xc4, 0x81, 0x8f, 0x00, 0x7c, 0x0a, 0x8e,
-	0xbc, 0x79, 0xb3, 0x33, 0xbb, 0x9b, 0xa4, 0x49, 0x7b, 0xb0, 0x34, 0xef, 0xef, 0xbc, 0x3f, 0xbf,
-	0xfd, 0x8d, 0x61, 0x18, 0xc5, 0x22, 0x7a, 0x21, 0xc7, 0x79, 0x91, 0xa9, 0x8c, 0x75, 0xb3, 0x5c,
-	0x0a, 0x71, 0xf7, 0x70, 0x91, 0xa8, 0x78, 0x3d, 0x1b, 0x47, 0xd9, 0x6a, 0x42, 0x9a, 0x09, 0x99,
-	0x67, 0xeb, 0x33, 0x23, 0x92, 0x34, 0x51, 0x9b, 0x5c, 0xc8, 0x89, 0x4a, 0x56, 0x42, 0xaa, 0x70,
-	0x95, 0x9b, 0x14, 0x77, 0x9f, 0xbc, 0x41, 0x6c, 0x98, 0x6e, 0xca, 0xa8, 0xf7, 0x6b, 0x51, 0x8b,
-	0x6c, 0x91, 0x55, 0x41, 0x5a, 0x32, 0x31, 0xfa, 0x54, 0xba, 0x3f, 0x7e, 0xad, 0x4b, 0xe8, 0x68,
-	0x22, 0x82, 0x33, 0xf0, 0x4f, 0xc2, 0x62, 0x21, 0x14, 0x63, 0xd0, 0x49, 0xc3, 0x95, 0x18, 0x79,
-	0xfb, 0xde, 0xc3, 0x01, 0xa7, 0x33, 0x1b, 0x41, 0x47, 0x57, 0x34, 0x6a, 0x69, 0xdd, 0xb4, 0xf3,
-	0xed, 0x0f, 0xf7, 0x3c, 0x4e, 0x1a, 0x76, 0x1b, 0x5a, 0xc9, 0x7c, 0xd4, 0xae, 0xe9, 0x51, 0x46,
-	0xff, 0x5e, 0x38, 0x9f, 0x17, 0x42, 0xca, 0x51, 0x87, 0xd2, 0x58, 0x31, 0xf8, 0xa3, 0x0d, 0xdd,
-	0x23, 0x3d, 0x52, 0x76, 0x83, 0x22, 0xcd, 0x2d, 0x3a, 0x66, 0x1f, 0xfa, 0x49, 0xaa, 0x44, 0xf1,
-	0x32, 0x5c, 0xd2, 0x3d, 0xdd, 0x32, 0x9f, 0xd3, 0xb2, 0xf7, 0xc0, 0x57, 0x54, 0x23, 0xdd, 0xb7,
-	0x75, 0xb0, 0x3d, 0x36, 0x1d, 0x98, 0xc2, 0x4b, 0xf7, 0xd2, 0x85, 0x7d, 0x00, 0xfd, 0x65, 0x28,
-	0xd5, 0x69, 0xb1, 0x4e, 0xa9, 0x86, 0xad, 0x83, 0xdd, 0xd2, 0x9d, 0x66, 0x3b, 0x3e, 0xb1, 0x7b,
-	0xe1, 0x3d, 0xed, 0xc7, 0xd7, 0x29, 0xfb, 0x08, 0x80, 0xb6, 0x7d, 0x2a, 0x73, 0x11, 0x8d, 0xba,
-	0x14, 0xb4, 0xd3, 0x08, 0x7a, 0x9a, 0x6e, 0xca, 0x6b, 0x06, 0xe4, 0xf9, 0x39, 0x3a, 0xea, 0xe1,
-	0xd0, 0xc0, 0xfc, 0xfa, 0x70, 0x68, 0x6c, 0x8f, 0x01, 0x42, 0x29, 0x45, 0xa1, 0x92, 0x2c, 0x95,
-	0xa3, 0xde, 0x7e, 0xbb, 0x96, 0xf0, 0xa9, 0x35, 0xf0, 0x9a, 0x0f, 0x7b, 0x04, 0x3d, 0x1c, 0xd3,
-	0x7a, 0xa9, 0xe4, 0xa8, 0x4f, 0xee, 0xac, 0x74, 0xa7, 0x99, 0x71, 0x32, 0x71, 0xeb, 0x82, 0x3d,
-	0x42, 0xac, 0x54, 0x7e, 0x4a, 0xb5, 0x8c, 0x44, 0xa3, 0xe0, 0x63, 0x34, 0x50, 0xd0, 0xf1, 0x5b,
-	0x7c, 0x10, 0x5b, 0x81, 0x1d, 0xc1, 0x4e, 0xb4, 0xcc, 0xd6, 0xf3, 0xaf, 0x43, 0x15, 0xc5, 0x65,
-	0xe0, 0x59, 0x63, 0x3c, 0x47, 0xda, 0xfc, 0x85, 0x36, 0xdb, 0xf0, 0x9b, 0x55, 0x04, 0xa9, 0xa6,
-	0x3e, 0x74, 0xf4, 0x88, 0x82, 0x6f, 0x60, 0xe0, 0xda, 0x60, 0xbb, 0xd0, 0x7e, 0x21, 0x36, 0x66,
-	0xa1, 0xe5, 0x14, 0xb4, 0x02, 0x11, 0xd2, 0xc5, 0xe5, 0xad, 0x4b, 0xf0, 0x70, 0x23, 0xb0, 0x87,
-	0x30, 0x2c, 0xc4, 0x32, 0xa4, 0xae, 0xe3, 0x24, 0x6f, 0x20, 0xa8, 0x61, 0xd1, 0x58, 0xca, 0x72,
-	0x51, 0x84, 0xe9, 0xdc, 0x62, 0xa9, 0x14, 0x83, 0x43, 0xf0, 0x8f, 0x45, 0x38, 0x17, 0x85, 0x5b,
-	0x81, 0x77, 0x61, 0x05, 0xbb, 0xe0, 0xd3, 0x85, 0x12, 0xaf, 0x6f, 0x63, 0x70, 0x29, 0x05, 0x7f,
-	0x7a, 0x30, 0x70, 0x23, 0x7a, 0x15, 0xe6, 0xf3, 0x50, 0xc5, 0x4d, 0xcc, 0x6b, 0x8d, 0x46, 0x2a,
-	0x7d, 0x34, 0x51, 0xb6, 0x6c, 0xd4, 0xed, 0xb4, 0x14, 0x9b, 0x15, 0x8a, 0x0a, 0xee, 0xba, 0x58,
-	0xd4, 0x68, 0xcb, 0x4b, 0x51, 0xcc, 0x08, 0x5d, 0x2e, 0xab, 0xd6, 0xb0, 0x07, 0xd0, 0x8b, 0xa9,
-	0x1b, 0x89, 0x48, 0x6a, 0xd7, 0xe0, 0x6d, 0x7a, 0xe4, 0xd6, 0xaa, 0x8b, 0x9d, 0x65, 0xf3, 0x0d,
-	0xe2, 0x89, 0x8a, 0xd5, 0xe7, 0xe0, 0x19, 0xdc, 0x3c, 0xb7, 0x37, 0x04, 0x47, 0x6f, 0x25, 0x54,
-	0x91, 0x44, 0x12, 0xdb, 0xd2, 0xf9, 0xde, 0xbe, 0xb0, 0xe0, 0x4f, 0xc9, 0xce, 0xad, 0x1f, 0x66,
-	0xd9, 0x39, 0x6f, 0x64, 0xef, 0xc0, 0x40, 0x8f, 0x43, 0xe6, 0x61, 0x64, 0xe7, 0x53, 0x29, 0xdc,
-	0xe0, 0x5a, 0xd5, 0xe0, 0x82, 0xaf, 0x80, 0x55, 0x59, 0x10, 0xb2, 0x39, 0x2e, 0x52, 0x5c, 0x93,
-	0xe7, 0x41, 0x55, 0x6c, 0xab, 0xd1, 0xfc, 0xf9, 0x12, 0x27, 0xd0, 0x3e, 0x09, 0x17, 0x97, 0x2e,
-	0xec, 0x52, 0xa0, 0x05, 0xbf, 0x7a, 0xe0, 0x97, 0xad, 0x5c, 0x1b, 0xe4, 0x59, 0x74, 0xee, 0x21,
-	0xdf, 0x85, 0x0b, 0x89, 0xdb, 0xd5, 0xb5, 0x80, 0xe3, 0x99, 0x05, 0x27, 0x3d, 0x7b, 0x02, 0x03,
-	0xc7, 0xeb, 0xd7, 0xb0, 0x4b, 0xe5, 0xa8, 0xef, 0x5f, 0xa7, 0x89, 0x32, 0xbb, 0xe7, 0x74, 0xd6,
-	0x63, 0x41, 0xa3, 0x4a, 0xa4, 0x4a, 0x22, 0xc3, 0x20, 0xbc, 0x52, 0x04, 0xdf, 0x79, 0x30, 0xd4,
-	0x28, 0x75, 0x53, 0xc4, 0x14, 0x51, 0x36, 0x37, 0x2d, 0x74, 0x39, 0x9d, 0x1d, 0x1e, 0x5a, 0x15,
-	0x1e, 0xea, 0x60, 0x6a, 0x5f, 0x09, 0xa6, 0xda, 0xe0, 0x3b, 0x57, 0x0d, 0x5e, 0xdf, 0x12, 0x67,
-	0xd2, 0x15, 0xaf, 0xcf, 0xc1, 0x8f, 0x2d, 0xd8, 0xb6, 0xc4, 0x64, 0xea, 0x7b, 0xd7, 0x51, 0xb4,
-	0x77, 0x09, 0x45, 0x3b, 0x72, 0x7e, 0x04, 0xfd, 0xa2, 0x0c, 0xa1, 0xb2, 0x2f, 0xe1, 0x59, 0xee,
-	0x3c, 0xf4, 0x8e, 0x44, 0x51, 0x64, 0x85, 0xf9, 0xd8, 0xb8, 0x11, 0x34, 0x2f, 0xe4, 0xc8, 0x9c,
-	0x49, 0xba, 0xa0, 0x0d, 0xf4, 0xb9, 0x15, 0xd9, 0x21, 0x6c, 0x13, 0x2d, 0xba, 0x2b, 0x0c, 0x33,
-	0xde, 0xaa, 0x31, 0xa3, 0x2d, 0x18, 0xd9, 0x6d, 0x18, 0xd7, 0x07, 0xfc, 0x09, 0xdc, 0xaa, 0xf1,
-	0xa3, 0xcb, 0x60, 0x28, 0xf2, 0xce, 0x85, 0x2f, 0xa8, 0x96, 0x87, 0x55, 0x71, 0x56, 0x3b, 0xed,
-	0x41, 0xb7, 0x10, 0xf9, 0x72, 0x13, 0xfc, 0xdc, 0x82, 0xad, 0x1a, 0x85, 0xb3, 0x3b, 0xd0, 0x37,
-	0x4f, 0x8d, 0x7b, 0x02, 0x7b, 0x24, 0x7f, 0x3c, 0x67, 0xf7, 0x61, 0x2b, 0x5a, 0x4b, 0x95, 0xad,
-	0x44, 0xa1, 0xad, 0x66, 0xab, 0x60, 0x55, 0xe8, 0xd0, 0x00, 0x5f, 0xfb, 0x75, 0xc1, 0xf7, 0xea,
-	0x71, 0x1d, 0xc0, 0xc0, 0xf6, 0x29, 0x71, 0xbd, 0x1a, 0x04, 0xb7, 0xcf, 0xbd, 0x3a, 0x64, 0xe4,
-	0x95, 0x5b, 0x6d, 0xcf, 0xfe, 0x55, 0x7b, 0xbe, 0x67, 0x5f, 0x54, 0xfa, 0xee, 0x0c, 0x61, 0x99,
-	0x97, 0xf3, 0x33, 0x43, 0xb1, 0x3d, 0xa4, 0x3e, 0x89, 0x4c, 0x8f, 0xaf, 0x9d, 0x06, 0xb4, 0x15,
-	0xa7, 0xcf, 0xfe, 0xfb, 0x67, 0xcf, 0xfb, 0xe9, 0xdf, 0x3d, 0xef, 0x17, 0xfc, 0xfd, 0x8e, 0xbf,
-	0xbf, 0xf0, 0xf7, 0x37, 0xfe, 0x7e, 0xfb, 0xfe, 0xbe, 0x07, 0x37, 0xa2, 0x6c, 0x5c, 0xfb, 0xf3,
-	0x32, 0x1d, 0x4e, 0xf1, 0x05, 0xc7, 0xb0, 0xe7, 0x5a, 0x7a, 0xee, 0x7d, 0xe9, 0x4b, 0xbc, 0x63,
-	0x15, 0xce, 0x7c, 0x32, 0x7f, 0xf8, 0x7f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x3e, 0xd5, 0xca, 0x3c,
-	0xc5, 0x09, 0x00, 0x00,
+	0x14, 0x67, 0xbd, 0xf6, 0xda, 0x7e, 0x71, 0xd3, 0x68, 0x5a, 0x82, 0x1b, 0xd1, 0x34, 0x5a, 0x09,
+	0x35, 0x88, 0x12, 0x97, 0x50, 0x2e, 0xb9, 0xd5, 0x29, 0x52, 0x90, 0x28, 0x54, 0x4b, 0x24, 0x24,
+	0x2e, 0xd1, 0x7a, 0x3d, 0xf1, 0xae, 0x6a, 0xef, 0xae, 0x76, 0xc6, 0x45, 0x3e, 0x20, 0x71, 0xe0,
+	0x63, 0x70, 0xe2, 0x00, 0x5c, 0xb8, 0x73, 0xec, 0x11, 0x21, 0x0e, 0x7c, 0x04, 0xe0, 0x53, 0x70,
+	0xe4, 0xcd, 0x9b, 0x9d, 0xd9, 0xdd, 0xc4, 0x49, 0xcb, 0xc1, 0xd2, 0xbc, 0xff, 0x6f, 0xde, 0xfb,
+	0xed, 0x6f, 0x0c, 0x83, 0x28, 0xe6, 0xd1, 0x73, 0x71, 0x90, 0x17, 0x99, 0xcc, 0x58, 0x27, 0xcb,
+	0x05, 0xe7, 0x3b, 0x47, 0xb3, 0x44, 0xc6, 0xcb, 0xc9, 0x41, 0x94, 0x2d, 0x46, 0xa4, 0x19, 0x91,
+	0x79, 0xb2, 0x3c, 0xd7, 0x22, 0x49, 0x23, 0xb9, 0xca, 0xb9, 0x18, 0xc9, 0x64, 0xc1, 0x85, 0x0c,
+	0x17, 0xb9, 0x4e, 0xb1, 0xf3, 0xe8, 0x7f, 0xc4, 0x86, 0xe9, 0xaa, 0x8c, 0x7a, 0xbf, 0x16, 0x35,
+	0xcb, 0x66, 0x59, 0x15, 0xa4, 0x24, 0x1d, 0xa3, 0x4e, 0xa5, 0xfb, 0xc3, 0xd7, 0x2a, 0x42, 0x47,
+	0x1d, 0xe1, 0x7f, 0x03, 0x9b, 0x9f, 0x2b, 0x71, 0x1c, 0x0a, 0xfe, 0x71, 0x51, 0x64, 0x05, 0x7b,
+	0x1b, 0xfa, 0x5c, 0x1d, 0x8e, 0xb3, 0x29, 0x1f, 0x3a, 0x7b, 0xce, 0x7e, 0x3f, 0xa8, 0x14, 0xcc,
+	0x87, 0x01, 0x09, 0x4f, 0xb9, 0x10, 0xe1, 0x8c, 0x0f, 0x5b, 0xe4, 0xd0, 0xd0, 0xb1, 0x77, 0xa1,
+	0x8d, 0xb2, 0x18, 0xba, 0x7b, 0xee, 0xfe, 0xc6, 0xe1, 0x9b, 0x07, 0xba, 0x5e, 0xb3, 0x4c, 0x40,
+	0x2e, 0xfe, 0x39, 0x78, 0xa7, 0x61, 0x31, 0xe3, 0x92, 0x31, 0x68, 0xa7, 0xe1, 0xc2, 0x54, 0xa4,
+	0x33, 0x1b, 0x42, 0x5b, 0x0d, 0x44, 0x17, 0x19, 0xb7, 0xbf, 0xfd, 0xf1, 0xae, 0x13, 0x90, 0x86,
+	0xdd, 0x86, 0x56, 0x32, 0xc5, 0x02, 0x95, 0x1e, 0x65, 0xf4, 0xef, 0x86, 0xd3, 0x69, 0x81, 0x6d,
+	0x0c, 0xdb, 0x94, 0xc6, 0x88, 0xfe, 0xef, 0x2e, 0x74, 0x8e, 0xd5, 0x46, 0xd9, 0x26, 0x45, 0xea,
+	0x2a, 0x2a, 0x66, 0x0f, 0x7a, 0x49, 0x2a, 0x79, 0xf1, 0x22, 0x9c, 0x53, 0x9d, 0x4e, 0x99, 0xcf,
+	0x6a, 0xd9, 0x7b, 0xe0, 0x49, 0xea, 0x91, 0xea, 0x6d, 0x1c, 0xde, 0x28, 0x2f, 0xa4, 0x1b, 0x2f,
+	0xdd, 0x4b, 0x17, 0xf6, 0x01, 0xf4, 0xe6, 0xa1, 0x90, 0x67, 0xc5, 0x32, 0xa5, 0x1e, 0x36, 0x0e,
+	0xb7, 0x4b, 0x77, 0x5a, 0xed, 0xc1, 0xa9, 0x81, 0x45, 0xd0, 0x55, 0x7e, 0xc1, 0x32, 0x65, 0x1f,
+	0x01, 0x10, 0xd8, 0xce, 0x44, 0xce, 0xa3, 0x61, 0x87, 0x82, 0xb6, 0x1a, 0x41, 0x8f, 0xd3, 0x55,
+	0x59, 0xa6, 0x4f, 0x9e, 0x5f, 0xa0, 0xa3, 0x1a, 0x0e, 0x0d, 0xcc, 0xab, 0x0f, 0x87, 0xc6, 0xf6,
+	0x10, 0x20, 0x14, 0x82, 0x17, 0x32, 0xc9, 0x52, 0x31, 0xec, 0xd2, 0x16, 0x4c, 0xc2, 0xc7, 0xc6,
+	0x10, 0xd4, 0x7c, 0xd8, 0x03, 0xe8, 0xe2, 0x98, 0x96, 0x73, 0x29, 0x86, 0x3d, 0x72, 0x67, 0xa5,
+	0x3b, 0xcd, 0x2c, 0x20, 0x53, 0x60, 0x5c, 0xf0, 0x8e, 0x10, 0x4b, 0x99, 0x9f, 0x51, 0x2f, 0x43,
+	0xde, 0x68, 0xf8, 0x04, 0x0d, 0x14, 0x74, 0xf2, 0x46, 0xd0, 0x8f, 0x8d, 0xc0, 0x8e, 0x61, 0x2b,
+	0x9a, 0x67, 0xcb, 0xe9, 0xd7, 0xa1, 0x8c, 0xe2, 0x32, 0xf0, 0xbc, 0x31, 0x9e, 0x63, 0x65, 0xfe,
+	0x52, 0x99, 0x4d, 0xf8, 0xcd, 0x2a, 0x82, 0x54, 0x63, 0x0f, 0xda, 0x6a, 0x44, 0x88, 0xd9, 0xbe,
+	0xbd, 0x06, 0xdb, 0x06, 0xf7, 0x39, 0x5f, 0xe9, 0x85, 0x96, 0x53, 0x50, 0x0a, 0x44, 0x48, 0x07,
+	0x97, 0xb7, 0x34, 0x08, 0xd5, 0x02, 0xdb, 0x87, 0x41, 0xc1, 0xe7, 0x21, 0xdd, 0x3a, 0x4e, 0xf2,
+	0x06, 0x82, 0x1a, 0x16, 0x85, 0xa5, 0x2c, 0xe7, 0x45, 0x98, 0x4e, 0x0d, 0x96, 0x4a, 0xd1, 0x3f,
+	0x02, 0xef, 0x84, 0x87, 0x53, 0x5e, 0xd8, 0x15, 0x38, 0x97, 0x56, 0xb0, 0x0d, 0x1e, 0x15, 0x14,
+	0x58, 0xde, 0xc5, 0xe0, 0x52, 0xf2, 0xff, 0x70, 0xa0, 0x6f, 0x47, 0x74, 0x15, 0xe6, 0xf3, 0x50,
+	0xc6, 0x4d, 0xcc, 0x2b, 0x8d, 0x42, 0x2a, 0x7d, 0xb3, 0x51, 0x36, 0x6f, 0xf4, 0x6d, 0xb5, 0x14,
+	0x9b, 0x15, 0x92, 0x1a, 0xee, 0xd8, 0x58, 0xd4, 0x28, 0xcb, 0x0b, 0x5e, 0x4c, 0x08, 0x5d, 0x36,
+	0xab, 0xd2, 0xb0, 0xfb, 0xd0, 0x8d, 0xe9, 0x36, 0x02, 0x91, 0xe4, 0xd6, 0xe0, 0xad, 0xef, 0x18,
+	0x18, 0xab, 0x6a, 0x76, 0x92, 0x4d, 0x57, 0x88, 0x27, 0x6a, 0x56, 0x9d, 0xfd, 0x27, 0x70, 0xf3,
+	0xc2, 0xde, 0x10, 0x1c, 0xdd, 0x05, 0x97, 0x45, 0x12, 0x09, 0xbc, 0x96, 0xca, 0xf7, 0xd6, 0xa5,
+	0x05, 0x3f, 0x25, 0x7b, 0x60, 0xfc, 0x30, 0xcb, 0xd6, 0x45, 0xa3, 0x62, 0x21, 0x35, 0x0e, 0x91,
+	0x87, 0x91, 0x65, 0x21, 0xab, 0xb0, 0x83, 0x6b, 0x55, 0x83, 0xf3, 0xbf, 0x73, 0x80, 0x55, 0x69,
+	0x10, 0xb3, 0x39, 0x6e, 0x92, 0xbf, 0x22, 0xd1, 0xfd, 0xaa, 0xdb, 0x56, 0xe3, 0xf6, 0x17, 0x7a,
+	0x44, 0x47, 0x17, 0x09, 0xab, 0x64, 0x80, 0x2b, 0x28, 0x4d, 0x79, 0xf8, 0x23, 0x70, 0x4f, 0xc3,
+	0xd9, 0xda, 0xd5, 0xae, 0x85, 0xa4, 0xff, 0xd2, 0x01, 0xaf, 0xbc, 0xf4, 0xba, 0xa0, 0x9d, 0x7a,
+	0x90, 0x53, 0xae, 0xae, 0x44, 0xf3, 0x2e, 0xf2, 0x63, 0x38, 0x33, 0x44, 0x0b, 0x96, 0x97, 0x66,
+	0x01, 0xe9, 0xd9, 0x23, 0xe8, 0xdb, 0x67, 0xe8, 0x15, 0x6c, 0x54, 0x39, 0xaa, 0x2e, 0x96, 0x69,
+	0x22, 0x35, 0x56, 0x02, 0x3a, 0xab, 0x29, 0xa2, 0x51, 0x26, 0x42, 0x26, 0x91, 0x66, 0x9c, 0xa0,
+	0x52, 0xf8, 0xdf, 0x3b, 0x30, 0x50, 0xa8, 0xb6, 0x43, 0xc7, 0x14, 0x91, 0x79, 0x3e, 0x3a, 0x01,
+	0x9d, 0x2d, 0x7e, 0x5a, 0x15, 0x7e, 0xea, 0xe0, 0x73, 0xaf, 0x05, 0x5f, 0x6d, 0x4f, 0xed, 0x6b,
+	0xf7, 0x84, 0x55, 0xe2, 0x4c, 0xd8, 0xe6, 0xd5, 0xd9, 0xff, 0xa9, 0x05, 0x37, 0x0c, 0x91, 0xe9,
+	0xfe, 0xde, 0xb1, 0x94, 0xee, 0xac, 0xa1, 0x74, 0x4b, 0xe6, 0x0f, 0xa0, 0x57, 0x94, 0x21, 0xd4,
+	0xf6, 0x1a, 0x5e, 0x0e, 0xac, 0x87, 0x5a, 0x2f, 0x3d, 0x83, 0xfa, 0xe3, 0x0c, 0xb4, 0xa0, 0x78,
+	0x24, 0x47, 0xa6, 0x4d, 0xd2, 0x19, 0x6d, 0xa0, 0x17, 0x18, 0x91, 0x1d, 0xc1, 0x0d, 0xa2, 0x51,
+	0x5b, 0x42, 0x33, 0xe9, 0xad, 0x1a, 0x93, 0x9a, 0x86, 0x91, 0x0d, 0x07, 0x71, 0x7d, 0xc0, 0x9f,
+	0xc2, 0xad, 0x1a, 0x9f, 0xda, 0x0c, 0x9a, 0x52, 0xef, 0x5c, 0xfa, 0xe2, 0x6a, 0x79, 0x58, 0x15,
+	0x67, 0xb4, 0xe3, 0x2e, 0x74, 0x0a, 0x9e, 0xcf, 0x57, 0xfe, 0x2f, 0x2d, 0xd8, 0xa8, 0x51, 0x3e,
+	0xbb, 0x03, 0x3d, 0xfd, 0x34, 0xd9, 0x27, 0xb3, 0x4b, 0xf2, 0x27, 0x53, 0x76, 0x0f, 0x36, 0xa2,
+	0xa5, 0x90, 0xd9, 0x82, 0x17, 0xca, 0xaa, 0xb7, 0x0a, 0x46, 0x85, 0x0e, 0x0d, 0xf0, 0xb9, 0xaf,
+	0x0b, 0xbe, 0xab, 0xc7, 0x75, 0x08, 0x7d, 0x73, 0x4f, 0x81, 0xeb, 0x55, 0x20, 0xb8, 0x7d, 0xe1,
+	0x95, 0x22, 0x63, 0x50, 0xb9, 0xd5, 0xf6, 0xec, 0x5d, 0xb7, 0xe7, 0xbb, 0xe6, 0x05, 0xa6, 0xaf,
+	0x4f, 0x13, 0x9c, 0x7e, 0x69, 0x3f, 0xd3, 0x94, 0xdc, 0x45, 0xaa, 0x14, 0xf8, 0x32, 0xe0, 0xeb,
+	0xa8, 0x00, 0x6d, 0xc4, 0xf1, 0x93, 0x7f, 0xff, 0xde, 0x75, 0x7e, 0xfe, 0x67, 0xd7, 0xf9, 0x15,
+	0x7f, 0xbf, 0xe1, 0xef, 0x4f, 0xfc, 0xfd, 0x85, 0xbf, 0x97, 0x3f, 0xdc, 0x73, 0x60, 0x33, 0xca,
+	0x0e, 0x6a, 0xff, 0xb5, 0xc6, 0x03, 0xa4, 0x0a, 0xf5, 0xbe, 0x3c, 0x53, 0xd2, 0x33, 0xe7, 0x2b,
+	0x4f, 0x60, 0x8d, 0x45, 0x38, 0xf1, 0xc8, 0xfc, 0xe1, 0x7f, 0x01, 0x00, 0x00, 0xff, 0xff, 0xf5,
+	0xe0, 0x61, 0x4f, 0x74, 0x0a, 0x00, 0x00,
 }
