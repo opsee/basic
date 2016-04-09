@@ -75,6 +75,7 @@ message CloudWatchResponse {
 	// The AWS CloudWatch metric namespace, e.g. AWS/RDS
 	string namespace = 1;
 	repeated Metric metrics = 2;
+    repeated Tag errors = 3; // maybe a bit ugly {MetricName: "Error", ...} Thoughts?
 }
 
 message Tag {
@@ -84,7 +85,7 @@ message Tag {
 
 message Metric {
 	string name = 1;
-	double value = 2;
+	double value = 2 [(opseeproto.required) = true];
 	repeated Tag tags = 3;
 	opsee.types.Timestamp timestamp = 4;
 	string unit = 5;	  // kbps, percent, ...
