@@ -37,7 +37,7 @@ message BezosRequest {
 }
 
 service Bezos {
-	rpc CloudwatchListMetrics(BezosRequest) returns (aws.cloudwatch.ListMetricsOutput) {}
+  rpc CloudwatchListMetrics(BezosRequest) returns (aws.cloudwatch.ListMetricsOutput) {}
   rpc CloudwatchGetMetricStatistics(BezosRequest) returns (aws.cloudwatch.GetMetricStatisticsOutput) {}
   
   rpc EC2DescribeInstances(BezosRequest) returns (aws.ec2.DescribeInstancesOutput) {}
