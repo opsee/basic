@@ -4,6 +4,12 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
+	"io/ioutil"
+	"os"
+	"path"
+	"reflect"
+
+	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/service/autoscaling"
 	"github.com/aws/aws-sdk-go/service/cloudwatch"
@@ -11,10 +17,6 @@ import (
 	"github.com/aws/aws-sdk-go/service/elb"
 	"github.com/aws/aws-sdk-go/service/rds"
 	"github.com/dedis/protobuf"
-	"io/ioutil"
-	"os"
-	"path"
-	"reflect"
 )
 
 type protonamer struct{}
@@ -68,6 +70,10 @@ var (
 			cloudwatch.ListMetricsOutput{},
 			cloudwatch.GetMetricStatisticsInput{},
 			cloudwatch.GetMetricStatisticsOutput{},
+		},
+		"awserr": []interface{}{
+			awserr.Error{},
+			awserr.BatchError{},
 		},
 	}
 
