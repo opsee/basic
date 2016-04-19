@@ -10,11 +10,11 @@ func TestAccountRoleARN(t *testing.T) {
 		ID:         666666666666,
 		CustomerID: "deadbeef",
 	}
-	assert.Equal(t, "arn:aws:iam::666666666666:role/opsee-role-deadbeef", account.RoleARN())
+	assert.Equal(t, "arn:aws:iam::666666666666:role/opsee-role-deadbeef", account.ComputedRoleARN())
 
 	account = &Account{
 		ID:         666666,
 		CustomerID: "deadbeef",
 	}
-	assert.Equal(t, "arn:aws:iam::000000666666:role/opsee-role-deadbeef", account.RoleARN())
+	assert.Equal(t, "arn:aws:iam::000000666666:role/opsee-role-deadbeef", account.ComputedRoleARN())
 }
