@@ -13,6 +13,11 @@ import (
 // it's a shim, and these objects should be proto, and we should have
 // a proper service client. until hugs is fixed, i'm doing this to get launched
 // also... why aren't notifications just part of checks???
+type Client interface {
+	CreateNotifications(user *schema.User, noteReq *NotificationRequest) error
+	CreateNotificationsMulti(user *schema.User, noteReq []*NotificationRequest) error
+}
+
 type Notification struct {
 	Type  string `json:"type"`
 	Value string `json:"value"`
