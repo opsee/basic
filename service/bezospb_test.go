@@ -28,6 +28,8 @@ It has these top-level messages:
 	LaunchStackResponse
 	AuthenticateBastionRequest
 	AuthenticateBastionResponse
+	EnhancedCombatModeRequest
+	EnhancedCombatModeResponse
 	PutRoleRequest
 	PutRoleResponse
 	GetCredentialsRequest
