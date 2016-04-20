@@ -59,7 +59,7 @@ func (c *hugsClient) createNotifications(user *schema.User, path string, noteReq
 		return err
 	}
 
-	req, err := http.NewRequest("POST", c.endpoint+"path", bytes.NewBuffer(reqBody))
+	req, err := http.NewRequest("POST", c.endpoint+path, bytes.NewBuffer(reqBody))
 	if err != nil {
 		return err
 	}
