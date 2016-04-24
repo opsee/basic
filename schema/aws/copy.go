@@ -93,6 +93,9 @@ func rcopy(dst, src reflect.Value, root bool) {
 			dst.SetMapIndex(k, v2)
 		}
 	default:
+		if dst.Kind() == reflect.Ptr && src.CanAddr() {
+			src = src.Addr()
+		}
 
 		if src.Type().AssignableTo(dst.Type()) {
 			dst.Set(src)
