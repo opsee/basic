@@ -45,6 +45,11 @@ func rcopy(dst, src reflect.Value, root bool) {
 				timestamp.Scan(*tt)
 				dst.Set(reflect.ValueOf(timestamp))
 			}
+		} else if tt, ok := src.Interface().(*opsee_types.Timestamp); ok {
+			if tt != nil && dst.CanSet() {
+				t, _ := tt.Value()
+				dst.Set(reflect.ValueOf(t.(time.Time)).Addr())
+			}
 		} else if dst.Kind() != reflect.Ptr {
 			if dst.CanSet() && !src.IsNil() {
 				dst.Set(reflect.Indirect(src))
