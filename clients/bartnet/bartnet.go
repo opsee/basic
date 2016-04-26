@@ -14,7 +14,6 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/opsee/basic/schema"
 	"github.com/opsee/basic/service"
-	opsee_types "github.com/opsee/protobuf/opseeproto/types"
 )
 
 type Client interface {
@@ -59,23 +58,13 @@ func (c *client) GetCheck(user *schema.User, id string) (*schema.Check, error) {
 	return check, nil
 }
 
-func (c *client) TestCheck(user *schema.User, check *schema.Check, deadline time.Time, maxHosts int) (*service.TestCheckResponse, error) {
-	var ts *opsee_types.Timestamp
-	if err := ts.Scan(deadline); err != nil {
-		return nil, err
-	}
-
-	tsJson, err := ts.MarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-
+func (c *client) TestCheck(user *schema.User, check *schema.Check) (*service.TestCheckResponse, error) {
 	checkJson, err := check.MarshalCrappyJSON()
 	if err != nil {
 		return nil, err
 	}
 
-	testCheckJson := fmt.Sprintf(`{"max_hosts": %d, "deadline": %s, "check": %s}`, maxHosts, string(tsJson), string(checkJson))
+	testCheckJson := fmt.Sprintf(`{"max_hosts": 3, "deadline": "30s", "check": %s}`, string(checkJson))
 
 	body, err := c.do(user, "POST", "application/x-protobuf", "/bastions/test-check", bytes.NewBufferString(testCheckJson))
 	if err != nil {
