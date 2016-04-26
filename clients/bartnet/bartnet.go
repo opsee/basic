@@ -9,7 +9,6 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"time"
 
 	"github.com/gogo/protobuf/proto"
 	"github.com/opsee/basic/schema"
@@ -22,7 +21,7 @@ type Client interface {
 	CreateCheck(user *schema.User, check *schema.Check) (*schema.Check, error)
 	UpdateCheck(user *schema.User, check *schema.Check) (*schema.Check, error)
 	DeleteCheck(user *schema.User, id string) error
-	TestCheck(user *schema.User, check *schema.Check, deadline time.Time, maxHosts int) (*service.TestCheckResponse, error)
+	TestCheck(user *schema.User, check *schema.Check) (*service.TestCheckResponse, error)
 }
 
 type client struct {
