@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+import "github.com/opsee/basic/schema/user.proto";
+
+package opsee;
+
+option go_package = "service";
+
+message Event {
+	User user = 1;
+	string name = 2;
+	map<string,bytes> fields = 3;
+}
+
+message PublishRequest {
+	repeated Event events = 1;
+}
+
+message PublishResponse {
+	bool ok = 1;
+}
+
+service Gmunch {
+	rpc Publish(PublishRequest) returns (PublishResponse) {}
+}
