@@ -13,7 +13,7 @@ message Event {
 }
 
 message PublishRequest {
-	repeated Event events = 1;
+	Event event = 1;
 }
 
 message PublishResponse {
