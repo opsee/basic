@@ -32,8 +32,8 @@ It has these top-level messages:
 	AuthenticateBastionResponse
 	EnhancedCombatModeRequest
 	EnhancedCombatModeResponse
-	PutRoleRequest
-	PutRoleResponse
+	GetRoleStackRequest
+	GetRoleStackResponse
 	GetCredentialsRequest
 	GetCredentialsResponse
 	GetUserRequest
