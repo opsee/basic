@@ -31,6 +31,7 @@ It has these top-level messages:
 	Subnet
 	BastionState
 	Stack
+	RoleStack
 	User
 	Customer
 */
