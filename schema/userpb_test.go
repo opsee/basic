@@ -133,15 +133,15 @@ func TestCustomerMarshalTo(t *testing.T) {
 	}
 }
 
-func TestOrgProto(t *testing.T) {
+func TestTeamProto(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedOrg(popr, false)
+	p := NewPopulatedTeam(popr, false)
 	data, err := github_com_gogo_protobuf_proto.Marshal(p)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
-	msg := &Org{}
+	msg := &Team{}
 	if err := github_com_gogo_protobuf_proto.Unmarshal(data, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -164,10 +164,10 @@ func TestOrgProto(t *testing.T) {
 	}
 }
 
-func TestOrgMarshalTo(t *testing.T) {
+func TestTeamMarshalTo(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedOrg(popr, false)
+	p := NewPopulatedTeam(popr, false)
 	size := p.Size()
 	data := make([]byte, size)
 	for i := range data {
@@ -177,7 +177,7 @@ func TestOrgMarshalTo(t *testing.T) {
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
-	msg := &Org{}
+	msg := &Team{}
 	if err := github_com_gogo_protobuf_proto.Unmarshal(data, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -337,16 +337,16 @@ func TestCustomerJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
-func TestOrgJSON(t *testing.T) {
+func TestTeamJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedOrg(popr, true)
+	p := NewPopulatedTeam(popr, true)
 	marshaler := github_com_gogo_protobuf_jsonpb.Marshaler{}
 	jsondata, err := marshaler.MarshalToString(p)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
-	msg := &Org{}
+	msg := &Team{}
 	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
@@ -447,12 +447,12 @@ func TestCustomerProtoCompactText(t *testing.T) {
 	}
 }
 
-func TestOrgProtoText(t *testing.T) {
+func TestTeamProtoText(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedOrg(popr, true)
+	p := NewPopulatedTeam(popr, true)
 	data := github_com_gogo_protobuf_proto.MarshalTextString(p)
-	msg := &Org{}
+	msg := &Team{}
 	if err := github_com_gogo_protobuf_proto.UnmarshalText(data, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -461,12 +461,12 @@ func TestOrgProtoText(t *testing.T) {
 	}
 }
 
-func TestOrgProtoCompactText(t *testing.T) {
+func TestTeamProtoCompactText(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedOrg(popr, true)
+	p := NewPopulatedTeam(popr, true)
 	data := github_com_gogo_protobuf_proto.CompactTextString(p)
-	msg := &Org{}
+	msg := &Team{}
 	if err := github_com_gogo_protobuf_proto.UnmarshalText(data, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -575,10 +575,10 @@ func TestCustomerSize(t *testing.T) {
 	}
 }
 
-func TestOrgSize(t *testing.T) {
+func TestTeamSize(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedOrg(popr, true)
+	p := NewPopulatedTeam(popr, true)
 	size2 := github_com_gogo_protobuf_proto.Size(p)
 	data, err := github_com_gogo_protobuf_proto.Marshal(p)
 	if err != nil {
@@ -659,11 +659,11 @@ func TestCustomerGraphQL(t *testing.T) {
 		t.Fatalf("String want %v got %v", objdesc, pdesc)
 	}
 }
-func TestOrgGraphQL(t *testing.T) {
+func TestTeamGraphQL(t *testing.T) {
 	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
-	_ = NewPopulatedOrg(popr, false)
+	_ = NewPopulatedTeam(popr, false)
 	objdesc := ""
-	pdesc := GraphQLOrgType.PrivateDescription
+	pdesc := GraphQLTeamType.PrivateDescription
 	if pdesc != objdesc {
 		t.Fatalf("String want %v got %v", objdesc, pdesc)
 	}
