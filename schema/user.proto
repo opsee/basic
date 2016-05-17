@@ -38,7 +38,14 @@ message Org {
 	string name = 2;
 	string subscription = 3;
 	CreditCardInfo creditCardInfo = 4;
-	repeated User users = 5;
+	repeated Invoice invoices = 5;
+	repeated User users = 6;
+}
+
+message Invoice {
+	opsee.types.Timestamp date = 1;
+	int32 amount = 2;
+	bool paid = 3;
 }
 
 message CreditCardInfo {
