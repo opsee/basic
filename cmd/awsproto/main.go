@@ -65,6 +65,8 @@ var (
 		"ecs": []interface{}{
 			ecs.ListTasksInput{},
 			ecs.ListTasksOutput{},
+			ecs.DescribeTasksInput{},
+			ecs.DescribeTasksOutput{},
 			ecs.DescribeContainerInstancesInput{},
 			ecs.DescribeContainerInstancesOutput{},
 		},
