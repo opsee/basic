@@ -35,6 +35,7 @@ It has these top-level messages:
 	User
 	Customer
 	Org
+	Invoice
 	CreditCardInfo
 */
 package schema

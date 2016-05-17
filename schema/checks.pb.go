@@ -35,6 +35,7 @@
 		User
 		Customer
 		Org
+		Invoice
 		CreditCardInfo
 */
 package schema
