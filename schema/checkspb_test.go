@@ -34,6 +34,8 @@ It has these top-level messages:
 	RoleStack
 	User
 	Customer
+	Org
+	CreditCardInfo
 */
 package schema
 

@@ -34,6 +34,8 @@
 		RoleStack
 		User
 		Customer
+		Org
+		CreditCardInfo
 */
 package schema
 
