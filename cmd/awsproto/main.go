@@ -75,6 +75,8 @@ var (
 			ecs.DescribeTasksOutput{},
 			ecs.DescribeContainerInstancesInput{},
 			ecs.DescribeContainerInstancesOutput{},
+			ecs.ListContainerInstancesInput{},
+			ecs.ListContainerInstancesOutput{},
 		},
 		"elb": []interface{}{
 			elb.DescribeLoadBalancersInput{},
