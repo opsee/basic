@@ -37,6 +37,7 @@ It has these top-level messages:
 	Team
 	Invoice
 	CreditCardInfo
+	Invite
 */
 package schema
 

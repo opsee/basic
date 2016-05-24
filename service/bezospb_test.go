@@ -36,11 +36,24 @@ It has these top-level messages:
 	GetRoleStackResponse
 	GetCredentialsRequest
 	GetCredentialsResponse
+	ListCustomersResponse
 	GetUserRequest
 	GetUserResponse
 	ListUsersRequest
 	ListUsersResponse
-	ListCustomersResponse
+	InviteUserRequest
+	InviteUserResponse
+	DeleteUserRequest
+	DeleteUserResponse
+	UpdateUserRequest
+	UpdateUserPermsRequest
+	UserTokenResponse
+	GetTeamRequest
+	GetTeamResponse
+	UpdateTeamRequest
+	UpdateTeamResponse
+	DeleteTeamRequest
+	DeleteTeamResponse
 */
 package service
 
