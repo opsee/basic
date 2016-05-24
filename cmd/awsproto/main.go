@@ -46,6 +46,10 @@ var (
 			cloudwatch.ListMetricsOutput{},
 			cloudwatch.GetMetricStatisticsInput{},
 			cloudwatch.GetMetricStatisticsOutput{},
+			cloudwatch.DescribeAlarmsInput{},
+			cloudwatch.DescribeAlarmsOutput{},
+			cloudwatch.DescribeAlarmsForMetricInput{},
+			cloudwatch.DescribeAlarmsForMetricOutput{},
 		},
 		"credentials": []interface{}{
 			credentials.Value{},
