@@ -38,6 +38,7 @@ message Check {
 	}
 	repeated Notification notifications = 9;
   string customer_id = 10;
+	string execution_group_id = 11;
 }
 
 message Notification {
