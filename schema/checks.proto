@@ -128,7 +128,7 @@ message CheckResult {
 	string customer_id = 2;
 	opsee.types.Timestamp timestamp = 3;
 	bool passing = 4;
-	repeated CheckResponse responses = 5;
+	repeated CheckResponse responses = 5 [(gogoproto.moretags) = "dynamodbav:\"-\""];
 	Target target = 6;
 	string check_name = 7;
 	int32 version = 8;
