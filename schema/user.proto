@@ -24,8 +24,8 @@ message User {
 	opsee.types.Timestamp created_at = 10 [(gogoproto.moretags) = "db:\"created_at\""];
 	opsee.types.Timestamp updated_at = 11 [(gogoproto.moretags) = "db:\"updated_at\""];
 	string status = 12 [(gogoproto.moretags) = "token:\"status\" db:\"status\""];
-	opsee.types.Permission perms = 13 [(gogoproto.moretags) = "db:\"perms\""];
-	repeated string team_flags = 14 [(gogoproto.moretags) = "token:\"team_flags\""];
+	opsee.types.Permission perms = 13 [(gogoproto.moretags) = "token:\"perms\" db:\"perms\""];
+	opsee.types.Permission team_flags = 14 [(gogoproto.moretags) = "token:\"team_flags\" db:\"team_flags\""];
 }
 
 message Customer {
