@@ -2346,7 +2346,7 @@ func TestUpdateUserRequestGraphQL(t *testing.T) {
 func TestUpdateUserPermsRequestGraphQL(t *testing.T) {
 	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
 	_ = NewPopulatedUpdateUserPermsRequest(popr, false)
-	objdesc := ""
+	objdesc := "not implemented"
 	pdesc := GraphQLUpdateUserPermsRequestType.PrivateDescription
 	if pdesc != objdesc {
 		t.Fatalf("String want %v got %v", objdesc, pdesc)
