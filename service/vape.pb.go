@@ -2347,6 +2347,10 @@ func init() {
 var _ context.Context
 var _ grpc.ClientConn
 
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion3
+
 // Client API for Vape service
 
 type VapeClient interface {
@@ -2468,112 +2472,166 @@ func RegisterVapeServer(s *grpc.Server, srv VapeServer) {
 	s.RegisterService(&_Vape_serviceDesc, srv)
 }
 
-func _Vape_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+func _Vape_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	out, err := srv.(VapeServer).GetUser(ctx, in)
-	if err != nil {
-		return nil, err
+	if interceptor == nil {
+		return srv.(VapeServer).GetUser(ctx, in)
 	}
-	return out, nil
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/opsee.Vape/GetUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VapeServer).GetUser(ctx, req.(*GetUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
-func _Vape_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+func _Vape_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	out, err := srv.(VapeServer).UpdateUser(ctx, in)
-	if err != nil {
-		return nil, err
+	if interceptor == nil {
+		return srv.(VapeServer).UpdateUser(ctx, in)
 	}
-	return out, nil
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/opsee.Vape/UpdateUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VapeServer).UpdateUser(ctx, req.(*UpdateUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
-func _Vape_UpdateUserPerms_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+func _Vape_UpdateUserPerms_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateUserPermsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	out, err := srv.(VapeServer).UpdateUserPerms(ctx, in)
-	if err != nil {
-		return nil, err
+	if interceptor == nil {
+		return srv.(VapeServer).UpdateUserPerms(ctx, in)
 	}
-	return out, nil
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/opsee.Vape/UpdateUserPerms",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VapeServer).UpdateUserPerms(ctx, req.(*UpdateUserPermsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
-func _Vape_ListUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+func _Vape_ListUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListUsersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	out, err := srv.(VapeServer).ListUsers(ctx, in)
-	if err != nil {
-		return nil, err
+	if interceptor == nil {
+		return srv.(VapeServer).ListUsers(ctx, in)
 	}
-	return out, nil
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/opsee.Vape/ListUsers",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VapeServer).ListUsers(ctx, req.(*ListUsersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
-func _Vape_InviteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+func _Vape_InviteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(InviteUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	out, err := srv.(VapeServer).InviteUser(ctx, in)
-	if err != nil {
-		return nil, err
+	if interceptor == nil {
+		return srv.(VapeServer).InviteUser(ctx, in)
 	}
-	return out, nil
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/opsee.Vape/InviteUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VapeServer).InviteUser(ctx, req.(*InviteUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
-func _Vape_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+func _Vape_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	out, err := srv.(VapeServer).DeleteUser(ctx, in)
-	if err != nil {
-		return nil, err
+	if interceptor == nil {
+		return srv.(VapeServer).DeleteUser(ctx, in)
 	}
-	return out, nil
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/opsee.Vape/DeleteUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VapeServer).DeleteUser(ctx, req.(*DeleteUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
-func _Vape_GetTeam_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+func _Vape_GetTeam_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetTeamRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	out, err := srv.(VapeServer).GetTeam(ctx, in)
-	if err != nil {
-		return nil, err
+	if interceptor == nil {
+		return srv.(VapeServer).GetTeam(ctx, in)
 	}
-	return out, nil
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/opsee.Vape/GetTeam",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VapeServer).GetTeam(ctx, req.(*GetTeamRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
-func _Vape_UpdateTeam_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+func _Vape_UpdateTeam_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateTeamRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	out, err := srv.(VapeServer).UpdateTeam(ctx, in)
-	if err != nil {
-		return nil, err
+	if interceptor == nil {
+		return srv.(VapeServer).UpdateTeam(ctx, in)
 	}
-	return out, nil
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/opsee.Vape/UpdateTeam",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VapeServer).UpdateTeam(ctx, req.(*UpdateTeamRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
-func _Vape_DeleteTeam_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+func _Vape_DeleteTeam_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteTeamRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	out, err := srv.(VapeServer).DeleteTeam(ctx, in)
-	if err != nil {
-		return nil, err
+	if interceptor == nil {
+		return srv.(VapeServer).DeleteTeam(ctx, in)
 	}
-	return out, nil
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/opsee.Vape/DeleteTeam",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VapeServer).DeleteTeam(ctx, req.(*DeleteTeamRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 var _Vape_serviceDesc = grpc.ServiceDesc{
@@ -2617,7 +2675,8 @@ var _Vape_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Vape_DeleteTeam_Handler,
 		},
 	},
-	Streams: []grpc.StreamDesc{},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: fileDescriptorVape,
 }
 
 func (m *ListCustomersResponse) Marshal() (data []byte, err error) {

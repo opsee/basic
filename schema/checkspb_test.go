@@ -7,6 +7,7 @@ Package schema is a generated protocol buffer package.
 
 It is generated from these files:
 	checks.proto
+	flags.proto
 	region.proto
 	stack.proto
 	user.proto
@@ -33,6 +34,7 @@ It has these top-level messages:
 	BastionState
 	Stack
 	RoleStack
+	UserFlags
 	User
 	Customer
 	Team
