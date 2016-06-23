@@ -46,7 +46,6 @@ It has these top-level messages:
 	DeleteUserRequest
 	DeleteUserResponse
 	UpdateUserRequest
-	UpdateUserPermsRequest
 	UserTokenResponse
 	GetTeamRequest
 	GetTeamResponse
