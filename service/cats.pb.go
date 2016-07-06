@@ -44,8 +44,8 @@ func (m *GetCheckCountRequest) GetUser() *opsee1.User {
 }
 
 type GetCheckCountResponse struct {
-	Count    int32 `protobuf:"varint,1,opt,name=count,proto3" json:"count,omitempty"`
-	Prorated bool  `protobuf:"varint,2,opt,name=prorated,proto3" json:"prorated,omitempty"`
+	Count    float32 `protobuf:"fixed32,1,opt,name=count,proto3" json:"count,omitempty"`
+	Prorated bool    `protobuf:"varint,2,opt,name=prorated,proto3" json:"prorated,omitempty"`
 }
 
 func (m *GetCheckCountResponse) Reset()                    { *m = GetCheckCountResponse{} }
@@ -195,7 +195,7 @@ func init() {
 		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
 			return github_com_graphql_go_graphql.Fields{
 				"count": &github_com_graphql_go_graphql.Field{
-					Type:        github_com_graphql_go_graphql.Int,
+					Type:        github_com_graphql_go_graphql.Float,
 					Description: "",
 					Resolve: func(p github_com_graphql_go_graphql.ResolveParams) (interface{}, error) {
 						obj, ok := p.Source.(*GetCheckCountResponse)
@@ -363,9 +363,9 @@ func (m *GetCheckCountResponse) MarshalTo(data []byte) (int, error) {
 	var l int
 	_ = l
 	if m.Count != 0 {
-		data[i] = 0x8
+		data[i] = 0xd
 		i++
-		i = encodeVarintCats(data, i, uint64(m.Count))
+		i = encodeFixed32Cats(data, i, uint32(math.Float32bits(float32(m.Count))))
 	}
 	if m.Prorated {
 		data[i] = 0x10
@@ -420,7 +420,7 @@ func NewPopulatedGetCheckCountRequest(r randyCats, easy bool) *GetCheckCountRequ
 
 func NewPopulatedGetCheckCountResponse(r randyCats, easy bool) *GetCheckCountResponse {
 	this := &GetCheckCountResponse{}
-	this.Count = int32(r.Int31())
+	this.Count = float32(r.Float32())
 	if r.Intn(2) == 0 {
 		this.Count *= -1
 	}
@@ -519,7 +519,7 @@ func (m *GetCheckCountResponse) Size() (n int) {
 	var l int
 	_ = l
 	if m.Count != 0 {
-		n += 1 + sovCats(uint64(m.Count))
+		n += 5
 	}
 	if m.Prorated {
 		n += 2
@@ -673,24 +673,19 @@ func (m *GetCheckCountResponse) Unmarshal(data []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
+			if wireType != 5 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Count", wireType)
 			}
-			m.Count = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCats
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := data[iNdEx]
-				iNdEx++
-				m.Count |= (int32(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var v uint32
+			if (iNdEx + 4) > l {
+				return io.ErrUnexpectedEOF
 			}
+			iNdEx += 4
+			v = uint32(data[iNdEx-4])
+			v |= uint32(data[iNdEx-3]) << 8
+			v |= uint32(data[iNdEx-2]) << 16
+			v |= uint32(data[iNdEx-1]) << 24
+			m.Count = float32(math.Float32frombits(v))
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Prorated", wireType)
@@ -852,10 +847,10 @@ var fileDescriptorCats = []byte{
 	0xad, 0x07, 0xf1, 0x54, 0x28, 0x50, 0x28, 0x08, 0x2c, 0x21, 0x24, 0xc5, 0xc5, 0x01, 0x34, 0xa1,
 	0x28, 0xb1, 0x24, 0x35, 0x45, 0x82, 0x09, 0xa8, 0x88, 0x23, 0x08, 0xce, 0x57, 0xf2, 0xe4, 0x12,
 	0x45, 0x33, 0xb4, 0xb8, 0x20, 0x3f, 0xaf, 0x38, 0x55, 0x48, 0x84, 0x8b, 0x35, 0x19, 0x24, 0x00,
-	0x36, 0x96, 0x35, 0x08, 0xc2, 0xc1, 0x67, 0x94, 0x51, 0x08, 0x17, 0x8b, 0x33, 0x30, 0x1e, 0x84,
+	0x36, 0x96, 0x29, 0x08, 0xc2, 0xc1, 0x67, 0x94, 0x51, 0x08, 0x17, 0x8b, 0x33, 0x30, 0x1e, 0x84,
 	0x7c, 0xb8, 0x78, 0x51, 0x8c, 0x14, 0x92, 0x86, 0x3a, 0x09, 0x9b, 0xeb, 0xa5, 0x64, 0xb0, 0x4b,
 	0x42, 0x5c, 0xa1, 0xc4, 0xe0, 0xa4, 0xfa, 0xe3, 0xa1, 0x1c, 0xe3, 0x8a, 0x47, 0x72, 0x8c, 0x3b,
 	0x80, 0xf8, 0x04, 0x10, 0x5f, 0x00, 0xe2, 0x07, 0x40, 0x7c, 0x60, 0x91, 0x3c, 0x63, 0x14, 0x3b,
 	0xd0, 0x7f, 0x65, 0x99, 0xc9, 0xa9, 0x49, 0x6c, 0xe0, 0x30, 0x32, 0x06, 0x04, 0x00, 0x00, 0xff,
-	0xff, 0xd5, 0xfb, 0xdc, 0x69, 0x0b, 0x02, 0x00, 0x00,
+	0xff, 0xaf, 0xe0, 0x3e, 0xa6, 0x0b, 0x02, 0x00, 0x00,
 }

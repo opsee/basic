@@ -16,7 +16,7 @@ message GetCheckCountRequest {
 }
 
 message GetCheckCountResponse {
-	int32 count = 1;
+	float count = 1;
 	bool prorated = 2;
 }
 
