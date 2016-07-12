@@ -52,6 +52,7 @@ message Team {
 	CreditCardInfo creditCardInfo = 4;
 	repeated Invoice invoices = 5;
 	repeated User users = 6;
+	string stripe_id = 7;
 }
 
 message Invoice {
