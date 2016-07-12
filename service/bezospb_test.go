@@ -10,6 +10,7 @@ It is generated from these files:
 	cats.proto
 	checker.proto
 	keelhaul.proto
+	mehtrics.proto
 	spanx.proto
 
 It has these top-level messages:
@@ -49,6 +50,10 @@ It has these top-level messages:
 	LaunchStackResponse
 	AuthenticateBastionRequest
 	AuthenticateBastionResponse
+	Group
+	QueryResult
+	GetMetricsRequest
+	GetMetricsResponse
 	EnhancedCombatModeRequest
 	EnhancedCombatModeResponse
 	GetRoleStackRequest
