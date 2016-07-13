@@ -51,6 +51,7 @@ It has these top-level messages:
 	AuthenticateBastionRequest
 	AuthenticateBastionResponse
 	Group
+	Aggregation
 	QueryResult
 	GetMetricsRequest
 	GetMetricsResponse
