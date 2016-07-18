@@ -4,8 +4,10 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/cloudwatch"
 	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/aws/aws-sdk-go/service/ecs"
 	opsee_cloudwatch "github.com/opsee/basic/schema/aws/cloudwatch"
 	opsee_ec2 "github.com/opsee/basic/schema/aws/ec2"
+	opsee_ecs "github.com/opsee/basic/schema/aws/ecs"
 	opsee_types "github.com/opsee/protobuf/opseeproto/types"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -59,6 +61,32 @@ func TestCopy(t *testing.T) {
 
 	awsStructDst2 := &cloudwatch.GetMetricStatisticsInput{}
 	CopyInto(awsStructDst2, opseeStructSrc2)
-
 	assert.NotZero(aws.TimeValue(awsStructDst2.StartTime))
+
+	awsStructSrcEcs := &ecs.ContainerDefinition{
+		DockerLabels: map[string]*string{
+			"hello": aws.String("there"),
+		},
+		DockerSecurityOptions: []*string{
+			aws.String("v secure"),
+		},
+	}
+	opseeStructDstEcs := &opsee_ecs.ContainerDefinition{}
+	CopyInto(opseeStructDstEcs, awsStructSrcEcs)
+	assert.Equal("v secure", opseeStructDstEcs.DockerSecurityOptions[0])
+	assert.Equal("there", opseeStructDstEcs.DockerLabels["hello"])
+
+	// TODO: implement me
+	// opseeStructSrcEcs := &opsee_ecs.ContainerDefinition{
+	// 	DockerLabels: map[string]string{
+	// 		"hello": "there",
+	// 	},
+	// 	DockerSecurityOptions: []string{
+	// 		"v secure",
+	// 	},
+	// }
+	// awsStructDstEcs := &ecs.ContainerDefinition{}
+	// CopyInto(awsStructDstEcs, opseeStructSrcEcs)
+	// assert.Equal(aws.String("v secure"), awsStructDstEcs.DockerSecurityOptions[0])
+	// assert.Equal(aws.String("there"), awsStructDstEcs.DockerLabels["hello"])
 }
