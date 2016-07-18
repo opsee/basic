@@ -18,6 +18,8 @@ It has these top-level messages:
 	BezosResponse
 	GetCheckCountRequest
 	GetCheckCountResponse
+	GetCheckResultsRequest
+	GetCheckResultsResponse
 	ListCustomersResponse
 	GetUserRequest
 	GetUserResponse

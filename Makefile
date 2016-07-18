@@ -1,8 +1,11 @@
 
-all: generate test
+all: pull generate test
 
 clean: 
 	rm -- **/*.pb.go **/*pb_test.go
+
+pull:
+	docker pull quay.io/opsee/build-go:proto16
 
 test:
 	docker run --rm -it -v $$(pwd):/gopath/src/github.com/opsee/basic quay.io/opsee/build-go:proto16 /bin/bash -c 'cd /gopath/src/github.com/opsee/basic && ./build.sh'
