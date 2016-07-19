@@ -123,6 +123,8 @@ message GetTeamResponse {
 message CreateTeamRequest {
 	User requestor = 1;
 	Team team = 2;
+	string stripe_token = 3;
+	int64 trial_end = 4;
 }
 
 message CreateTeamResponse {
