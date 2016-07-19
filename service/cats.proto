@@ -120,6 +120,15 @@ message GetTeamResponse {
 	Team team = 1;
 }
 
+message CreateTeamRequest {
+	User requestor = 1;
+	Team team = 2;
+}
+
+message CreateTeamResponse {
+	Team team = 1;
+}
+
 message UpdateTeamRequest {
 	User requestor = 1;
 	Team team = 2;
@@ -147,6 +156,7 @@ service Cats {
 	rpc InviteUser(InviteUserRequest) returns (InviteUserResponse) {}
 	rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {}
 	rpc GetTeam(GetTeamRequest) returns (GetTeamResponse) {}
+	rpc CreateTeam(CreateTeamRequest) returns (CreateTeamResponse) {}
 	rpc UpdateTeam(UpdateTeamRequest) returns (UpdateTeamResponse) {}
 	rpc DeleteTeam(DeleteTeamRequest) returns (DeleteTeamResponse) {}
 	rpc GetCheckResults(GetCheckResultsRequest) returns (GetCheckResultsResponse) {}

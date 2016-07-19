@@ -35,6 +35,8 @@ It has these top-level messages:
 	UserTokenResponse
 	GetTeamRequest
 	GetTeamResponse
+	CreateTeamRequest
+	CreateTeamResponse
 	UpdateTeamRequest
 	UpdateTeamResponse
 	DeleteTeamRequest
