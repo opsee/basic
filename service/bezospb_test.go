@@ -20,6 +20,8 @@ It has these top-level messages:
 	GetCheckCountResponse
 	GetCheckResultsRequest
 	GetCheckResultsResponse
+	GetCheckStateTransitionsRequest
+	GetCheckStateTransitionsResponse
 	ListCustomersResponse
 	GetUserRequest
 	GetUserResponse
