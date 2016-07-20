@@ -41,6 +41,8 @@ It has these top-level messages:
 	UpdateTeamResponse
 	DeleteTeamRequest
 	DeleteTeamResponse
+	GetChecksRequest
+	GetChecksResponse
 	CheckResourceResponse
 	ResourceResponse
 	CheckResourceRequest
