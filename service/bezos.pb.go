@@ -41,8 +41,6 @@
 		UpdateTeamResponse
 		DeleteTeamRequest
 		DeleteTeamResponse
-		GetChecksRequest
-		GetChecksResponse
 		CheckResourceResponse
 		ResourceResponse
 		CheckResourceRequest
