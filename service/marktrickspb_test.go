@@ -17,6 +17,8 @@ import _ "github.com/opsee/protobuf/opseeproto/types"
 import _ "github.com/opsee/basic/schema/aws/credentials"
 import _ "github.com/opsee/basic/schema"
 import _ "github.com/opsee/basic/schema"
+import _ "github.com/golang/protobuf/ptypes/struct"
+import _ "github.com/gogo/protobuf/gogoproto"
 import _ "github.com/opsee/basic/schema"
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -24,15 +26,15 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
-func TestGroupProto(t *testing.T) {
+func TestGroupByProto(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedGroup(popr, false)
+	p := NewPopulatedGroupBy(popr, false)
 	data, err := github_com_gogo_protobuf_proto.Marshal(p)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
-	msg := &Group{}
+	msg := &GroupBy{}
 	if err := github_com_gogo_protobuf_proto.Unmarshal(data, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -55,10 +57,10 @@ func TestGroupProto(t *testing.T) {
 	}
 }
 
-func TestGroupMarshalTo(t *testing.T) {
+func TestGroupByMarshalTo(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedGroup(popr, false)
+	p := NewPopulatedGroupBy(popr, false)
 	size := p.Size()
 	data := make([]byte, size)
 	for i := range data {
@@ -68,7 +70,7 @@ func TestGroupMarshalTo(t *testing.T) {
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
-	msg := &Group{}
+	msg := &GroupBy{}
 	if err := github_com_gogo_protobuf_proto.Unmarshal(data, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -80,15 +82,15 @@ func TestGroupMarshalTo(t *testing.T) {
 	}
 }
 
-func TestAggregationProto(t *testing.T) {
+func TestSamplingProto(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedAggregation(popr, false)
+	p := NewPopulatedSampling(popr, false)
 	data, err := github_com_gogo_protobuf_proto.Marshal(p)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
-	msg := &Aggregation{}
+	msg := &Sampling{}
 	if err := github_com_gogo_protobuf_proto.Unmarshal(data, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -111,10 +113,10 @@ func TestAggregationProto(t *testing.T) {
 	}
 }
 
-func TestAggregationMarshalTo(t *testing.T) {
+func TestSamplingMarshalTo(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedAggregation(popr, false)
+	p := NewPopulatedSampling(popr, false)
 	size := p.Size()
 	data := make([]byte, size)
 	for i := range data {
@@ -124,7 +126,7 @@ func TestAggregationMarshalTo(t *testing.T) {
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
-	msg := &Aggregation{}
+	msg := &Sampling{}
 	if err := github_com_gogo_protobuf_proto.Unmarshal(data, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -136,15 +138,15 @@ func TestAggregationMarshalTo(t *testing.T) {
 	}
 }
 
-func TestQueryResultProto(t *testing.T) {
+func TestAggregatorProto(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedQueryResult(popr, false)
+	p := NewPopulatedAggregator(popr, false)
 	data, err := github_com_gogo_protobuf_proto.Marshal(p)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
-	msg := &QueryResult{}
+	msg := &Aggregator{}
 	if err := github_com_gogo_protobuf_proto.Unmarshal(data, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -167,10 +169,10 @@ func TestQueryResultProto(t *testing.T) {
 	}
 }
 
-func TestQueryResultMarshalTo(t *testing.T) {
+func TestAggregatorMarshalTo(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedQueryResult(popr, false)
+	p := NewPopulatedAggregator(popr, false)
 	size := p.Size()
 	data := make([]byte, size)
 	for i := range data {
@@ -180,7 +182,287 @@ func TestQueryResultMarshalTo(t *testing.T) {
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
-	msg := &QueryResult{}
+	msg := &Aggregator{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	for i := range data {
+		data[i] = byte(popr.Intn(256))
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestStringListProto(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedStringList(popr, false)
+	data, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &StringList{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	littlefuzz := make([]byte, len(data))
+	copy(littlefuzz, data)
+	for i := range data {
+		data[i] = byte(popr.Intn(256))
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+	if len(littlefuzz) > 0 {
+		fuzzamount := 100
+		for i := 0; i < fuzzamount; i++ {
+			littlefuzz[popr.Intn(len(littlefuzz))] = byte(popr.Intn(256))
+			littlefuzz = append(littlefuzz, byte(popr.Intn(256)))
+		}
+		// shouldn't panic
+		_ = github_com_gogo_protobuf_proto.Unmarshal(littlefuzz, msg)
+	}
+}
+
+func TestStringListMarshalTo(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedStringList(popr, false)
+	size := p.Size()
+	data := make([]byte, size)
+	for i := range data {
+		data[i] = byte(popr.Intn(256))
+	}
+	_, err := p.MarshalTo(data)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &StringList{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	for i := range data {
+		data[i] = byte(popr.Intn(256))
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestQueryMetricProto(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedQueryMetric(popr, false)
+	data, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &QueryMetric{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	littlefuzz := make([]byte, len(data))
+	copy(littlefuzz, data)
+	for i := range data {
+		data[i] = byte(popr.Intn(256))
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+	if len(littlefuzz) > 0 {
+		fuzzamount := 100
+		for i := 0; i < fuzzamount; i++ {
+			littlefuzz[popr.Intn(len(littlefuzz))] = byte(popr.Intn(256))
+			littlefuzz = append(littlefuzz, byte(popr.Intn(256)))
+		}
+		// shouldn't panic
+		_ = github_com_gogo_protobuf_proto.Unmarshal(littlefuzz, msg)
+	}
+}
+
+func TestQueryMetricMarshalTo(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedQueryMetric(popr, false)
+	size := p.Size()
+	data := make([]byte, size)
+	for i := range data {
+		data[i] = byte(popr.Intn(256))
+	}
+	_, err := p.MarshalTo(data)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &QueryMetric{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	for i := range data {
+		data[i] = byte(popr.Intn(256))
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestDatapointProto(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedDatapoint(popr, false)
+	data, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &Datapoint{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	littlefuzz := make([]byte, len(data))
+	copy(littlefuzz, data)
+	for i := range data {
+		data[i] = byte(popr.Intn(256))
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+	if len(littlefuzz) > 0 {
+		fuzzamount := 100
+		for i := 0; i < fuzzamount; i++ {
+			littlefuzz[popr.Intn(len(littlefuzz))] = byte(popr.Intn(256))
+			littlefuzz = append(littlefuzz, byte(popr.Intn(256)))
+		}
+		// shouldn't panic
+		_ = github_com_gogo_protobuf_proto.Unmarshal(littlefuzz, msg)
+	}
+}
+
+func TestDatapointMarshalTo(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedDatapoint(popr, false)
+	size := p.Size()
+	data := make([]byte, size)
+	for i := range data {
+		data[i] = byte(popr.Intn(256))
+	}
+	_, err := p.MarshalTo(data)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &Datapoint{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	for i := range data {
+		data[i] = byte(popr.Intn(256))
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestResultProto(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedResult(popr, false)
+	data, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &Result{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	littlefuzz := make([]byte, len(data))
+	copy(littlefuzz, data)
+	for i := range data {
+		data[i] = byte(popr.Intn(256))
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+	if len(littlefuzz) > 0 {
+		fuzzamount := 100
+		for i := 0; i < fuzzamount; i++ {
+			littlefuzz[popr.Intn(len(littlefuzz))] = byte(popr.Intn(256))
+			littlefuzz = append(littlefuzz, byte(popr.Intn(256)))
+		}
+		// shouldn't panic
+		_ = github_com_gogo_protobuf_proto.Unmarshal(littlefuzz, msg)
+	}
+}
+
+func TestResultMarshalTo(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedResult(popr, false)
+	size := p.Size()
+	data := make([]byte, size)
+	for i := range data {
+		data[i] = byte(popr.Intn(256))
+	}
+	_, err := p.MarshalTo(data)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &Result{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	for i := range data {
+		data[i] = byte(popr.Intn(256))
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestQueryProto(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedQuery(popr, false)
+	data, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &Query{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	littlefuzz := make([]byte, len(data))
+	copy(littlefuzz, data)
+	for i := range data {
+		data[i] = byte(popr.Intn(256))
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+	if len(littlefuzz) > 0 {
+		fuzzamount := 100
+		for i := 0; i < fuzzamount; i++ {
+			littlefuzz[popr.Intn(len(littlefuzz))] = byte(popr.Intn(256))
+			littlefuzz = append(littlefuzz, byte(popr.Intn(256)))
+		}
+		// shouldn't panic
+		_ = github_com_gogo_protobuf_proto.Unmarshal(littlefuzz, msg)
+	}
+}
+
+func TestQueryMarshalTo(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedQuery(popr, false)
+	size := p.Size()
+	data := make([]byte, size)
+	for i := range data {
+		data[i] = byte(popr.Intn(256))
+	}
+	_, err := p.MarshalTo(data)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &Query{}
 	if err := github_com_gogo_protobuf_proto.Unmarshal(data, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -304,16 +586,16 @@ func TestGetMetricsResponseMarshalTo(t *testing.T) {
 	}
 }
 
-func TestGroupJSON(t *testing.T) {
+func TestGroupByJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedGroup(popr, true)
+	p := NewPopulatedGroupBy(popr, true)
 	marshaler := github_com_gogo_protobuf_jsonpb.Marshaler{}
 	jsondata, err := marshaler.MarshalToString(p)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
-	msg := &Group{}
+	msg := &GroupBy{}
 	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
@@ -322,16 +604,16 @@ func TestGroupJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
-func TestAggregationJSON(t *testing.T) {
+func TestSamplingJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedAggregation(popr, true)
+	p := NewPopulatedSampling(popr, true)
 	marshaler := github_com_gogo_protobuf_jsonpb.Marshaler{}
 	jsondata, err := marshaler.MarshalToString(p)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
-	msg := &Aggregation{}
+	msg := &Sampling{}
 	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
@@ -340,16 +622,106 @@ func TestAggregationJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
-func TestQueryResultJSON(t *testing.T) {
+func TestAggregatorJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedQueryResult(popr, true)
+	p := NewPopulatedAggregator(popr, true)
 	marshaler := github_com_gogo_protobuf_jsonpb.Marshaler{}
 	jsondata, err := marshaler.MarshalToString(p)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
-	msg := &QueryResult{}
+	msg := &Aggregator{}
+	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
+	}
+}
+func TestStringListJSON(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedStringList(popr, true)
+	marshaler := github_com_gogo_protobuf_jsonpb.Marshaler{}
+	jsondata, err := marshaler.MarshalToString(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &StringList{}
+	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
+	}
+}
+func TestQueryMetricJSON(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedQueryMetric(popr, true)
+	marshaler := github_com_gogo_protobuf_jsonpb.Marshaler{}
+	jsondata, err := marshaler.MarshalToString(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &QueryMetric{}
+	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
+	}
+}
+func TestDatapointJSON(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedDatapoint(popr, true)
+	marshaler := github_com_gogo_protobuf_jsonpb.Marshaler{}
+	jsondata, err := marshaler.MarshalToString(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &Datapoint{}
+	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
+	}
+}
+func TestResultJSON(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedResult(popr, true)
+	marshaler := github_com_gogo_protobuf_jsonpb.Marshaler{}
+	jsondata, err := marshaler.MarshalToString(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &Result{}
+	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
+	}
+}
+func TestQueryJSON(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedQuery(popr, true)
+	marshaler := github_com_gogo_protobuf_jsonpb.Marshaler{}
+	jsondata, err := marshaler.MarshalToString(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &Query{}
 	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
@@ -394,12 +766,12 @@ func TestGetMetricsResponseJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
-func TestGroupProtoText(t *testing.T) {
+func TestGroupByProtoText(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedGroup(popr, true)
+	p := NewPopulatedGroupBy(popr, true)
 	data := github_com_gogo_protobuf_proto.MarshalTextString(p)
-	msg := &Group{}
+	msg := &GroupBy{}
 	if err := github_com_gogo_protobuf_proto.UnmarshalText(data, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -408,12 +780,12 @@ func TestGroupProtoText(t *testing.T) {
 	}
 }
 
-func TestGroupProtoCompactText(t *testing.T) {
+func TestGroupByProtoCompactText(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedGroup(popr, true)
+	p := NewPopulatedGroupBy(popr, true)
 	data := github_com_gogo_protobuf_proto.CompactTextString(p)
-	msg := &Group{}
+	msg := &GroupBy{}
 	if err := github_com_gogo_protobuf_proto.UnmarshalText(data, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -422,12 +794,12 @@ func TestGroupProtoCompactText(t *testing.T) {
 	}
 }
 
-func TestAggregationProtoText(t *testing.T) {
+func TestSamplingProtoText(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedAggregation(popr, true)
+	p := NewPopulatedSampling(popr, true)
 	data := github_com_gogo_protobuf_proto.MarshalTextString(p)
-	msg := &Aggregation{}
+	msg := &Sampling{}
 	if err := github_com_gogo_protobuf_proto.UnmarshalText(data, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -436,12 +808,12 @@ func TestAggregationProtoText(t *testing.T) {
 	}
 }
 
-func TestAggregationProtoCompactText(t *testing.T) {
+func TestSamplingProtoCompactText(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedAggregation(popr, true)
+	p := NewPopulatedSampling(popr, true)
 	data := github_com_gogo_protobuf_proto.CompactTextString(p)
-	msg := &Aggregation{}
+	msg := &Sampling{}
 	if err := github_com_gogo_protobuf_proto.UnmarshalText(data, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -450,12 +822,12 @@ func TestAggregationProtoCompactText(t *testing.T) {
 	}
 }
 
-func TestQueryResultProtoText(t *testing.T) {
+func TestAggregatorProtoText(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedQueryResult(popr, true)
+	p := NewPopulatedAggregator(popr, true)
 	data := github_com_gogo_protobuf_proto.MarshalTextString(p)
-	msg := &QueryResult{}
+	msg := &Aggregator{}
 	if err := github_com_gogo_protobuf_proto.UnmarshalText(data, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -464,12 +836,152 @@ func TestQueryResultProtoText(t *testing.T) {
 	}
 }
 
-func TestQueryResultProtoCompactText(t *testing.T) {
+func TestAggregatorProtoCompactText(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedQueryResult(popr, true)
+	p := NewPopulatedAggregator(popr, true)
 	data := github_com_gogo_protobuf_proto.CompactTextString(p)
-	msg := &QueryResult{}
+	msg := &Aggregator{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestStringListProtoText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedStringList(popr, true)
+	data := github_com_gogo_protobuf_proto.MarshalTextString(p)
+	msg := &StringList{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestStringListProtoCompactText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedStringList(popr, true)
+	data := github_com_gogo_protobuf_proto.CompactTextString(p)
+	msg := &StringList{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestQueryMetricProtoText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedQueryMetric(popr, true)
+	data := github_com_gogo_protobuf_proto.MarshalTextString(p)
+	msg := &QueryMetric{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestQueryMetricProtoCompactText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedQueryMetric(popr, true)
+	data := github_com_gogo_protobuf_proto.CompactTextString(p)
+	msg := &QueryMetric{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestDatapointProtoText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedDatapoint(popr, true)
+	data := github_com_gogo_protobuf_proto.MarshalTextString(p)
+	msg := &Datapoint{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestDatapointProtoCompactText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedDatapoint(popr, true)
+	data := github_com_gogo_protobuf_proto.CompactTextString(p)
+	msg := &Datapoint{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestResultProtoText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedResult(popr, true)
+	data := github_com_gogo_protobuf_proto.MarshalTextString(p)
+	msg := &Result{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestResultProtoCompactText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedResult(popr, true)
+	data := github_com_gogo_protobuf_proto.CompactTextString(p)
+	msg := &Result{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestQueryProtoText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedQuery(popr, true)
+	data := github_com_gogo_protobuf_proto.MarshalTextString(p)
+	msg := &Query{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(data, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestQueryProtoCompactText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedQuery(popr, true)
+	data := github_com_gogo_protobuf_proto.CompactTextString(p)
+	msg := &Query{}
 	if err := github_com_gogo_protobuf_proto.UnmarshalText(data, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -534,10 +1046,10 @@ func TestGetMetricsResponseProtoCompactText(t *testing.T) {
 	}
 }
 
-func TestGroupSize(t *testing.T) {
+func TestGroupBySize(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedGroup(popr, true)
+	p := NewPopulatedGroupBy(popr, true)
 	size2 := github_com_gogo_protobuf_proto.Size(p)
 	data, err := github_com_gogo_protobuf_proto.Marshal(p)
 	if err != nil {
@@ -556,10 +1068,10 @@ func TestGroupSize(t *testing.T) {
 	}
 }
 
-func TestAggregationSize(t *testing.T) {
+func TestSamplingSize(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedAggregation(popr, true)
+	p := NewPopulatedSampling(popr, true)
 	size2 := github_com_gogo_protobuf_proto.Size(p)
 	data, err := github_com_gogo_protobuf_proto.Marshal(p)
 	if err != nil {
@@ -578,10 +1090,120 @@ func TestAggregationSize(t *testing.T) {
 	}
 }
 
-func TestQueryResultSize(t *testing.T) {
+func TestAggregatorSize(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedQueryResult(popr, true)
+	p := NewPopulatedAggregator(popr, true)
+	size2 := github_com_gogo_protobuf_proto.Size(p)
+	data, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	size := p.Size()
+	if len(data) != size {
+		t.Errorf("seed = %d, size %v != marshalled size %v", seed, size, len(data))
+	}
+	if size2 != size {
+		t.Errorf("seed = %d, size %v != before marshal proto.Size %v", seed, size, size2)
+	}
+	size3 := github_com_gogo_protobuf_proto.Size(p)
+	if size3 != size {
+		t.Errorf("seed = %d, size %v != after marshal proto.Size %v", seed, size, size3)
+	}
+}
+
+func TestStringListSize(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedStringList(popr, true)
+	size2 := github_com_gogo_protobuf_proto.Size(p)
+	data, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	size := p.Size()
+	if len(data) != size {
+		t.Errorf("seed = %d, size %v != marshalled size %v", seed, size, len(data))
+	}
+	if size2 != size {
+		t.Errorf("seed = %d, size %v != before marshal proto.Size %v", seed, size, size2)
+	}
+	size3 := github_com_gogo_protobuf_proto.Size(p)
+	if size3 != size {
+		t.Errorf("seed = %d, size %v != after marshal proto.Size %v", seed, size, size3)
+	}
+}
+
+func TestQueryMetricSize(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedQueryMetric(popr, true)
+	size2 := github_com_gogo_protobuf_proto.Size(p)
+	data, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	size := p.Size()
+	if len(data) != size {
+		t.Errorf("seed = %d, size %v != marshalled size %v", seed, size, len(data))
+	}
+	if size2 != size {
+		t.Errorf("seed = %d, size %v != before marshal proto.Size %v", seed, size, size2)
+	}
+	size3 := github_com_gogo_protobuf_proto.Size(p)
+	if size3 != size {
+		t.Errorf("seed = %d, size %v != after marshal proto.Size %v", seed, size, size3)
+	}
+}
+
+func TestDatapointSize(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedDatapoint(popr, true)
+	size2 := github_com_gogo_protobuf_proto.Size(p)
+	data, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	size := p.Size()
+	if len(data) != size {
+		t.Errorf("seed = %d, size %v != marshalled size %v", seed, size, len(data))
+	}
+	if size2 != size {
+		t.Errorf("seed = %d, size %v != before marshal proto.Size %v", seed, size, size2)
+	}
+	size3 := github_com_gogo_protobuf_proto.Size(p)
+	if size3 != size {
+		t.Errorf("seed = %d, size %v != after marshal proto.Size %v", seed, size, size3)
+	}
+}
+
+func TestResultSize(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedResult(popr, true)
+	size2 := github_com_gogo_protobuf_proto.Size(p)
+	data, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	size := p.Size()
+	if len(data) != size {
+		t.Errorf("seed = %d, size %v != marshalled size %v", seed, size, len(data))
+	}
+	if size2 != size {
+		t.Errorf("seed = %d, size %v != before marshal proto.Size %v", seed, size, size2)
+	}
+	size3 := github_com_gogo_protobuf_proto.Size(p)
+	if size3 != size {
+		t.Errorf("seed = %d, size %v != after marshal proto.Size %v", seed, size, size3)
+	}
+}
+
+func TestQuerySize(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedQuery(popr, true)
 	size2 := github_com_gogo_protobuf_proto.Size(p)
 	data, err := github_com_gogo_protobuf_proto.Marshal(p)
 	if err != nil {
@@ -644,29 +1266,74 @@ func TestGetMetricsResponseSize(t *testing.T) {
 	}
 }
 
-func TestGroupGraphQL(t *testing.T) {
+func TestGroupByGraphQL(t *testing.T) {
 	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
-	_ = NewPopulatedGroup(popr, false)
+	_ = NewPopulatedGroupBy(popr, false)
 	objdesc := ""
-	pdesc := GraphQLGroupType.PrivateDescription
+	pdesc := GraphQLGroupByType.PrivateDescription
 	if pdesc != objdesc {
 		t.Fatalf("String want %v got %v", objdesc, pdesc)
 	}
 }
-func TestAggregationGraphQL(t *testing.T) {
+func TestSamplingGraphQL(t *testing.T) {
 	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
-	_ = NewPopulatedAggregation(popr, false)
+	_ = NewPopulatedSampling(popr, false)
 	objdesc := ""
-	pdesc := GraphQLAggregationType.PrivateDescription
+	pdesc := GraphQLSamplingType.PrivateDescription
 	if pdesc != objdesc {
 		t.Fatalf("String want %v got %v", objdesc, pdesc)
 	}
 }
-func TestQueryResultGraphQL(t *testing.T) {
+func TestAggregatorGraphQL(t *testing.T) {
 	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
-	_ = NewPopulatedQueryResult(popr, false)
+	_ = NewPopulatedAggregator(popr, false)
 	objdesc := ""
-	pdesc := GraphQLQueryResultType.PrivateDescription
+	pdesc := GraphQLAggregatorType.PrivateDescription
+	if pdesc != objdesc {
+		t.Fatalf("String want %v got %v", objdesc, pdesc)
+	}
+}
+func TestStringListGraphQL(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	_ = NewPopulatedStringList(popr, false)
+	objdesc := ""
+	pdesc := GraphQLStringListType.PrivateDescription
+	if pdesc != objdesc {
+		t.Fatalf("String want %v got %v", objdesc, pdesc)
+	}
+}
+func TestQueryMetricGraphQL(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	_ = NewPopulatedQueryMetric(popr, false)
+	objdesc := ""
+	pdesc := GraphQLQueryMetricType.PrivateDescription
+	if pdesc != objdesc {
+		t.Fatalf("String want %v got %v", objdesc, pdesc)
+	}
+}
+func TestDatapointGraphQL(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	_ = NewPopulatedDatapoint(popr, false)
+	objdesc := "use alternate datapoint type"
+	pdesc := GraphQLDatapointType.PrivateDescription
+	if pdesc != objdesc {
+		t.Fatalf("String want %v got %v", objdesc, pdesc)
+	}
+}
+func TestResultGraphQL(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	_ = NewPopulatedResult(popr, false)
+	objdesc := ""
+	pdesc := GraphQLResultType.PrivateDescription
+	if pdesc != objdesc {
+		t.Fatalf("String want %v got %v", objdesc, pdesc)
+	}
+}
+func TestQueryGraphQL(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	_ = NewPopulatedQuery(popr, false)
+	objdesc := ""
+	pdesc := GraphQLQueryType.PrivateDescription
 	if pdesc != objdesc {
 		t.Fatalf("String want %v got %v", objdesc, pdesc)
 	}
@@ -674,7 +1341,7 @@ func TestQueryResultGraphQL(t *testing.T) {
 func TestGetMetricsRequestGraphQL(t *testing.T) {
 	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
 	_ = NewPopulatedGetMetricsRequest(popr, false)
-	objdesc := "Array of metrics with complete metric name and optional tags"
+	objdesc := ""
 	pdesc := GraphQLGetMetricsRequestType.PrivateDescription
 	if pdesc != objdesc {
 		t.Fatalf("String want %v got %v", objdesc, pdesc)
@@ -683,7 +1350,7 @@ func TestGetMetricsRequestGraphQL(t *testing.T) {
 func TestGetMetricsResponseGraphQL(t *testing.T) {
 	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
 	_ = NewPopulatedGetMetricsResponse(popr, false)
-	objdesc := "Array of metrics from Opsee metrics store"
+	objdesc := ""
 	pdesc := GraphQLGetMetricsResponseType.PrivateDescription
 	if pdesc != objdesc {
 		t.Fatalf("String want %v got %v", objdesc, pdesc)

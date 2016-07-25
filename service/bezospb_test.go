@@ -58,9 +58,14 @@ It has these top-level messages:
 	LaunchStackResponse
 	AuthenticateBastionRequest
 	AuthenticateBastionResponse
-	Group
-	Aggregation
-	QueryResult
+	GroupBy
+	Sampling
+	Aggregator
+	StringList
+	QueryMetric
+	Datapoint
+	Result
+	Query
 	GetMetricsRequest
 	GetMetricsResponse
 	EnhancedCombatModeRequest
