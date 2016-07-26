@@ -1314,7 +1314,7 @@ func TestQueryMetricGraphQL(t *testing.T) {
 func TestDatapointGraphQL(t *testing.T) {
 	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
 	_ = NewPopulatedDatapoint(popr, false)
-	objdesc := "use alternate datapoint type"
+	objdesc := ""
 	pdesc := GraphQLDatapointType.PrivateDescription
 	if pdesc != objdesc {
 		t.Fatalf("String want %v got %v", objdesc, pdesc)

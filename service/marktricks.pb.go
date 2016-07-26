@@ -122,7 +122,6 @@ func (m *QueryMetric) GetAggregators() []*Aggregator {
 	return nil
 }
 
-// use alternate datapoint type
 type Datapoint struct {
 	Timestamp *opsee_types.Timestamp `protobuf:"bytes,1,opt,name=timestamp" json:"timestamp,omitempty"`
 	Value     float64                `protobuf:"fixed64,2,opt,name=value,proto3" json:"value,omitempty"`
@@ -1046,7 +1045,7 @@ func init() {
 	})
 	GraphQLDatapointType = github_com_graphql_go_graphql.NewObject(github_com_graphql_go_graphql.ObjectConfig{
 		Name:        "serviceDatapoint",
-		Description: "use alternate datapoint type",
+		Description: "",
 		Fields: (github_com_graphql_go_graphql.FieldsThunk)(func() github_com_graphql_go_graphql.Fields {
 			return github_com_graphql_go_graphql.Fields{
 				"timestamp": &github_com_graphql_go_graphql.Field{
