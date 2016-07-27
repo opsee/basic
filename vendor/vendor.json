@@ -202,6 +202,12 @@
 			"revisionTime": "2016-06-14T15:31:40-07:00"
 		},
 		{
+			"checksumSHA1": "2bstKAF87xM849Og0V92uGUSj7s=",
+			"path": "github.com/golang/protobuf/ptypes/struct",
+			"revision": "0c1f6d65b5a189c2250d10e71a5506f06f9fa0a0",
+			"revisionTime": "2016-06-14T22:31:40Z"
+		},
+		{
 			"checksumSHA1": "ftnii31JY1Sbvq+qLECUUObVPvM=",
 			"path": "github.com/graphql-go/graphql",
 			"revision": "909ca9f800e7ab67307b4f9f1d56394346acb33c",
@@ -275,24 +281,21 @@
 		},
 		{
 			"checksumSHA1": "Oc5/hmIbwL/aWBo72SigCzA82JE=",
-			"origin": "github.com/opsee/basic/vendor/github.com/opsee/protobuf/opseeproto",
 			"path": "github.com/opsee/protobuf/opseeproto",
 			"revision": "52c86fd0b6cd5b4f528cee904ad79ea4afbc3505",
-			"revisionTime": "2016-07-26T11:01:06-07:00"
+			"revisionTime": "2016-07-26T18:01:06Z"
 		},
 		{
 			"checksumSHA1": "haQwx5jDhyDpCBViVSiq+McsHw4=",
-			"origin": "github.com/opsee/basic/vendor/github.com/opsee/protobuf/opseeproto/types",
 			"path": "github.com/opsee/protobuf/opseeproto/types",
 			"revision": "52c86fd0b6cd5b4f528cee904ad79ea4afbc3505",
-			"revisionTime": "2016-07-26T11:01:06-07:00"
+			"revisionTime": "2016-07-26T18:01:06Z"
 		},
 		{
 			"checksumSHA1": "T4VPZma7pi1abYtq32e31mvdzj4=",
-			"origin": "github.com/opsee/basic/vendor/github.com/opsee/protobuf/plugin/graphql/scalars",
 			"path": "github.com/opsee/protobuf/plugin/graphql/scalars",
 			"revision": "52c86fd0b6cd5b4f528cee904ad79ea4afbc3505",
-			"revisionTime": "2016-07-26T11:01:06-07:00"
+			"revisionTime": "2016-07-26T18:01:06Z"
 		},
 		{
 			"checksumSHA1": "zKKp5SZ3d3ycKe4EKMNT0BqAWBw=",
