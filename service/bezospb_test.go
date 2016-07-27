@@ -43,6 +43,8 @@ It has these top-level messages:
 	DeleteTeamResponse
 	GetChecksRequest
 	GetChecksResponse
+	GetCheckSnapshotRequest
+	GetCheckSnapshotResponse
 	CheckResourceResponse
 	ResourceResponse
 	CheckResourceRequest
