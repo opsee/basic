@@ -58,6 +58,11 @@ It has these top-level messages:
 	LaunchStackResponse
 	AuthenticateBastionRequest
 	AuthenticateBastionResponse
+	Group
+	Aggregation
+	QueryResult
+	GetMetricsRequest
+	GetMetricsResponse
 	GroupBy
 	Sampling
 	Aggregator
@@ -66,8 +71,8 @@ It has these top-level messages:
 	Datapoint
 	Result
 	Query
-	GetMetricsRequest
-	GetMetricsResponse
+	QueryMetricsRequest
+	QueryMetricsResponse
 	EnhancedCombatModeRequest
 	EnhancedCombatModeResponse
 	GetRoleStackRequest
